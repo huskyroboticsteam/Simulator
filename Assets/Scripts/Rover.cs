@@ -67,8 +67,7 @@ public class Rover : MonoBehaviour
 
     public void EStop(bool release)
     {
-        Debug.LogError(release);
-        bool redundant = this.eStopped != release;
+        bool redundant = eStopped != release;
         if (redundant)
         {
             return;
