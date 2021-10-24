@@ -37,13 +37,8 @@ public class Rover : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rb.velocity = -transform.forward * driveforwardBackward;
-        rb.angularVelocity = new Vector3(0.0f, -driveLeftRight, 0.0f);
-        // prevent obstacles from forcing unwanted transformations on rover
-        Vector3 pos = transform.position;
-        pos.y = 0.0f;
-        transform.position = pos;
-        transform.rotation = Quaternion.Euler(0.0f, transform.rotation.eulerAngles.y, 0.0f);
+        rb.velocity = -driveforwardBackward * transform.forward;
+        rb.angularVelocity = -driveLeftRight * transform.up;
 
         armBase.transform.Rotate(0.0f, armBasePower * armBaseSpeed * Time.fixedDeltaTime, 0.0f);
         lowerArm.transform.Rotate(shoulderPower * shoulderSpeed * Time.fixedDeltaTime, 0.0f, 0.0f);
