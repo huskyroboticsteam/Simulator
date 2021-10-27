@@ -8,10 +8,15 @@ using UnityEngine;
 public class Rover : MonoBehaviour
 {
     public float linearSpeed;
-    public float rotationSpeed;
+    public float angularSpeed;
     public float armBaseSpeed;
     public float shoulderSpeed;
     public float elbowSpeed;
+    public Vector3 centerOfMass;
+    public WheelCollider frontLeftWheel;
+    public WheelCollider frontRightWheel;
+    public WheelCollider rearLeftWheel;
+    public WheelCollider rearRightWheel;
     public GameObject armBase;
     public GameObject lowerArm;
     public GameObject upperArm;
@@ -27,6 +32,7 @@ public class Rover : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        rb.centerOfMass = centerOfMass;
         eStopped = false;
         driveforwardBackward = 0.0f;
         driveLeftRight = 0.0f;
@@ -37,8 +43,16 @@ public class Rover : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rb.velocity = -driveforwardBackward * transform.forward;
-        rb.angularVelocity = -driveLeftRight * transform.up;
+        // Keep the rover grounded.
+        rb.AddForce(Vector3.down * 5f);
+
+        float leftDriveTorque = -driveforwardBackward * linearSpeed + driveLeftRight * angularSpeed;
+        frontLeftWheel.motorTorque = leftDriveTorque;
+        rearLeftWheel.motorTorque = leftDriveTorque;
+
+        float rightDriveTorque = -driveforwardBackward * linearSpeed - driveLeftRight * angularSpeed;
+        frontRightWheel.motorTorque = rightDriveTorque;
+        rearRightWheel.motorTorque = rightDriveTorque;
 
         armBase.transform.Rotate(0.0f, armBasePower * armBaseSpeed * Time.fixedDeltaTime, 0.0f);
         lowerArm.transform.Rotate(shoulderPower * shoulderSpeed * Time.fixedDeltaTime, 0.0f, 0.0f);
@@ -56,8 +70,8 @@ public class Rover : MonoBehaviour
         {
             return;
         }
-        this.driveforwardBackward = forwardBackward * linearSpeed;
-        this.driveLeftRight = leftRight * rotationSpeed;
+        driveforwardBackward = forwardBackward;
+        driveLeftRight = leftRight;
     }
 
     public void EStop(bool release)

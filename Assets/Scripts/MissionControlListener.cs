@@ -12,20 +12,20 @@ public class MissionControlListener : MonoBehaviour
 {
     public Rover rover;
 
-    private bool listen;
+    private TcpClient client;
+    private StreamReader reader;
 
     private void Start()
     {
         // We must connect on a separate thread so that the simulator can
         // continue running in parallel.
-        listen = true;
         Thread thread = new Thread(Connect);
         thread.Start();
     }
 
     private void OnDestroy()
     {
-        listen = false;
+        Disconnect();
     }
 
     /// <summary>
@@ -35,14 +35,14 @@ public class MissionControlListener : MonoBehaviour
     {
         try
         {
-            TcpClient client = new TcpClient("localhost", 3001);
+            client = new TcpClient("localhost", 3001);
             Debug.Log("Connected to base station");
-            StreamReader reader = new StreamReader(client.GetStream());
+            reader = new StreamReader(client.GetStream());
 
             StringBuilder jsonBuilder = new StringBuilder();
             int openBraceCount = 0;
             int firstBraceIndex = -1;
-            while (listen)
+            while (true)
             {
                 char ch = (char)reader.Read();
                 if (ch == '{')
@@ -69,10 +69,6 @@ public class MissionControlListener : MonoBehaviour
                     firstBraceIndex = -1;
                 }
             }
-
-            Debug.Log("Closing connection to Base Station");
-            reader.Close();
-            client.Close();
         }
         catch (Exception)
         {
@@ -88,7 +84,6 @@ public class MissionControlListener : MonoBehaviour
     /// <param name="request">the json request in string format</param>
     private void ProcessRequest(string request)
     {
-        Debug.Log("Message received from Base Station: " + request);
         int typeStartIndex = request.IndexOf("type") + 7;
         int typeEndIndex = request.Substring(typeStartIndex).IndexOf("\"");
         string type = request.Substring(typeStartIndex, typeEndIndex);
@@ -112,6 +107,13 @@ public class MissionControlListener : MonoBehaviour
                 Debug.LogError("Unknown request type: " + request);
                 break;
         }
+    }
+
+    private void Disconnect()
+    {
+        Debug.Log("Closing connection to Base Station");
+        reader?.Close();
+        client?.Close();
     }
 
     [System.Serializable]
