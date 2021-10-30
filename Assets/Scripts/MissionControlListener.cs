@@ -12,10 +12,11 @@ public class MissionControlListener : MonoBehaviour
 {
     public Rover rover;
 
+    private bool listening;
     private TcpClient client;
     private StreamReader reader;
 
-    private void Start()
+    private void OnEnable()
     {
         // We must connect on a separate thread so that the simulator can
         // continue running in parallel.
@@ -23,7 +24,7 @@ public class MissionControlListener : MonoBehaviour
         thread.Start();
     }
 
-    private void OnDestroy()
+    private void OnDisable()
     {
         Disconnect();
     }
@@ -36,46 +37,54 @@ public class MissionControlListener : MonoBehaviour
         try
         {
             client = new TcpClient("localhost", 3001);
-            Debug.Log("Connected to base station");
-            reader = new StreamReader(client.GetStream());
-
-            StringBuilder jsonBuilder = new StringBuilder();
-            int openBraceCount = 0;
-            int firstBraceIndex = -1;
-            while (true)
-            {
-                char ch = (char)reader.Read();
-                if (ch == '{')
-                {
-                    if (firstBraceIndex == -1)
-                    {
-                        firstBraceIndex = jsonBuilder.Length;
-                    }
-                    openBraceCount++;
-                }
-                else if (ch == '}')
-                {
-                    openBraceCount--;
-                }
-
-                jsonBuilder.Append(ch);
-                if (firstBraceIndex != -1 && openBraceCount == 0)
-                {
-                    // end of request
-                    string request = jsonBuilder.ToString().Substring(firstBraceIndex);
-                    ProcessRequest(request);
-
-                    jsonBuilder = new StringBuilder();
-                    firstBraceIndex = -1;
-                }
-            }
         }
         catch (Exception)
         {
-            Debug.Log("Connection to base station failed, trying again in 3 seconds");
+            Debug.Log("Connection to base station failed. Trying again in 3 seconds.");
             Thread.Sleep(3000);
             Connect();
+            return;
         }
+
+        listening = true;
+        Debug.Log("Connected to base station");
+        reader = new StreamReader(client.GetStream());
+
+        StringBuilder jsonBuilder = new StringBuilder();
+        int openBraceCount = 0;
+        int firstBraceIndex = -1;
+
+        while (listening)
+        {
+            char ch = (char)reader.Read();
+            if (ch == '{')
+            {
+                if (firstBraceIndex == -1)
+                {
+                    firstBraceIndex = jsonBuilder.Length;
+                }
+                openBraceCount++;
+            }
+            else if (ch == '}')
+            {
+                openBraceCount--;
+            }
+
+            jsonBuilder.Append(ch);
+            if (firstBraceIndex != -1 && openBraceCount == 0)
+            {
+                // end of request
+                string request = jsonBuilder.ToString().Substring(firstBraceIndex);
+                ProcessRequest(request);
+
+                jsonBuilder = new StringBuilder();
+                firstBraceIndex = -1;
+            }
+        }
+
+        // Clean up.
+        reader.Close();
+        client.Close();
     }
 
     /// <summary>
@@ -112,8 +121,7 @@ public class MissionControlListener : MonoBehaviour
     private void Disconnect()
     {
         Debug.Log("Closing connection to Base Station");
-        reader?.Close();
-        client?.Close();
+        listening = false;
     }
 
     [System.Serializable]
