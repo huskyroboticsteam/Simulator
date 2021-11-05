@@ -13,7 +13,7 @@ public class CommandRegisterer : MonoBehaviour
     private void OnEnable()
     {
         commands = new List<Command>();
-        Command setSpeed = new Command("setspeed", args => SetSpeed(args));
+        Command setSpeed = new Command("setspeed", SetSpeed);
         SimulatorConsole.RegisterCommand(setSpeed);
         commands.Add(setSpeed);
     }
