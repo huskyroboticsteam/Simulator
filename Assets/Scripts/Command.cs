@@ -1,20 +1,27 @@
+using System;
+
 /// <summary>
 /// Represents a command with a name and execution behavior.
 /// </summary>
-public abstract class Command
+public class Command
 {
     /// <summary>
     /// Constructs a new command with the given name.
     /// </summary>
-    public Command(string name)
+    public Command(string name, Action<string[]> onExecute)
     {
         Name = name;
+        OnExecute = onExecute;
     }
 
     public string Name { get; private set; }
+    private Action<string[]> OnExecute { get; set; }
 
     /// <summary>
-    /// Invoked when this command is executed by the CommandManager.
+    /// Invoked by the simulator console when this command is executed.
     /// </summary>
-    public abstract void Execute(string[] args);
+    public void Execute(string[] args)
+    {
+        OnExecute.Invoke(args);
+    }
 }

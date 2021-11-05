@@ -44,7 +44,7 @@ public class Rover : MonoBehaviour
     private void FixedUpdate()
     {
         // Keep the rover grounded.
-        rb.AddForce(Vector3.down * 5f);
+        rb.AddForce(transform.up * -5f);
 
         float leftDriveTorque = -driveforwardBackward * linearSpeed + driveLeftRight * angularSpeed;
         frontLeftWheel.motorTorque = leftDriveTorque;
