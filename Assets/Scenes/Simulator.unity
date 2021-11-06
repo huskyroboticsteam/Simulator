@@ -746,6 +746,10 @@ PrefabInstance:
       propertyPath: angularSpeed
       value: 15
       objectReference: {fileID: 0}
+    - target: {fileID: 8112312423978612202, guid: 98ff0860011a26244ac7003c5e0e1b59, type: 3}
+      propertyPath: maxArmRotation
+      value: 90
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 98ff0860011a26244ac7003c5e0e1b59, type: 3}
 --- !u!4 &1338021929 stripped
