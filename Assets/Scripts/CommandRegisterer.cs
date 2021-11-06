@@ -7,15 +7,24 @@ using UnityEngine;
 public class CommandRegisterer : MonoBehaviour
 {
     public Rover rover;
+    [SerializeField] ItemSpawn spawnPoint;
 
     private List<Command> commands;
 
     private void OnEnable()
     {
         commands = new List<Command>();
+
         Command setSpeed = new Command("setspeed", SetSpeed);
-        SimulatorConsole.RegisterCommand(setSpeed);
         commands.Add(setSpeed);
+
+        Command spawnItem = new Command("spawnitem", SpawnItem);
+        commands.Add(spawnItem);
+
+        foreach (Command command in commands)
+        {
+            SimulatorConsole.RegisterCommand(command);
+        }
     }
 
     private void OnDisable()
@@ -48,5 +57,10 @@ public class CommandRegisterer : MonoBehaviour
 
         rover.linearSpeed = linearSpeed;
         rover.angularSpeed = angularSpeed;
+    }
+
+    private void SpawnItem(string[] args)
+    {
+        spawnPoint.DropItem();
     }
 }
