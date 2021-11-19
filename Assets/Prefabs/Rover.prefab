@@ -110,15 +110,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8d0d374843382444984ee02b96ffd54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  linearSpeed: 12
-  angularSpeed: 4
+  linearSpeed: 15
+  angularSpeed: 15
   armBaseSpeed: 50
   shoulderSpeed: 50
   elbowSpeed: 50
+  centerOfMass: {x: 0, y: 0.25, z: -0.25}
   webcamFPS: 30
   webcamVideoWidth: 750
   webcamVideoHeight: 500
-  centerOfMass: {x: 0, y: 0.25, z: -0.25}
   frontLeftWheel: {fileID: 3839302444312865605}
   frontRightWheel: {fileID: 2953348284045469186}
   rearLeftWheel: {fileID: 4607163949034448654}

@@ -123,11 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!20 &11092799 stripped
-Camera:
-  m_CorrespondingSourceObject: {fileID: 7915994943220000904, guid: 98ff0860011a26244ac7003c5e0e1b59, type: 3}
-  m_PrefabInstance: {fileID: 1338021928}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &43209524
 GameObject:
   m_ObjectHideFlags: 0
@@ -402,7 +397,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rover: {fileID: 133023391}
-  webcam: {fileID: 11092799}
 --- !u!4 &706808519
 Transform:
   m_ObjectHideFlags: 0
@@ -769,12 +763,12 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8112312423978612202, guid: 98ff0860011a26244ac7003c5e0e1b59, type: 3}
-      propertyPath: linearSpeed
-      value: 15
+      propertyPath: armBaseRotMax
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 8112312423978612202, guid: 98ff0860011a26244ac7003c5e0e1b59, type: 3}
-      propertyPath: angularSpeed
-      value: 15
+      propertyPath: armBaseRotMin
+      value: -90
       objectReference: {fileID: 0}
     - target: {fileID: 8112312423978612202, guid: 98ff0860011a26244ac7003c5e0e1b59, type: 3}
       propertyPath: maxArmRotation

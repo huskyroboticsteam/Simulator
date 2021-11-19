@@ -8,15 +8,22 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class Rover : MonoBehaviour
 {
+    [Header("Motor Speeds")]
     public float linearSpeed;
     public float angularSpeed;
     public float armBaseSpeed;
     public float shoulderSpeed;
     public float elbowSpeed;
+
+    [Header("Physics")]
+    public Vector3 centerOfMass;
+
+    [Header("Camera Settings")]
     public float webcamFPS;
     public int webcamVideoWidth;
     public int webcamVideoHeight;
-    public Vector3 centerOfMass;
+
+    [Header("Object References")]
     public WheelCollider frontLeftWheel;
     public WheelCollider frontRightWheel;
     public WheelCollider rearLeftWheel;
