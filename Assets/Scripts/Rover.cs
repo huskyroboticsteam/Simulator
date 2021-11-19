@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 /// <summary>
@@ -12,6 +13,9 @@ public class Rover : MonoBehaviour
     public float armBaseSpeed;
     public float shoulderSpeed;
     public float elbowSpeed;
+    public float webcamFPS;
+    public int webcamVideoWidth;
+    public int webcamVideoHeight;
     public Vector3 centerOfMass;
     public WheelCollider frontLeftWheel;
     public WheelCollider frontRightWheel;
@@ -20,6 +24,7 @@ public class Rover : MonoBehaviour
     public GameObject armBase;
     public GameObject lowerArm;
     public GameObject upperArm;
+    public Camera webcam;
 
     private Rigidbody rb;
     private bool eStopped;
@@ -39,6 +44,7 @@ public class Rover : MonoBehaviour
         armBasePower = 0.0f;
         shoulderPower = 0.0f;
         elbowPower = 0.0f;
+        StartCoroutine(StreamWebcamVideo());
     }
 
     private void FixedUpdate()
@@ -129,5 +135,41 @@ public class Rover : MonoBehaviour
             default:
                 throw new ArgumentException(motor + " is not a valid motor");
         }
+    }
+
+    private IEnumerator StreamWebcamVideo()
+    {
+        while (true)
+        {
+            RenderTexture renderTexture = new RenderTexture(webcamVideoWidth, webcamVideoHeight, 24);
+            RenderTexture.active = renderTexture;
+
+            webcam.targetTexture = renderTexture;
+            webcam.Render();
+
+            Texture2D frame = new Texture2D(webcamVideoWidth, webcamVideoHeight, TextureFormat.RGB24, false);
+            frame.ReadPixels(new Rect(0, 0, webcamVideoWidth, webcamVideoHeight), 0, 0);
+
+            byte[] bytes = frame.EncodeToJPG();
+            WebcamMessage message = new WebcamMessage();
+            message.type = "webcam";
+            message.bytes = Convert.ToBase64String(bytes);
+
+            // Clean up to prevent memory leaks.
+            webcam.targetTexture = null;
+            RenderTexture.active = null;
+            Destroy(renderTexture);
+            Destroy(frame);
+
+            Server.instance.Broadcast("/mission-control", JsonUtility.ToJson(message));
+            yield return new WaitForSeconds(1f / webcamFPS);
+        }
+    }
+
+    [Serializable]
+    private struct WebcamMessage
+    {
+        public string type;
+        public string bytes;
     }
 }
