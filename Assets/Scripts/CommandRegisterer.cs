@@ -1,13 +1,16 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Registers commands with the simulator console.
 /// </summary>
 public class CommandRegisterer : MonoBehaviour
 {
-    public Rover rover;
-    [SerializeField] ItemSpawn spawnPoint;
+    [SerializeField]
+    private Rover rover;
+    [SerializeField]
+    private ItemSpawn spawnPoint;
 
     private List<Command> commands;
 
@@ -20,6 +23,9 @@ public class CommandRegisterer : MonoBehaviour
 
         Command spawnItem = new Command("spawnitem", SpawnItem);
         commands.Add(spawnItem);
+
+        Command reset = new Command("reset", Reset);
+        commands.Add(reset);
 
         foreach (Command command in commands)
         {
@@ -62,5 +68,17 @@ public class CommandRegisterer : MonoBehaviour
     private void SpawnItem(string[] args)
     {
         spawnPoint.DropItem();
+    }
+
+    private void Reset(string[] args)
+    {
+        if (args.Length != 0)
+        {
+            SimulatorConsole.WriteLine("reset takes no arguments");
+            return;
+        }
+        // Note: Unity does not rebake lighting in the editor when loading a
+        // scene this way, but this issue doesn't arise in production builds.
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
