@@ -52,7 +52,7 @@ public class SimulatorConsole : MonoBehaviour
         }
     }
 
-    private void Awake()
+    private void OnEnable()
     {
         focused = false;
         userInput = "";

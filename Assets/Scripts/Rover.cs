@@ -35,9 +35,10 @@ public class Rover : MonoBehaviour
 
     private Rigidbody rb;
     private Server server;
-    private bool eStopped;
-    private float driveforwardBackward;
-    private float driveLeftRight;
+    private SimulatorConsole console;
+    private bool emergencyStopped;
+    private float driveStraight;
+    private float driveSteer;
     private float armBasePower;
     private float shoulderPower;
     private float elbowPower;
@@ -46,18 +47,19 @@ public class Rover : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         server = FindObjectOfType<Server>();
+        console = FindObjectOfType<SimulatorConsole>();
     }
 
     private void Start()
     {
         rb.centerOfMass = centerOfMass;
-        eStopped = false;
-        driveforwardBackward = 0.0f;
-        driveLeftRight = 0.0f;
+        emergencyStopped = false;
+        driveStraight = 0.0f;
+        driveSteer = 0.0f;
         armBasePower = 0.0f;
         shoulderPower = 0.0f;
         elbowPower = 0.0f;
-        StartCoroutine(StreamWebcamVideo());
+        StartCoroutine(StreamVideo());
     }
 
     private void FixedUpdate()
@@ -65,11 +67,11 @@ public class Rover : MonoBehaviour
         // Keep the rover grounded.
         rb.AddForce(transform.up * -5f);
 
-        float leftDriveTorque = -driveforwardBackward * linearSpeed + driveLeftRight * angularSpeed;
+        float leftDriveTorque = -driveStraight * linearSpeed - driveSteer * angularSpeed;
         frontLeftWheel.motorTorque = leftDriveTorque;
         rearLeftWheel.motorTorque = leftDriveTorque;
 
-        float rightDriveTorque = -driveforwardBackward * linearSpeed - driveLeftRight * angularSpeed;
+        float rightDriveTorque = -driveStraight * linearSpeed + driveSteer * angularSpeed;
         frontRightWheel.motorTorque = rightDriveTorque;
         rearRightWheel.motorTorque = rightDriveTorque;
 
@@ -83,48 +85,48 @@ public class Rover : MonoBehaviour
     /// </summary>
     /// <param name="forwardBackward">The linear velocity [-1.0, 1.0]. Positive values correspond to forward motion. Negative values correspond to backward motion.</param>
     /// <param name="leftRight">The rotational velocity [-1.0, 1.0]. Positive values correspond to counterclockwise rotation. Negative values correspond to clockwise rotation.</param>
-    public void SetVelocity(float forwardBackward, float leftRight)
+    public void SetVelocity(float straight, float steer)
     {
-        if (eStopped)
+        if (emergencyStopped)
         {
             return;
         }
-        driveforwardBackward = forwardBackward;
-        driveLeftRight = leftRight;
+        driveStraight = straight;
+        driveSteer = steer;
     }
 
-    public void EStop(bool release)
+    public void setEmergencyStopped(bool stopped)
     {
-        bool redundant = eStopped != release;
+        bool redundant = emergencyStopped == stopped;
         if (redundant)
         {
             return;
         }
-        eStopped = !release;
-        if (eStopped)
+        emergencyStopped = stopped;
+        if (emergencyStopped)
         {
-            Debug.Log("E-stop engaged");
-            driveforwardBackward = 0.0f;
-            driveLeftRight = 0.0f;
+            console.WriteLine("Emergency stop engaged");
+            driveStraight = 0.0f;
+            driveSteer = 0.0f;
             armBasePower = 0.0f;
             shoulderPower = 0.0f;
             elbowPower = 0.0f;
         }
         else
         {
-            Debug.Log("E-stop disengaged");
+            console.WriteLine("Emergency stop disengaged");
         }
     }
 
     public void SetMotorPower(string motor, float power)
     {
-        if (eStopped)
+        if (emergencyStopped)
         {
             return;
         }
         switch (motor)
         {
-            case "arm_base":
+            case "armBase":
                 armBasePower = power;
                 break;
             case "shoulder":
@@ -133,24 +135,12 @@ public class Rover : MonoBehaviour
             case "elbow":
                 elbowPower = power;
                 break;
-            case "forearm":
-                Debug.LogError("Forearm not supported yet");
-                break;
-            case "diffleft":
-                Debug.LogError("Diffleft not supported yet");
-                break;
-            case "diffright":
-                Debug.LogError("Diffright not supported yet");
-                break;
-            case "hand":
-                Debug.LogError("Hand not supported yet");
-                break;
             default:
                 throw new ArgumentException(motor + " is not a valid motor");
         }
     }
 
-    private IEnumerator StreamWebcamVideo()
+    private IEnumerator StreamVideo()
     {
         while (true)
         {
@@ -164,9 +154,9 @@ public class Rover : MonoBehaviour
             frame.ReadPixels(new Rect(0, 0, webcamVideoWidth, webcamVideoHeight), 0, 0);
 
             byte[] bytes = frame.EncodeToJPG();
-            WebcamMessage message = new WebcamMessage();
-            message.type = "webcam";
-            message.bytes = Convert.ToBase64String(bytes);
+            CameraStreamFrameMessage message = new CameraStreamFrameMessage();
+            message.cameraName = "front";
+            message.data = Convert.ToBase64String(bytes);
 
             // Clean up to prevent memory leaks.
             webcam.targetTexture = null;
@@ -177,12 +167,5 @@ public class Rover : MonoBehaviour
             server.Broadcast("/mission-control", JsonUtility.ToJson(message));
             yield return new WaitForSeconds(1f / webcamFPS);
         }
-    }
-
-    [Serializable]
-    private struct WebcamMessage
-    {
-        public string type;
-        public string bytes;
     }
 }

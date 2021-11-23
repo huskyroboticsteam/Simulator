@@ -88,21 +88,20 @@ public class Server : MonoBehaviour
         int typeStartIndex = message.IndexOf("type") + 7;
         int typeEndIndex = message.Substring(typeStartIndex).IndexOf("\"");
         string type = message.Substring(typeStartIndex, typeEndIndex);
+        dynamic deserializedMessage = JsonUtility.FromJson<dynamic>(message);
         switch (type)
         {
             case "drive":
-                DriveCommand driveCommand = JsonUtility.FromJson<DriveCommand>(message);
-                rover.SetVelocity(driveCommand.forward_backward, driveCommand.left_right);
+                DriveMessage driveMessage = JsonUtility.FromJson<DriveMessage>(message);
+                rover.SetVelocity(driveMessage.straight, driveMessage.steer);
                 break;
-            case "estop":
-                EStopCommand eStopCommand = JsonUtility.FromJson<EStopCommand>(message);
-                rover.EStop(eStopCommand.release);
+            case "emergencyStop":
+                EmergencyStopMessage emergencyStopMessage = JsonUtility.FromJson<EmergencyStopMessage>(message);
+                rover.setEmergencyStopped(emergencyStopMessage.stop);
                 break;
             case "motor":
-                // Need to convert key name to a valid field name
-                message = message.Replace("PWM target", "PWM_target");
-                MotorCommand motorCommand = JsonUtility.FromJson<MotorCommand>(message);
-                rover.SetMotorPower(motorCommand.motor, motorCommand.PWM_target);
+                MotorPowerMessage motorPowerMessage = JsonUtility.FromJson<MotorPowerMessage>(message);
+                rover.SetMotorPower(motorPowerMessage.motor, motorPowerMessage.power);
                 break;
             default:
                 Debug.LogError("Unknown command: " + message);
@@ -144,29 +143,5 @@ public class Server : MonoBehaviour
 
         public string PathTo { get; }
         public string Message { get; }
-    }
-
-    [Serializable]
-    private struct DriveCommand
-    {
-        public string type;
-        public float forward_backward;
-        public float left_right;
-    }
-
-    [Serializable]
-    private struct MotorCommand
-    {
-        public string type;
-        public string motor;
-        public string mode;
-        public float PWM_target;
-    }
-
-    [Serializable]
-    private struct EStopCommand
-    {
-        public string type;
-        public bool release;
     }
 }

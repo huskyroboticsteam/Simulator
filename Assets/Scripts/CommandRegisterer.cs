@@ -11,22 +11,23 @@ public class CommandRegisterer : MonoBehaviour
     private ItemSpawn spawnPoint;
 
     private SimulatorConsole console;
-    private List<Command> commands;
     private Rover rover;
+    private List<Command> commands;
 
     private void Awake()
     {
         console = FindObjectOfType<SimulatorConsole>();
-        commands = new List<Command>() {
-            new Command("setspeed", SetSpeed),
-            new Command("spawnitem", SpawnItem),
-            new Command("reset", Reset)
-        };
         rover = FindObjectOfType<Rover>();
     }
 
     private void OnEnable()
     {
+        commands = new List<Command>() {
+            new Command("setspeed", SetSpeed),
+            new Command("spawnitem", SpawnItem),
+            new Command("reset", Reset)
+        };
+
         foreach (Command command in commands)
         {
             console.RegisterCommand(command);
