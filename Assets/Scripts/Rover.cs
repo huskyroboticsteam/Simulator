@@ -34,6 +34,7 @@ public class Rover : MonoBehaviour
     public Camera webcam;
 
     private Rigidbody rb;
+    private Server server;
     private bool eStopped;
     private float driveforwardBackward;
     private float driveLeftRight;
@@ -41,9 +42,14 @@ public class Rover : MonoBehaviour
     private float shoulderPower;
     private float elbowPower;
 
-    private void Start()
+    private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        server = FindObjectOfType<Server>();
+    }
+
+    private void Start()
+    {
         rb.centerOfMass = centerOfMass;
         eStopped = false;
         driveforwardBackward = 0.0f;
@@ -168,7 +174,7 @@ public class Rover : MonoBehaviour
             Destroy(renderTexture);
             Destroy(frame);
 
-            Server.instance.Broadcast("/mission-control", JsonUtility.ToJson(message));
+            server.Broadcast("/mission-control", JsonUtility.ToJson(message));
             yield return new WaitForSeconds(1f / webcamFPS);
         }
     }

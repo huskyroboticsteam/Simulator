@@ -5,7 +5,12 @@ using UnityEngine;
 /// </summary>
 public class RoverController : MonoBehaviour
 {
-    public Rover rover;
+    private Rover rover;
+
+    private void Awake()
+    {
+        rover = FindObjectOfType<Rover>();
+    }
 
     private void Update()
     {

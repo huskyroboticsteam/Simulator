@@ -10,25 +10,33 @@ using WebSocketSharp.Server;
 /// </summary>
 public class Server : MonoBehaviour
 {
-    public static Server instance;
     /// <summary>
-    /// This thread-safe queue stores commands made by the Mission Control
-    /// client. Commands are added to this queue in a WebSocketBehavior thread
-    /// so they can later be processed in the Unity main thread because Unity
-    /// API calls are not thread-safe.
+    /// This thread-safe queue stores messages sent by the Mission Control
+    /// client. Messages are added to this queue in a WebSocketBehavior thread
+    /// so they can later be processed in the Unity thread because Unity API
+    /// calls are not thread-safe.
     /// </summary>
-    private static ConcurrentQueue<string> incomingCommands = new ConcurrentQueue<string>();
-    private static ConcurrentQueue<ServerMessage> outgoingMessages = new ConcurrentQueue<ServerMessage>();
-
-    public Rover rover;
+    private ConcurrentQueue<string> incomingMessages = new ConcurrentQueue<string>();
+    /// <summary>
+    /// This thread-safe queue stores messages to be sent to the Mission
+    /// Control client. Messages are added to this queue in the Unity thread so
+    /// they can later be sent in the WebSocket server thread because sending
+    /// messages in the Unity thread reduces performance.
+    /// </summary>
+    private ConcurrentQueue<ServerMessage> outgoingMessages = new ConcurrentQueue<ServerMessage>();
 
     private WebSocketServer server;
+    private Rover rover;
+
+    private void Awake()
+    {
+        rover = FindObjectOfType<Rover>();
+    }
 
     private void OnEnable()
     {
         Thread serverThread = new Thread(RunServer);
         serverThread.Start();
-        instance = this;
     }
 
     /// <summary>
@@ -37,13 +45,13 @@ public class Server : MonoBehaviour
     private void RunServer()
     {
         server = new WebSocketServer("ws://localhost:3001");
-        server.AddWebSocketService<MissionControlService>("/mission-control");
+        server.AddWebSocketService<MissionControlService>("/mission-control", service => service.Initialize(incomingMessages));
         server.KeepClean = false;
         server.Start();
 
         while (server.IsListening)
         {
-            if (outgoingMessages.TryDequeue(out ServerMessage message))
+            while (outgoingMessages.TryDequeue(out ServerMessage message))
             {
                 server.WebSocketServices[message.PathTo].Sessions.Broadcast(message.Message);
             }
@@ -60,47 +68,44 @@ public class Server : MonoBehaviour
     /// </summary>
     private void StopServer()
     {
-        instance = null;
         server.Stop();
     }
 
     private void Update()
     {
-        // Process commands enqueued form the WebSocketBehavior thread.
-        while (!incomingCommands.IsEmpty)
+        // Process messages enqueued from the WebSocketBehavior thread.
+        while (incomingMessages.TryDequeue(out string message))
         {
-            string command;
-            incomingCommands.TryDequeue(out command);
-            ProcessCommand(command);
+            ProcessMessage(message);
         }
     }
 
     /// <summary>
-    /// Processes the given JSON command received from Mission Control.
+    /// Processes the given JSON message received from Mission Control.
     /// </summary>
-    private void ProcessCommand(string command)
+    private void ProcessMessage(string message)
     {
-        int typeStartIndex = command.IndexOf("type") + 7;
-        int typeEndIndex = command.Substring(typeStartIndex).IndexOf("\"");
-        string type = command.Substring(typeStartIndex, typeEndIndex);
+        int typeStartIndex = message.IndexOf("type") + 7;
+        int typeEndIndex = message.Substring(typeStartIndex).IndexOf("\"");
+        string type = message.Substring(typeStartIndex, typeEndIndex);
         switch (type)
         {
             case "drive":
-                DriveCommand driveCommand = JsonUtility.FromJson<DriveCommand>(command);
+                DriveCommand driveCommand = JsonUtility.FromJson<DriveCommand>(message);
                 rover.SetVelocity(driveCommand.forward_backward, driveCommand.left_right);
                 break;
             case "estop":
-                EStopCommand eStopCommand = JsonUtility.FromJson<EStopCommand>(command);
+                EStopCommand eStopCommand = JsonUtility.FromJson<EStopCommand>(message);
                 rover.EStop(eStopCommand.release);
                 break;
             case "motor":
                 // Need to convert key name to a valid field name
-                command = command.Replace("PWM target", "PWM_target");
-                MotorCommand motorCommand = JsonUtility.FromJson<MotorCommand>(command);
+                message = message.Replace("PWM target", "PWM_target");
+                MotorCommand motorCommand = JsonUtility.FromJson<MotorCommand>(message);
                 rover.SetMotorPower(motorCommand.motor, motorCommand.PWM_target);
                 break;
             default:
-                Debug.LogError("Unknown command: " + command);
+                Debug.LogError("Unknown command: " + message);
                 break;
         }
     }
@@ -116,6 +121,13 @@ public class Server : MonoBehaviour
     /// </summary>
     private class MissionControlService : WebSocketBehavior
     {
+        private ConcurrentQueue<string> incomingCommands;
+
+        public void Initialize(ConcurrentQueue<string> incomingCommandsRef)
+        {
+            incomingCommands = incomingCommandsRef;
+        }
+
         protected override void OnMessage(MessageEventArgs e)
         {
             incomingCommands.Enqueue(e.Data);

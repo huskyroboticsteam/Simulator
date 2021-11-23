@@ -8,28 +8,28 @@ using UnityEngine.SceneManagement;
 public class CommandRegisterer : MonoBehaviour
 {
     [SerializeField]
-    private Rover rover;
-    [SerializeField]
     private ItemSpawn spawnPoint;
 
+    private SimulatorConsole console;
     private List<Command> commands;
+    private Rover rover;
+
+    private void Awake()
+    {
+        console = FindObjectOfType<SimulatorConsole>();
+        commands = new List<Command>() {
+            new Command("setspeed", SetSpeed),
+            new Command("spawnitem", SpawnItem),
+            new Command("reset", Reset)
+        };
+        rover = FindObjectOfType<Rover>();
+    }
 
     private void OnEnable()
     {
-        commands = new List<Command>();
-
-        Command setSpeed = new Command("setspeed", SetSpeed);
-        commands.Add(setSpeed);
-
-        Command spawnItem = new Command("spawnitem", SpawnItem);
-        commands.Add(spawnItem);
-
-        Command reset = new Command("reset", Reset);
-        commands.Add(reset);
-
         foreach (Command command in commands)
         {
-            SimulatorConsole.RegisterCommand(command);
+            console.RegisterCommand(command);
         }
     }
 
@@ -37,7 +37,7 @@ public class CommandRegisterer : MonoBehaviour
     {
         foreach (Command command in commands)
         {
-            SimulatorConsole.UnregisterCommand(command);
+            console.UnregisterCommand(command);
         }
     }
 
@@ -45,20 +45,20 @@ public class CommandRegisterer : MonoBehaviour
     {
         if (args.Length != 2)
         {
-            SimulatorConsole.WriteLine("Usage: setspeed [linearSpeed] [angularSpeed]");
+            console.WriteLine("Usage: setspeed [linearSpeed] [angularSpeed]");
             return;
         }
 
         float linearSpeed;
         if (!float.TryParse(args[0], out linearSpeed))
         {
-            SimulatorConsole.WriteLine("Not a valid float: " + args[0]);
+            console.WriteLine("Not a valid float: " + args[0]);
         }
 
         float angularSpeed;
         if (!float.TryParse(args[1], out angularSpeed))
         {
-            SimulatorConsole.WriteLine("Not a valid float: " + args[1]);
+            console.WriteLine("Not a valid float: " + args[1]);
         }
 
         rover.linearSpeed = linearSpeed;
@@ -74,7 +74,7 @@ public class CommandRegisterer : MonoBehaviour
     {
         if (args.Length != 0)
         {
-            SimulatorConsole.WriteLine("reset takes no arguments");
+            console.WriteLine("reset takes no arguments");
             return;
         }
         // Note: Unity does not rebake lighting in the editor when loading a

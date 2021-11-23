@@ -10,21 +10,20 @@ public class SimulatorConsole : MonoBehaviour
 {
     private const int MaxDisplayedMessages = 8;
 
-    private static SimulatorConsole instance;
-    private static Dictionary<string, Command> commands =
+    [SerializeField]
+    private Font font;
+
+    private Dictionary<string, Command> commands =
         new Dictionary<string, Command>();
-
-    public Font font;
-
-    private bool focused;
-    private string input;
     private List<ConsoleMessage> output;
+    private bool focused;
+    private string userInput;
 
     /// <summary>
     /// Registers the commmand with the console, so that it can be invoked by
     /// typing the command's name into the simulator console's input field.
     /// </summary>
-    public static void RegisterCommand(Command command)
+    public void RegisterCommand(Command command)
     {
         commands[command.Name] = command;
     }
@@ -32,7 +31,7 @@ public class SimulatorConsole : MonoBehaviour
     /// <summary>
     /// Unregisters the command with the simulator console.
     /// </summary>
-    public static void UnregisterCommand(Command command)
+    public void UnregisterCommand(Command command)
     {
         commands.Remove(command.Name);
     }
@@ -40,35 +39,24 @@ public class SimulatorConsole : MonoBehaviour
     /// <summary>
     /// Prints the given string to the simulator console.
     /// </summary>
-    public static void WriteLine(string value)
+    public void WriteLine(string value)
     {
-        if (instance == null)
-        {
-            throw new InvalidOperationException("No console available");
-        }
-
         // Append the message to the output text.
         ConsoleMessage message = new ConsoleMessage(value, Time.time + 5f);
-        instance.output.Add(message);
+        output.Add(message);
 
         // Prevent overflow.
-        if (instance.output.Count > 8)
+        if (output.Count > 8)
         {
-            instance.output.RemoveAt(0);
+            output.RemoveAt(0);
         }
     }
 
-    private void OnEnable()
+    private void Awake()
     {
-        instance = this;
         focused = false;
-        input = "";
+        userInput = "";
         output = new List<ConsoleMessage>();
-    }
-
-    private void OnDisable()
-    {
-        instance = null;
     }
 
     private void Update()
@@ -85,16 +73,16 @@ public class SimulatorConsole : MonoBehaviour
         // Check if the user wants to escape the console.
         if (Event.current.keyCode == KeyCode.Escape)
         {
-            input = "";
+            userInput = "";
             focused = false;
         }
 
         // Check if the user wants to execute the currently-inputted command.
-        if (Event.current.keyCode == KeyCode.Return && input != "")
+        if (Event.current.keyCode == KeyCode.Return && userInput != "")
         {
             ExecuteCommand();
             // Reset input text field.
-            input = "";
+            userInput = "";
             // Unfocus the console.
             focused = false;
         }
@@ -175,7 +163,7 @@ public class SimulatorConsole : MonoBehaviour
             Rect inputPosition = new Rect(10, 170, Screen.width - 20, 20);
             GUI.color = Color.white;
             GUI.SetNextControlName("ConsoleInput");
-            input = GUI.TextField(inputPosition, input);
+            userInput = GUI.TextField(inputPosition, userInput);
             GUI.FocusControl("ConsoleInput");
         }
     }
@@ -186,7 +174,7 @@ public class SimulatorConsole : MonoBehaviour
     private void ExecuteCommand()
     {
         // Tokenize input.
-        string[] tokens = input.Split(' ');
+        string[] tokens = userInput.Split(' ');
 
         // Ensure command exists.
         string commandName = tokens[0];

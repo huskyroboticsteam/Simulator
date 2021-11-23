@@ -14,8 +14,8 @@ public class Command
         OnExecute = onExecute;
     }
 
-    public string Name { get; private set; }
-    private Action<string[]> OnExecute { get; set; }
+    public string Name { get; }
+    private Action<string[]> OnExecute { get; }
 
     /// <summary>
     /// Invoked by the simulator console when this command is executed.
