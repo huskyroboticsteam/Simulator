@@ -8,78 +8,51 @@ using UnityEngine.SceneManagement;
 public class CommandRegisterer : MonoBehaviour
 {
     [SerializeField]
-    private ItemSpawn spawnPoint;
-
-    private SimulatorConsole console;
-    private Rover rover;
-    private List<Command> commands;
+    private ItemSpawn _spawnPoint;
+    private SimulatorConsole _console;
+    private List<Command> _commands;
 
     private void Awake()
     {
-        console = FindObjectOfType<SimulatorConsole>();
-        rover = FindObjectOfType<Rover>();
+        _console = FindObjectOfType<SimulatorConsole>();
     }
 
     private void OnEnable()
     {
-        commands = new List<Command>() {
-            new Command("setspeed", SetSpeed),
+        _commands = new List<Command>() {
             new Command("spawnitem", SpawnItem),
             new Command("reset", Reset)
         };
 
-        foreach (Command command in commands)
+        foreach (Command command in _commands)
         {
-            console.RegisterCommand(command);
+            _console.RegisterCommand(command);
         }
     }
 
     private void OnDisable()
     {
-        foreach (Command command in commands)
+        foreach (Command command in _commands)
         {
-            console.UnregisterCommand(command);
+            _console.UnregisterCommand(command);
         }
-    }
-
-    private void SetSpeed(string[] args)
-    {
-        if (args.Length != 2)
-        {
-            console.WriteLine("Usage: setspeed [linearSpeed] [angularSpeed]");
-            return;
-        }
-
-        float linearSpeed;
-        if (!float.TryParse(args[0], out linearSpeed))
-        {
-            console.WriteLine("Not a valid float: " + args[0]);
-        }
-
-        float angularSpeed;
-        if (!float.TryParse(args[1], out angularSpeed))
-        {
-            console.WriteLine("Not a valid float: " + args[1]);
-        }
-
-        rover.linearSpeed = linearSpeed;
-        rover.angularSpeed = angularSpeed;
     }
 
     private void SpawnItem(string[] args)
     {
-        spawnPoint.DropItem();
+        _spawnPoint.DropItem();
     }
 
+    /// <summary>
+    /// Resets the simulator by reloading the current scene.
+    /// </summary>
     private void Reset(string[] args)
     {
         if (args.Length != 0)
         {
-            console.WriteLine("reset takes no arguments");
+            _console.WriteLine("reset takes no arguments");
             return;
         }
-        // Note: Unity does not rebake lighting in the editor when loading a
-        // scene this way, but this issue doesn't arise in production builds.
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

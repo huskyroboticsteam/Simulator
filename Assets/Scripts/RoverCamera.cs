@@ -1,21 +1,110 @@
-﻿using UnityEngine;
+using System;
+using System.Collections;
+using UnityEngine;
+using Newtonsoft.Json.Linq;
 
 /// <summary>
-/// Component that makes a camera follow the rover.
+/// A camera on the rover which may stream to the rover server.
 /// </summary>
+[RequireComponent(typeof(Camera))]
 public class RoverCamera : MonoBehaviour
 {
-    public GameObject rover;
+    [SerializeField]
+    private string _cameraName;
+    private bool _isStreaming;
+    private Camera _camera;
+    private SimulatorSocket _socket;
 
-    private Vector3 offset;
-
-    private void Start()
+    /// <summary>
+    /// The name that identifies this camera.
+    /// </summary>
+    public string CameraName
     {
-        offset = transform.position - rover.transform.position;
+        get { return _cameraName; }
     }
 
-    private void Update()
+    /// <summary>
+    /// The frames per second at which this camera streams.
+    /// </summary>
+    public float StreamFps { get; set; }
+
+    /// <summary>
+    /// The width of this camera's stream.
+    /// </summary>
+    public int StreamWidth { get; set; }
+
+    /// <summary>
+    /// The height of this camera's stream.
+    /// </summary>
+    public int StreamHeight { get; set; }
+
+    /// <summary>
+    /// Whether this camera is streaming to the rover server.
+    /// </summary>
+    public bool IsStreaming
     {
-        transform.position = rover.transform.position + offset;
+        get { return _isStreaming; }
+        set
+        {
+            _isStreaming = value;
+            if (_isStreaming)
+            {
+                StartCoroutine(Stream());
+            }
+            else
+            {
+                StopAllCoroutines();
+            }
+        }
+    }
+
+    private void Awake()
+    {
+        _camera = GetComponent<Camera>();
+        _socket = FindObjectOfType<SimulatorSocket>();
+    }
+
+    private void OnEnable()
+    {
+        if (IsStreaming)
+        {
+            StartCoroutine(Stream());
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (IsStreaming)
+        {
+            StopAllCoroutines();
+        }
+    }
+
+    private IEnumerator Stream()
+    {
+        while (true)
+        {
+            RenderTexture renderTexture = new RenderTexture(StreamWidth, StreamHeight, 24);
+            RenderTexture.active = renderTexture;
+
+            _camera.targetTexture = renderTexture;
+            _camera.Render();
+
+            Texture2D frame = new Texture2D(StreamWidth, StreamHeight, TextureFormat.RGB24, false);
+            frame.ReadPixels(new Rect(0, 0, StreamWidth, StreamHeight), 0, 0);
+
+            byte[] bytes = frame.EncodeToJPG();
+            string streamData = Convert.ToBase64String(bytes);
+
+            JObject cameraStreamReport = new JObject()
+            {
+                ["type"] = "cameraStreamReport",
+                ["camera"] = CameraName,
+                ["data"] = streamData
+            };
+            _socket.Send(cameraStreamReport);
+
+            yield return new WaitForSeconds(1 / StreamFps);
+        }
     }
 }

@@ -11,52 +11,52 @@ public class SimulatorConsole : MonoBehaviour
     private const int MaxDisplayedMessages = 8;
 
     [SerializeField]
-    private Font font;
+    private Font _font;
 
-    private Dictionary<string, Command> commands =
-        new Dictionary<string, Command>();
-    private List<ConsoleMessage> output;
-    private bool focused;
-    private string userInput;
+    private IDictionary<string, Command> _commands = new Dictionary<string, Command>();
+    private List<ConsoleMessage> _output;
+    private bool _focused;
+    private string _userInput;
 
     /// <summary>
-    /// Registers the commmand with the console, so that it can be invoked by
-    /// typing the command's name into the simulator console's input field.
+    /// Registers the given commmand with this console, so that it can be
+    /// invoked by typing the command's name into the simulator console's input
+    /// field.
     /// </summary>
     public void RegisterCommand(Command command)
     {
-        commands[command.Name] = command;
+        _commands[command.Name] = command;
     }
 
     /// <summary>
-    /// Unregisters the command with the simulator console.
+    /// Unregisters the given command with this console.
     /// </summary>
     public void UnregisterCommand(Command command)
     {
-        commands.Remove(command.Name);
+        _commands.Remove(command.Name);
     }
 
     /// <summary>
-    /// Prints the given string to the simulator console.
+    /// Prints the given string to this console.
     /// </summary>
     public void WriteLine(string value)
     {
         // Append the message to the output text.
         ConsoleMessage message = new ConsoleMessage(value, Time.time + 5f);
-        output.Add(message);
+        _output.Add(message);
 
         // Prevent overflow.
-        if (output.Count > 8)
+        if (_output.Count > 8)
         {
-            output.RemoveAt(0);
+            _output.RemoveAt(0);
         }
     }
 
     private void OnEnable()
     {
-        focused = false;
-        userInput = "";
-        output = new List<ConsoleMessage>();
+        _focused = false;
+        _userInput = "";
+        _output = new List<ConsoleMessage>();
     }
 
     private void Update()
@@ -64,7 +64,7 @@ public class SimulatorConsole : MonoBehaviour
         // Check if the user wants to use the console.
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            focused = true;
+            _focused = true;
         }
     }
 
@@ -73,22 +73,22 @@ public class SimulatorConsole : MonoBehaviour
         // Check if the user wants to escape the console.
         if (Event.current.keyCode == KeyCode.Escape)
         {
-            userInput = "";
-            focused = false;
+            _userInput = "";
+            _focused = false;
         }
 
         // Check if the user wants to execute the currently-inputted command.
-        if (Event.current.keyCode == KeyCode.Return && userInput != "")
+        if (Event.current.keyCode == KeyCode.Return && _userInput != "")
         {
             ExecuteCommand();
             // Reset input text field.
-            userInput = "";
+            _userInput = "";
             // Unfocus the console.
-            focused = false;
+            _focused = false;
         }
 
         // Render the GUI.
-        GUI.skin.font = font;
+        GUI.skin.font = _font;
         RenderOutput();
         RenderInput();
     }
@@ -98,18 +98,18 @@ public class SimulatorConsole : MonoBehaviour
     /// </summary>
     private void RenderOutput()
     {
-        if (focused)
+        if (_focused)
         {
             Rect outputPosition = new Rect(10, 10, Screen.width - 20, 160);
             string outputText = "";
 
             // Add padding.
-            for (int i = 0; i < MaxDisplayedMessages - output.Count; i++)
+            for (int i = 0; i < MaxDisplayedMessages - _output.Count; i++)
             {
                 outputText += '\n';
             }
 
-            foreach (ConsoleMessage message in output)
+            foreach (ConsoleMessage message in _output)
             {
                 outputText += message.text + '\n';
             }
@@ -125,7 +125,7 @@ public class SimulatorConsole : MonoBehaviour
 
             // Only draw unfaded messages.
             List<ConsoleMessage> unfadedMessages = new List<ConsoleMessage>();
-            foreach (ConsoleMessage message in output)
+            foreach (ConsoleMessage message in _output)
             {
                 if (!message.HasFaded())
                 {
@@ -158,12 +158,12 @@ public class SimulatorConsole : MonoBehaviour
     /// </summary>
     private void RenderInput()
     {
-        if (focused)
+        if (_focused)
         {
             Rect inputPosition = new Rect(10, 170, Screen.width - 20, 20);
             GUI.color = Color.white;
             GUI.SetNextControlName("ConsoleInput");
-            userInput = GUI.TextField(inputPosition, userInput);
+            _userInput = GUI.TextField(inputPosition, _userInput);
             GUI.FocusControl("ConsoleInput");
         }
     }
@@ -174,11 +174,11 @@ public class SimulatorConsole : MonoBehaviour
     private void ExecuteCommand()
     {
         // Tokenize input.
-        string[] tokens = userInput.Split(' ');
+        string[] tokens = _userInput.Split(' ');
 
         // Ensure command exists.
         string commandName = tokens[0];
-        if (!commands.ContainsKey(commandName))
+        if (!_commands.ContainsKey(commandName))
         {
             WriteLine("No such command: " + commandName);
             return;
@@ -189,7 +189,7 @@ public class SimulatorConsole : MonoBehaviour
         Array.Copy(tokens, 1, args, 0, tokens.Length - 1);
 
         // Execute command.
-        Command command = commands[commandName];
+        Command command = _commands[commandName];
         command.Execute(args);
     }
 

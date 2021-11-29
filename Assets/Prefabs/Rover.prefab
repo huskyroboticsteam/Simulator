@@ -110,23 +110,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8d0d374843382444984ee02b96ffd54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  linearSpeed: 15
-  angularSpeed: 15
-  armBaseSpeed: 50
-  shoulderSpeed: 50
-  elbowSpeed: 50
-  centerOfMass: {x: 0, y: 0.25, z: -0.25}
-  webcamFPS: 30
-  webcamVideoWidth: 750
-  webcamVideoHeight: 500
-  frontLeftWheel: {fileID: 3839302444312865605}
-  frontRightWheel: {fileID: 2953348284045469186}
-  rearLeftWheel: {fileID: 4607163949034448654}
-  rearRightWheel: {fileID: 7805105798211256234}
-  armBase: {fileID: 674935375923068147}
-  lowerArm: {fileID: 2453800126063614844}
-  upperArm: {fileID: 5104322098144024024}
-  webcam: {fileID: 7915994943220000904}
 --- !u!1 &3644462002569656953
 GameObject:
   m_ObjectHideFlags: 0
@@ -259,8 +242,10 @@ GameObject:
   m_Component:
   - component: {fileID: 5194603167029174570}
   - component: {fileID: 7915994943220000904}
+  - component: {fileID: 2847730740321644805}
+  - component: {fileID: 7035796974874598999}
   m_Layer: 0
-  m_Name: Webcam
+  m_Name: Front Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -323,6 +308,28 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!45 &2847730740321644805
+Skybox:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8820217337209607296}
+  m_Enabled: 1
+  m_CustomSkybox: {fileID: 2100000, guid: 67b542931ed30f940af0e7ade58f9057, type: 2}
+--- !u!114 &7035796974874598999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8820217337209607296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c82dca69731416449ee97f7492e49c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cameraName: front
 --- !u!1001 &188009216468948488
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -438,7 +445,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: fcc743e85e667cb4182a0d5226df2cdb, type: 3}
       propertyPath: m_Name
-      value: ArmBase
+      value: Arm Base
       objectReference: {fileID: 0}
     - target: {fileID: 1151388028547126963, guid: fcc743e85e667cb4182a0d5226df2cdb, type: 3}
       propertyPath: m_LocalPosition.y
@@ -446,11 +453,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fcc743e85e667cb4182a0d5226df2cdb, type: 3}
---- !u!1 &674935375923068147 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: fcc743e85e667cb4182a0d5226df2cdb, type: 3}
-  m_PrefabInstance: {fileID: 404395943823147426}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &150319227978212937 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: fcc743e85e667cb4182a0d5226df2cdb, type: 3}
@@ -513,14 +515,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c614262f174e91744b31e3dfeb420e84, type: 3}
---- !u!1 &3156150260265190859 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: c614262f174e91744b31e3dfeb420e84, type: 3}
-  m_PrefabInstance: {fileID: 2814059417498040474}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2343900800497835889 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: c614262f174e91744b31e3dfeb420e84, type: 3}
+  m_PrefabInstance: {fileID: 2814059417498040474}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3156150260265190859 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: c614262f174e91744b31e3dfeb420e84, type: 3}
   m_PrefabInstance: {fileID: 2814059417498040474}
   m_PrefabAsset: {fileID: 0}
 --- !u!146 &3839302444312865605
@@ -553,6 +555,20 @@ WheelCollider:
     m_AsymptoteValue: 1
     m_Stiffness: 1
   m_Enabled: 1
+--- !u!114 &7217846920462043943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3156150260265190859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74fc13afe9c7ac046a291ce30cd68c3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _motorName: driveFrontLeft
+  _strength: 15
 --- !u!1001 &3372298813579044397
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -614,11 +630,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e58cbd7e638329d4fa8732e61aaa1fdb, type: 3}
---- !u!1 &2453800126063614844 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: e58cbd7e638329d4fa8732e61aaa1fdb, type: 3}
-  m_PrefabInstance: {fileID: 3372298813579044397}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2974195008349192646 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e58cbd7e638329d4fa8732e61aaa1fdb, type: 3}
@@ -721,6 +732,20 @@ WheelCollider:
     m_AsymptoteValue: 1
     m_Stiffness: 1
   m_Enabled: 1
+--- !u!114 &3499037686028010327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3599165555334547827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74fc13afe9c7ac046a291ce30cd68c3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _motorName: driveFrontRight
+  _strength: 15
 --- !u!1001 &5316469590114577629
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -778,14 +803,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c614262f174e91744b31e3dfeb420e84, type: 3}
---- !u!1 &4973818132784157068 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: c614262f174e91744b31e3dfeb420e84, type: 3}
-  m_PrefabInstance: {fileID: 5316469590114577629}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5642268789263256374 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: c614262f174e91744b31e3dfeb420e84, type: 3}
+  m_PrefabInstance: {fileID: 5316469590114577629}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4973818132784157068 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: c614262f174e91744b31e3dfeb420e84, type: 3}
   m_PrefabInstance: {fileID: 5316469590114577629}
   m_PrefabAsset: {fileID: 0}
 --- !u!146 &4607163949034448654
@@ -818,6 +843,20 @@ WheelCollider:
     m_AsymptoteValue: 1
     m_Stiffness: 1
   m_Enabled: 1
+--- !u!114 &2950569151458390408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4973818132784157068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74fc13afe9c7ac046a291ce30cd68c3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _motorName: driveRearLeft
+  _strength: 15
 --- !u!1001 &5338832873883445385
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -878,11 +917,6 @@ PrefabInstance:
 --- !u!4 &5592874025001766754 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e3df2dc990d1b5442ad1378697abfaf4, type: 3}
-  m_PrefabInstance: {fileID: 5338832873883445385}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &5104322098144024024 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: e3df2dc990d1b5442ad1378697abfaf4, type: 3}
   m_PrefabInstance: {fileID: 5338832873883445385}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6399391373452334003
@@ -1004,14 +1038,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c614262f174e91744b31e3dfeb420e84, type: 3}
---- !u!4 &6985237089067729782 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: c614262f174e91744b31e3dfeb420e84, type: 3}
-  m_PrefabInstance: {fileID: 7456330832307381405}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &7762900307099802060 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: c614262f174e91744b31e3dfeb420e84, type: 3}
+  m_PrefabInstance: {fileID: 7456330832307381405}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &6985237089067729782 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: c614262f174e91744b31e3dfeb420e84, type: 3}
   m_PrefabInstance: {fileID: 7456330832307381405}
   m_PrefabAsset: {fileID: 0}
 --- !u!146 &7805105798211256234
@@ -1044,6 +1078,20 @@ WheelCollider:
     m_AsymptoteValue: 1
     m_Stiffness: 1
   m_Enabled: 1
+--- !u!114 &7314407629224911904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7762900307099802060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74fc13afe9c7ac046a291ce30cd68c3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _motorName: driveRearRight
+  _strength: 15
 --- !u!1001 &7557868762426845855
 PrefabInstance:
   m_ObjectHideFlags: 0
