@@ -26,12 +26,9 @@ public static class MessageHandler
     private static void HandleMotorPowerRequest(JObject motorPowerRequest)
     {
         Rover rover = Object.FindObjectOfType<Rover>();
-        if (!rover.EmergencyStopped)
-        {
-            string motorName = (string)motorPowerRequest["motor"];
-            RoverMotor motor = rover.GetMotor(motorName);
-            motor.Power = (float)motorPowerRequest["power"];
-        }
+        string motorName = (string)motorPowerRequest["motor"];
+        RoverMotor motor = rover.GetMotor(motorName);
+        motor.Power = (float)motorPowerRequest["power"];
     }
 
     private static void HandleCameraStreamOpenRequest(JObject cameraStreamOpenRequest)

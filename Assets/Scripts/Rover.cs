@@ -3,38 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Main component of the rover GameObject.
+/// Main component of the rover GameObject that provides an interface for
+/// accessing virtual hardware components.
 /// </summary>
 public class Rover : MonoBehaviour
 {
     private IDictionary<string, RoverMotor> _motors;
     private IDictionary<string, RoverCamera> _cameras;
-    private bool _emergencyStopped;
-    private SimulatorConsole _console;
-
-    /// <summary>
-    /// Whether emergency stop is engaged.
-    /// </summary>
-    public bool EmergencyStopped
-    {
-        get { return _emergencyStopped; }
-        set
-        {
-            _emergencyStopped = value;
-            if (_emergencyStopped)
-            {
-                foreach (RoverMotor motor in _motors.Values)
-                {
-                    motor.Power = 0;
-                }
-                _console.WriteLine("Emergency stop engaged.");
-            }
-            else
-            {
-                _console.WriteLine("Emergency stop disengaged.");
-            }
-        }
-    }
 
     /// <summary>
     /// Returns the motor on this rover with the specified name.
@@ -60,11 +35,6 @@ public class Rover : MonoBehaviour
         throw new ArgumentException("No such camera " + camera + ".");
     }
 
-    private void Awake()
-    {
-        _console = FindObjectOfType<SimulatorConsole>();
-    }
-
     private void OnEnable()
     {
         _motors = new Dictionary<string, RoverMotor>();
@@ -78,7 +48,5 @@ public class Rover : MonoBehaviour
         {
             _cameras[camera.CameraName] = camera;
         }
-
-        _emergencyStopped = false;
     }
 }
