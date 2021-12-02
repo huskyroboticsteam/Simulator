@@ -14,7 +14,7 @@ public class SimulatorConsole : MonoBehaviour
     private Font _font;
 
     private IDictionary<string, Command> _commands = new Dictionary<string, Command>();
-    private List<ConsoleMessage> _output;
+    private IList<ConsoleMessage> _output;
     private bool _focused;
     private string _userInput;
 

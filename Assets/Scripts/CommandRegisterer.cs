@@ -10,7 +10,7 @@ public class CommandRegisterer : MonoBehaviour
     [SerializeField]
     private ItemSpawn _spawnPoint;
     private SimulatorConsole _console;
-    private List<Command> _commands;
+    private IList<Command> _commands;
 
     private void Awake()
     {
