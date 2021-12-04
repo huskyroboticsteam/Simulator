@@ -100,6 +100,10 @@ public class SimulatorSocket : MonoBehaviour
     /// </summary>
     public void Send(JObject message)
     {
-        _outgoingMessages.Enqueue(message);
+        // Can be null during initialization.
+        if (_outgoingMessages != null)
+        {
+            _outgoingMessages.Enqueue(message);
+        }
     }
 }
