@@ -96,6 +96,12 @@ public class RoverCamera : MonoBehaviour
             byte[] bytes = frame.EncodeToJPG();
             string streamData = Convert.ToBase64String(bytes);
 
+            // Clean up to prevent memory leaks.
+            _camera.targetTexture = null;
+            RenderTexture.active = null;
+            Destroy(renderTexture);
+            Destroy(frame);
+
             JObject cameraStreamReport = new JObject()
             {
                 ["type"] = "cameraStreamReport",
