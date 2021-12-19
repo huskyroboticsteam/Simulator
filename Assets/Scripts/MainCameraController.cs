@@ -1,21 +1,21 @@
 ﻿using UnityEngine;
 
 /// <summary>
-/// Component applied to the main camera to make it follow the rover.
+/// Component applied to the main camera to make it follow a target GameObject.
 /// </summary>
 public class MainCameraController : MonoBehaviour
 {
     [SerializeField]
-    private GameObject _rover;
+    private GameObject _target;
     private Vector3 _offset;
 
     private void OnEnable()
     {
-        _offset = transform.position - _rover.transform.position;
+        _offset = transform.position - _target.transform.position;
     }
 
     private void Update()
     {
-        transform.position = _rover.transform.position + _offset;
+        transform.position = _target.transform.position + _offset;
     }
 }
