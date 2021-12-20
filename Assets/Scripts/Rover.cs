@@ -47,7 +47,7 @@ public class Rover : MonoBehaviour
         {
             return camera;
         }
-        throw new ArgumentException("No such camera " + camera + ".");
+        throw new ArgumentException("No such camera " + cameraName + ".");
     }
 
     private void OnEnable()
