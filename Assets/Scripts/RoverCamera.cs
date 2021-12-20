@@ -46,6 +46,10 @@ public class RoverCamera : MonoBehaviour
         get { return _isStreaming; }
         set
         {
+            if (_isStreaming == value)
+            {
+                return;
+            }
             _isStreaming = value;
             if (_isStreaming)
             {

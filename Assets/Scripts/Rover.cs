@@ -11,6 +11,21 @@ public class Rover : MonoBehaviour
     private IDictionary<string, RoverMotor> _motors;
     private IDictionary<string, RoverCamera> _cameras;
 
+    /// A collection containing all of the motors on this rover.
+    /// </summary>
+    public ICollection<RoverMotor> Motors
+    {
+        get { return _motors.Values; }
+    }
+
+    /// <summary>
+    /// A collection containing all of the cameras on this rover.
+    /// </summary>
+    public ICollection<RoverCamera> Cameras
+    {
+        get { return _cameras.Values; }
+    }
+
     /// <summary>
     /// Returns the motor on this rover with the specified name.
     /// </summary>

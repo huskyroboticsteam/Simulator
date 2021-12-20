@@ -26,6 +26,11 @@ public class SimulatorSocket : MonoBehaviour
     private WebSocket _socket;
     private bool _shouldReconnect;
 
+    /// <summary>
+    /// Whether the socket is connected to the rover server.
+    /// </summary>
+    public bool IsConnected { get; private set; }
+
     private void OnEnable()
     {
         _incomingMessages = new ConcurrentQueue<JObject>();
@@ -48,11 +53,6 @@ public class SimulatorSocket : MonoBehaviour
         _shouldReconnect = true;
         Connect();
     }
-
-    /// <summary>
-    /// Whether the socket is connected to the rover server.
-    /// </summary>
-    public bool IsConnected { get; private set; }
 
     /// <summary>
     /// Attempts to connect to the rover server.
