@@ -11,13 +11,13 @@ public static class MessageHandler
         string type = (string)message["type"];
         switch (type)
         {
-            case "motorPowerRequest":
+            case "simMotorPowerRequest":
                 HandleMotorPowerRequest(message);
                 break;
-            case "cameraStreamOpenRequest":
+            case "simCameraStreamOpenRequest":
                 HandleCameraStreamOpenRequest(message);
                 break;
-            case "cameraStreamCloseRequest":
+            case "simCameraStreamCloseRequest":
                 HandleCameraStreamCloseRequest(message);
                 break;
         }

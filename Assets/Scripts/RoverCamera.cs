@@ -108,7 +108,7 @@ public class RoverCamera : MonoBehaviour
 
             JObject cameraStreamReport = new JObject()
             {
-                ["type"] = "cameraStreamReport",
+                ["type"] = "simCameraStreamReport",
                 ["camera"] = CameraName,
                 ["data"] = streamData
             };
