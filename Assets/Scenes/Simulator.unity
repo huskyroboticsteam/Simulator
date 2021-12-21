@@ -293,7 +293,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74fc13afe9c7ac046a291ce30cd68c3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _motorName: driveRearRight
+  _motorName: rearRightWheel
   _strength: -4
 --- !u!64 &398433506
 MeshCollider:
@@ -435,7 +435,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74fc13afe9c7ac046a291ce30cd68c3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _motorName: driveRearLeft
+  _motorName: rearLeftWheel
   _strength: -4
 --- !u!64 &428345333
 MeshCollider:
@@ -1311,7 +1311,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74fc13afe9c7ac046a291ce30cd68c3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _motorName: driveFrontLeft
+  _motorName: frontLeftWheel
   _strength: -4
 --- !u!64 &1665592525
 MeshCollider:
@@ -1997,7 +1997,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74fc13afe9c7ac046a291ce30cd68c3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _motorName: driveFrontRight
+  _motorName: frontRightWheel
   _strength: -4
 --- !u!4 &4231447049125055457
 Transform:
