@@ -3,18 +3,18 @@ using UnityEngine;
 public class RotationalRoverMotor : RoverMotor
 {
     [SerializeField]
-    private Vector3 axis;
+    private Vector3 _axis;
     [SerializeField]
-    private float minAngle;
+    private float _minAngle;
     [SerializeField]
-    private float maxAngle;
+    private float _maxAngle;
 
-    private float currentAngle;
+    private float _currentAngle;
 
     private void FixedUpdate()
     {
-        currentAngle += Strength * Power * Time.fixedDeltaTime;
-        currentAngle = Mathf.Clamp(currentAngle, minAngle, maxAngle);
-        transform.localRotation = Quaternion.AngleAxis(currentAngle, axis);
+        _currentAngle += Strength * Power * Time.fixedDeltaTime;
+        _currentAngle = Mathf.Clamp(_currentAngle, _minAngle, _maxAngle);
+        transform.localRotation = Quaternion.AngleAxis(_currentAngle, _axis);
     }
 }
