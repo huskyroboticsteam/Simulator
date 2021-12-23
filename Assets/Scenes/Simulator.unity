@@ -1791,8 +1791,8 @@ MonoBehaviour:
   _motorName: armBase
   _strength: 50
   _axis: {x: 0, y: 1, z: 0}
-  _minAngle: -60
-  _maxAngle: 60
+  _minAngle: -200
+  _maxAngle: 200
 --- !u!64 &2529387371914505428
 MeshCollider:
   m_ObjectHideFlags: 0
