@@ -294,7 +294,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _motorName: rearRightWheel
-  _strength: -4
+  _hasEncoder: 0
+  _statusReportPeriod: 0.033333335
+  _torqueMultiplier: -4
 --- !u!64 &398433506
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -436,7 +438,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _motorName: rearLeftWheel
-  _strength: -4
+  _hasEncoder: 0
+  _statusReportPeriod: 0.033333335
+  _torqueMultiplier: -4
 --- !u!64 &428345333
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -671,6 +675,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d648ac4ae7751a4280b8e6de15d1d96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rover: {fileID: 8112312425249451458}
 --- !u!4 &706808519
 Transform:
   m_ObjectHideFlags: 0
@@ -732,7 +737,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _motorName: elbow
-  _strength: 50
+  _hasEncoder: 1
+  _statusReportPeriod: 0.033333335
+  _speed: 50
   _axis: {x: 1, y: 0, z: 0}
   _minAngle: -35
   _maxAngle: 150
@@ -1115,7 +1122,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _motorName: shoulder
-  _strength: 50
+  _hasEncoder: 1
+  _statusReportPeriod: 0.033333335
+  _speed: 50
   _axis: {x: 1, y: 0, z: 0}
   _minAngle: -110
   _maxAngle: 40
@@ -1312,7 +1321,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _motorName: frontLeftWheel
-  _strength: -4
+  _hasEncoder: 0
+  _statusReportPeriod: 0.033333335
+  _torqueMultiplier: -4
 --- !u!64 &1665592525
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1789,7 +1800,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _motorName: armBase
-  _strength: 50
+  _hasEncoder: 1
+  _statusReportPeriod: 0.033333335
+  _speed: 50
   _axis: {x: 0, y: 1, z: 0}
   _minAngle: -200
   _maxAngle: 200
@@ -1998,7 +2011,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _motorName: frontRightWheel
-  _strength: -4
+  _hasEncoder: 0
+  _statusReportPeriod: 0.033333335
+  _torqueMultiplier: -4
 --- !u!4 &4231447049125055457
 Transform:
   m_ObjectHideFlags: 0

@@ -13,7 +13,7 @@ public class RoverCamera : MonoBehaviour
     private string _cameraName;
     private bool _isStreaming;
     private Camera _camera;
-    private SimulatorSocket _socket;
+    private RoverSocket _socket;
 
     /// <summary>
     /// The name that identifies this camera.
@@ -65,7 +65,7 @@ public class RoverCamera : MonoBehaviour
     private void Awake()
     {
         _camera = GetComponent<Camera>();
-        _socket = FindObjectOfType<SimulatorSocket>();
+        _socket = FindObjectOfType<RoverSocket>();
     }
 
     private void OnEnable()

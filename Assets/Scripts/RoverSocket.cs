@@ -7,8 +7,11 @@ using Newtonsoft.Json.Linq;
 /// <summary>
 /// Manages connection to the rover WebSocket server.
 /// </summary>
-public class SimulatorSocket : MonoBehaviour
+public class RoverSocket : MonoBehaviour
 {
+    [SerializeField]
+    private Rover _rover;
+
     /// <summary>
     /// This thread-safe queue stores messages sent from the rover server to
     /// the simulator. Messages are added to this queue in the WebSocket thread
@@ -91,7 +94,7 @@ public class SimulatorSocket : MonoBehaviour
         // Process messages enqueued from the WebSocketBehavior thread.
         while (_incomingMessages.TryDequeue(out JObject message))
         {
-            MessageHandler.Handle(message);
+            MessageHandler.Handle(_rover, message);
         }
     }
 

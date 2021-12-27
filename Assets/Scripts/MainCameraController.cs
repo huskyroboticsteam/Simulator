@@ -1,21 +1,21 @@
 ﻿using UnityEngine;
 
 /// <summary>
-/// Component applied to the main camera to make it follow a target GameObject.
+/// Component applied to the main camera to make it follow a target.
 /// </summary>
 public class MainCameraController : MonoBehaviour
 {
     [SerializeField]
-    private GameObject _target;
+    private Transform _target;
     private Vector3 _offset;
 
     private void OnEnable()
     {
-        _offset = transform.position - _target.transform.position;
+        _offset = transform.position - _target.position;
     }
 
     private void Update()
     {
-        transform.position = _target.transform.position + _offset;
+        transform.position = _target.position + _offset;
     }
 }

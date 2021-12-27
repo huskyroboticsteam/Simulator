@@ -1,11 +1,14 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Displays the connection status of the rover.
+/// </summary>
 [RequireComponent(typeof(Text))]
 public class RoverConnectionInfo : MonoBehaviour
 {
     [SerializeField]
-    private SimulatorSocket _socket;
+    private RoverSocket _socket;
 
     private Text _text;
 

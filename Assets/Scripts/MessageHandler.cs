@@ -1,4 +1,3 @@
-using UnityEngine;
 using Newtonsoft.Json.Linq;
 
 /// <summary>
@@ -6,34 +5,55 @@ using Newtonsoft.Json.Linq;
 /// </summary>
 public static class MessageHandler
 {
-    public static void Handle(JObject message)
+    public static void Handle(Rover rover, JObject message)
     {
         string type = (string)message["type"];
         switch (type)
         {
             case "simMotorPowerRequest":
-                HandleMotorPowerRequest(message);
+                HandleMotorPowerRequest(rover, message);
+                break;
+            case "simMotorPositionRequest":
+                HandleMotorPositionRequest(rover, message);
+                break;
+            case "simMotorVelocityRequest":
+                HandleMotorVelocityRequest(rover, message);
                 break;
             case "simCameraStreamOpenRequest":
-                HandleCameraStreamOpenRequest(message);
+                HandleCameraStreamOpenRequest(rover, message);
                 break;
             case "simCameraStreamCloseRequest":
-                HandleCameraStreamCloseRequest(message);
+                HandleCameraStreamCloseRequest(rover, message);
                 break;
         }
     }
 
-    private static void HandleMotorPowerRequest(JObject motorPowerRequest)
+    private static void HandleMotorPowerRequest(Rover rover, JObject motorPowerRequest)
     {
-        Rover rover = Object.FindObjectOfType<Rover>();
         string motorName = (string)motorPowerRequest["motor"];
         RoverMotor motor = rover.GetMotor(motorName);
-        motor.Power = (float)motorPowerRequest["power"];
+        motor.TargetPower = (float)motorPowerRequest["power"];
+        motor.Mode = RoverMotor.RunMode.RunWithPower;
     }
 
-    private static void HandleCameraStreamOpenRequest(JObject cameraStreamOpenRequest)
+    private static void HandleMotorPositionRequest(Rover rover, JObject motorPositionRequest)
     {
-        Rover rover = Object.FindObjectOfType<Rover>();
+        string motorName = (string)motorPositionRequest["motor"];
+        RoverMotor motor = rover.GetMotor(motorName);
+        motor.TargetPosition = (float)motorPositionRequest["position"];
+        motor.Mode = RoverMotor.RunMode.RunToPosition;
+    }
+
+    private static void HandleMotorVelocityRequest(Rover rover, JObject motorVelocityRequest)
+    {
+        string motorName = (string)motorVelocityRequest["motor"];
+        RoverMotor motor = rover.GetMotor(motorName);
+        motor.TargetVelocity = (float)motorVelocityRequest["velocity"];
+        motor.Mode = RoverMotor.RunMode.RunWithVelocity;
+    }
+
+    private static void HandleCameraStreamOpenRequest(Rover rover, JObject cameraStreamOpenRequest)
+    {
         string cameraName = (string)cameraStreamOpenRequest["camera"];
         RoverCamera camera = rover.GetCamera(cameraName);
         camera.StreamFps = (float)cameraStreamOpenRequest["fps"];
@@ -42,9 +62,8 @@ public static class MessageHandler
         camera.IsStreaming = true;
     }
 
-    private static void HandleCameraStreamCloseRequest(JObject cameraStreamCloseRequest)
+    private static void HandleCameraStreamCloseRequest(Rover rover, JObject cameraStreamCloseRequest)
     {
-        Rover rover = Object.FindObjectOfType<Rover>();
         string cameraName = (string)cameraStreamCloseRequest["camera"];
         RoverCamera camera = rover.GetCamera(cameraName);
         camera.IsStreaming = false;
