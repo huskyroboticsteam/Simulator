@@ -294,7 +294,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _motorName: rearRightWheel
-  _hasEncoder: 0
+  _hasEncoder: 1
   _statusReportPeriod: 0.033333335
   _torqueMultiplier: -4
 --- !u!64 &398433506
@@ -438,7 +438,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _motorName: rearLeftWheel
-  _hasEncoder: 0
+  _hasEncoder: 1
   _statusReportPeriod: 0.033333335
   _torqueMultiplier: -4
 --- !u!64 &428345333
@@ -1321,7 +1321,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _motorName: frontLeftWheel
-  _hasEncoder: 0
+  _hasEncoder: 1
   _statusReportPeriod: 0.033333335
   _torqueMultiplier: -4
 --- !u!64 &1665592525
@@ -2011,7 +2011,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _motorName: frontRightWheel
-  _hasEncoder: 0
+  _hasEncoder: 1
   _statusReportPeriod: 0.033333335
   _torqueMultiplier: -4
 --- !u!4 &4231447049125055457
