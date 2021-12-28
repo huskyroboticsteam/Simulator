@@ -167,6 +167,56 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &151057232
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 151057233}
+  - component: {fileID: 151057234}
+  m_Layer: 6
+  m_Name: Lidar Sensor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &151057233
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 151057232}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6876223964561378480}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &151057234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 151057232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47334de10e0723b41b9fb478268edce9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _range: 100
+  _resolution: 100
+  _scanPeriod: 0.033333335
+  _noiseIntensity: 0.1
+  _roverMask:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &398433500
 GameObject:
   m_ObjectHideFlags: 0
@@ -181,7 +231,7 @@ GameObject:
   - component: {fileID: 398433506}
   - component: {fileID: 398433504}
   - component: {fileID: 398433505}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Rear Right Wheel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -325,7 +375,7 @@ GameObject:
   - component: {fileID: 428345333}
   - component: {fileID: 428345331}
   - component: {fileID: 428345332}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Rear Left Wheel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -467,7 +517,7 @@ GameObject:
   - component: {fileID: 474228933}
   - component: {fileID: 474228932}
   - component: {fileID: 474228936}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Left Suspension
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -482,7 +532,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 474228930}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.225, y: 0.25, z: 0}
+  m_LocalPosition: {x: 2.225, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1665592520}
@@ -703,7 +753,7 @@ GameObject:
   - component: {fileID: 932555735}
   - component: {fileID: 932555734}
   - component: {fileID: 932555733}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Upper Arm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -915,7 +965,7 @@ GameObject:
   - component: {fileID: 1141722567}
   - component: {fileID: 1141722569}
   - component: {fileID: 1141722568}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Rear Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1003,7 +1053,7 @@ GameObject:
   - component: {fileID: 1161796998}
   - component: {fileID: 1161797000}
   - component: {fileID: 1161796999}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Front Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1093,7 +1143,7 @@ GameObject:
   - component: {fileID: 1349559458}
   - component: {fileID: 1349559457}
   - component: {fileID: 1349559461}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Lower Arm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1274,7 +1324,7 @@ GameObject:
   - component: {fileID: 1647191662}
   - component: {fileID: 1647191664}
   - component: {fileID: 1647191663}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Upper Arm Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1365,7 +1415,7 @@ GameObject:
   - component: {fileID: 1665592525}
   - component: {fileID: 1665592523}
   - component: {fileID: 1665592524}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Front Left Wheel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1838,7 +1888,7 @@ GameObject:
   - component: {fileID: 1913635771919039008}
   - component: {fileID: 1913635771919039011}
   - component: {fileID: 8112312425249451458}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Rover
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1937,7 +1987,7 @@ GameObject:
   - component: {fileID: 2529387371914505429}
   - component: {fileID: 2529387371914505428}
   - component: {fileID: 2529387371914505426}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Arm Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2055,7 +2105,7 @@ GameObject:
   - component: {fileID: 3599165554072031582}
   - component: {fileID: 3599165554072031583}
   - component: {fileID: 3599165554072031584}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Front Right Wheel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2201,6 +2251,7 @@ Transform:
   - {fileID: 2905350372432475755}
   - {fileID: 1161796998}
   - {fileID: 1141722567}
+  - {fileID: 151057233}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2216,7 +2267,7 @@ GameObject:
   - component: {fileID: 7215778468094840811}
   - component: {fileID: 7215778468094840810}
   - component: {fileID: 7215778468094840808}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Right Suspension
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2294,7 +2345,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7215778468094840806}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0.25, z: 0}
+  m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4231447049125055457}
