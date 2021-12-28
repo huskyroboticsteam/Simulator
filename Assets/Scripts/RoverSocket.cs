@@ -77,7 +77,7 @@ public class RoverSocket : MonoBehaviour
             {
                 while (_outgoingMessages.TryDequeue(out JObject message))
                 {
-                    _socket.Send(message.ToString());
+                    _socket.Send(message.ToString(Newtonsoft.Json.Formatting.None));
                 }
             }
         }).Start();
