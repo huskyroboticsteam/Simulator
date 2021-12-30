@@ -3,8 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json.Linq;
 
+/// <summary>
+/// A lidar sensor on the rover which sends lidar data to the rover server.
+/// </summary>
 public class RoverLidarSensor : MonoBehaviour
 {
+    private struct Polar
+    {
+        public Polar(float r, float theta)
+        {
+            R = r;
+            Theta = theta;
+        }
+
+        public float R { get; set; }
+
+        public float Theta { get; set; }
+    }
+
     [SerializeField]
     private float _range;
     [SerializeField]
@@ -15,8 +31,10 @@ public class RoverLidarSensor : MonoBehaviour
     private float _noiseIntensity;
     [SerializeField]
     private LayerMask _roverMask;
+    [SerializeField]
+    private bool _showGizmos;
 
-    private IList<Vector3> _points;
+    private IList<Polar> _points;
     private RoverSocket _socket;
 
     private void Awake()
@@ -26,7 +44,7 @@ public class RoverLidarSensor : MonoBehaviour
 
     private void OnEnable()
     {
-        _points = new List<Vector3>();
+        _points = new List<Polar>();
         StartCoroutine(BeginScanning());
     }
 
@@ -49,15 +67,26 @@ public class RoverLidarSensor : MonoBehaviour
         _points.Clear();
         for (int i = 0; i < _resolution; i++)
         {
-            float angle = i * 360f / _resolution;
-            Vector3 direction = Quaternion.AngleAxis(angle, transform.up) * transform.forward;
+            float theta = i / (float)_resolution * 360;
+            Vector3 direction = Quaternion.AngleAxis(theta, transform.up) * transform.forward;
             if (Physics.Raycast(transform.position, direction, out RaycastHit hit, _range, ~_roverMask))
-                _points.Add(ApplyNoise(hit.point - transform.position));
+            {
+                Vector3 cartesian = hit.point - transform.position;
+                float r = cartesian.magnitude + Random.Range(-_noiseIntensity, _noiseIntensity);
+                _points.Add(new Polar(r, theta));
+            }
         }
 
         JArray jsonPoints = new JArray();
-        foreach (Vector3 point in _points)
-            jsonPoints.Add(new JArray(point.x, point.y, point.z));
+        foreach (Polar point in _points)
+        {
+            JObject jsonPoint = new JObject()
+            {
+                ["r"] = point.R,
+                ["theta"] = point.Theta
+            };
+            jsonPoints.Add(jsonPoint);
+        }
         JObject lidarReport = new JObject()
         {
             ["type"] = "simLidarReport",
@@ -66,17 +95,16 @@ public class RoverLidarSensor : MonoBehaviour
         _socket.Send(lidarReport);
     }
 
-    private Vector3 ApplyNoise(Vector3 point)
-    {
-        return point + new Vector3(Random.value - 0.5f, Random.value - 0.5f, Random.value - 0.5f) * _noiseIntensity;
-    }
-
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.green;
-        foreach (Vector3 point in _points)
+        if (_showGizmos && _points != null)
         {
-            Gizmos.DrawSphere(transform.position + point, 0.05f);
+            Gizmos.color = Color.green;
+            foreach (Polar point in _points)
+            {
+                Vector3 cartesianPoint = transform.position + Quaternion.AngleAxis(point.Theta, transform.up) * transform.forward * point.R;
+                Gizmos.DrawSphere(cartesianPoint, 0.02f);
+            }
         }
     }
 }

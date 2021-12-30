@@ -210,13 +210,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47334de10e0723b41b9fb478268edce9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _range: 100
+  _range: 12
   _resolution: 100
-  _scanPeriod: 0.033333335
-  _noiseIntensity: 0.1
+  _scanPeriod: 0.1
+  _noiseIntensity: 0.05
   _roverMask:
     serializedVersion: 2
     m_Bits: 64
+  _showGizmos: 0
 --- !u!1 &398433500
 GameObject:
   m_ObjectHideFlags: 0
