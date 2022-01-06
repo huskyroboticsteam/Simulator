@@ -8,17 +8,17 @@ using Newtonsoft.Json.Linq;
 /// </summary>
 public class RoverLidarSensor : MonoBehaviour
 {
-    private struct Polar
+    public struct LidarPoint
     {
-        public Polar(float r, float theta)
+        public LidarPoint(float r, float theta)
         {
             R = r;
             Theta = theta;
         }
 
-        public float R { get; set; }
+        public float R { get; }
 
-        public float Theta { get; set; }
+        public float Theta { get; }
     }
 
     [SerializeField]
@@ -34,8 +34,9 @@ public class RoverLidarSensor : MonoBehaviour
     [SerializeField]
     private bool _showGizmos;
 
-    private IList<Polar> _points;
     private RoverSocket _socket;
+
+    public LidarPoint[] Points { get; private set; }
 
     private void Awake()
     {
@@ -44,7 +45,6 @@ public class RoverLidarSensor : MonoBehaviour
 
     private void OnEnable()
     {
-        _points = new List<Polar>();
         StartCoroutine(BeginScanning());
     }
 
@@ -58,13 +58,14 @@ public class RoverLidarSensor : MonoBehaviour
         while (true)
         {
             Scan();
+            Report();
             yield return new WaitForSeconds(_scanPeriod);
         }
     }
 
     private void Scan()
     {
-        _points.Clear();
+        Points = new LidarPoint[_resolution];
         for (int i = 0; i < _resolution; i++)
         {
             float theta = i / (float)_resolution * 360;
@@ -73,36 +74,47 @@ public class RoverLidarSensor : MonoBehaviour
             {
                 Vector3 cartesian = hit.point - transform.position;
                 float r = cartesian.magnitude + Random.Range(-_noiseIntensity, _noiseIntensity);
-                _points.Add(new Polar(r, theta));
+                // Convert from Unity coordinates to our coordinates.
+                theta = (360 - theta) % 360;
+                LidarPoint point = new LidarPoint(r, theta);
+                Points[i] = point;
             }
         }
+    }
 
-        JArray jsonPoints = new JArray();
-        foreach (Polar point in _points)
+    private void Report()
+    {
+        JObject[] jPoints = new JObject[_resolution];
+        for (int i = 0; i < _resolution; i++)
         {
-            JObject jsonPoint = new JObject()
+            LidarPoint point = Points[i];
+            JObject jPoint = new JObject()
             {
                 ["r"] = point.R,
                 ["theta"] = point.Theta
             };
-            jsonPoints.Add(jsonPoint);
+            jPoints[i] = jPoint;
         }
         JObject lidarReport = new JObject()
         {
             ["type"] = "simLidarReport",
-            ["points"] = jsonPoints
+            ["points"] = new JArray(jPoints)
         };
         _socket.Send(lidarReport);
     }
 
     private void OnDrawGizmos()
     {
-        if (_showGizmos && _points != null)
+        if (_showGizmos && Points != null)
         {
             Gizmos.color = Color.green;
-            foreach (Polar point in _points)
+            foreach (LidarPoint point in Points)
             {
-                Vector3 cartesianPoint = transform.position + Quaternion.AngleAxis(point.Theta, transform.up) * transform.forward * point.R;
+                float r = (float)point.R;
+                float theta = (float)point.Theta;
+                // Convert from our coordinates to Unity coordinates.
+                theta = 360 - theta;
+                Vector3 cartesianPoint = transform.position + Quaternion.AngleAxis(theta, transform.up) * transform.forward * r;
                 Gizmos.DrawSphere(cartesianPoint, 0.02f);
             }
         }

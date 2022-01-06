@@ -43,9 +43,7 @@ public class RotationalRoverMotor : RoverMotor
                 float newPower = Mathf.Sign(remainingDistance);
                 // Slow down when near target.
                 if (Mathf.Abs(remainingDistance) < Smoothing)
-                {
                     newPower *= remainingDistance / Smoothing;
-                }
                 CurrentPower = newPower;
                 break;
             case RunMode.RunWithVelocity:

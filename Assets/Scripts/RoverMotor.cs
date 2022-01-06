@@ -87,9 +87,7 @@ public abstract class RoverMotor : MonoBehaviour
         set
         {
             if (Math.Abs(value) > 1)
-            {
                 throw new ArgumentOutOfRangeException(nameof(value), "|value| > 1");
-            }
             _targetPower = value;
         }
     }
@@ -103,9 +101,7 @@ public abstract class RoverMotor : MonoBehaviour
         protected set
         {
             if (Math.Abs(value) > 1)
-            {
                 throw new ArgumentOutOfRangeException(nameof(value), "|value| > 1");
-            }
             _currentPower = value;
         }
     }
@@ -218,9 +214,7 @@ public abstract class RoverMotor : MonoBehaviour
     private void EnsureEncoder()
     {
         if (!_hasEncoder)
-        {
             throw new InvalidOperationException(MotorName + " has no encoder");
-        }
     }
 
     /// <summary>
