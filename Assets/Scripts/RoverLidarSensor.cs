@@ -75,7 +75,7 @@ public class RoverLidarSensor : MonoBehaviour
                 Vector3 cartesian = hit.point - transform.position;
                 float r = cartesian.magnitude + Random.Range(-_noiseIntensity, _noiseIntensity);
                 // Convert from Unity coordinates to our coordinates.
-                theta = (360 - theta) % 360;
+                theta = Mathf.Deg2Rad * ((360 - theta) % 360);
                 LidarPoint point = new LidarPoint(r, theta);
                 Points[i] = point;
             }
@@ -113,7 +113,7 @@ public class RoverLidarSensor : MonoBehaviour
                 float r = (float)point.R;
                 float theta = (float)point.Theta;
                 // Convert from our coordinates to Unity coordinates.
-                theta = 360 - theta;
+                theta = 360 - Mathf.Rad2Deg * theta;
                 Vector3 cartesianPoint = transform.position + Quaternion.AngleAxis(theta, transform.up) * transform.forward * r;
                 Gizmos.DrawSphere(cartesianPoint, 0.02f);
             }
