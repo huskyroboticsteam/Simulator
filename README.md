@@ -97,8 +97,8 @@ Sent from the rover server to instruct the simulator to begin providing a camera
 ### Parameters
 - `camera` - the name of the camera
 - `fps` - the frames per second of the stream
-- `width` - the width of the stream
-- `height` - the height of the stream
+- `width` - the width of the stream in pixels
+- `height` - the height of the stream in pixels
 
 ## Camera Stream Close Request
 ### Description
@@ -133,8 +133,8 @@ Sent from the simulator to inform the rover server of a motor's status.
 ### Parameters
 - `motor` - the name of the motor
 - `power` - the current power of the motor, or null if unavailable
-- `position` - the current position of the motor, or null if unavailable
-- `velocity` - the current velocity of the motor, or null if unavailable
+- `position` - the current position of the motor in degrees, or null if unavailable
+- `velocity` - the current velocity of the motor in degrees per second, or null if unavailable
 
 ## Camera Stream Report
 ### Description
@@ -167,3 +167,5 @@ Sent from the simulator to inform the rover server of data provided by a simulat
 
 ### Parameters
 - `points` - an array of points in polar coordinates read by the simulated lidar sensor
+- `r` - the distance between a point and the rover in meters
+- `theta` - the angle of a point in [0, 2π) measured from the rover's forward direction and increasing counterclockwise
