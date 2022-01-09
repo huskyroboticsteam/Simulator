@@ -16,9 +16,6 @@ public static class MessageHandler
             case "simMotorPositionRequest":
                 HandleMotorPositionRequest(rover, message);
                 break;
-            case "simMotorVelocityRequest":
-                HandleMotorVelocityRequest(rover, message);
-                break;
             case "simCameraStreamOpenRequest":
                 HandleCameraStreamOpenRequest(rover, message);
                 break;
@@ -42,14 +39,6 @@ public static class MessageHandler
         RoverMotor motor = rover.GetMotor(motorName);
         motor.TargetPosition = (float)motorPositionRequest["position"];
         motor.Mode = RoverMotor.RunMode.RunToPosition;
-    }
-
-    private static void HandleMotorVelocityRequest(Rover rover, JObject motorVelocityRequest)
-    {
-        string motorName = (string)motorVelocityRequest["motor"];
-        RoverMotor motor = rover.GetMotor(motorName);
-        motor.TargetVelocity = (float)motorVelocityRequest["velocity"];
-        motor.Mode = RoverMotor.RunMode.RunWithVelocity;
     }
 
     private static void HandleCameraStreamOpenRequest(Rover rover, JObject cameraStreamOpenRequest)

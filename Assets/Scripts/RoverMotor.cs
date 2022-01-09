@@ -6,9 +6,9 @@ using Newtonsoft.Json.Linq;
 /// <summary>
 /// A motor on the rover. The manner in which this motor interacts with Unity's
 /// physics must be implemented in subclasses by reading Mode, TargetPower,
-/// TargetPosition, and TargetVelocity. Subclasses are responsible setting
-/// CurrentPower, CurrentPosition, and CurrentVelocity. Positions and
-/// velocities can only be accessed on motors with encoders.
+/// and TargetPosition. Subclasses are responsible setting CurrentPower,
+/// CurrentPosition, and CurrentVelocity. Positions and velocities can only be
+/// accessed on motors with encoders.
 /// </summary>
 public abstract class RoverMotor : MonoBehaviour
 {
@@ -24,11 +24,7 @@ public abstract class RoverMotor : MonoBehaviour
         /// <summary>
         /// The motor will try to reach its target position.
         /// </summary>
-        RunToPosition,
-        /// <summary>
-        /// The motor will try to run with its target velocity.
-        /// </summary>
-        RunWithVelocity
+        RunToPosition
     }
 
     [SerializeField]
@@ -43,7 +39,6 @@ public abstract class RoverMotor : MonoBehaviour
     private float _currentPower;
     private float _targetPosition;
     private float _currentPosition;
-    private float _targetVelocity;
     private float _currentVelocity;
     private RoverSocket _socket;
 
@@ -71,7 +66,7 @@ public abstract class RoverMotor : MonoBehaviour
         get { return _mode; }
         set
         {
-            if (value == RunMode.RunToPosition || value == RunMode.RunWithVelocity)
+            if (value == RunMode.RunToPosition)
                 EnsureEncoder();
             _mode = value;
         }
@@ -143,25 +138,6 @@ public abstract class RoverMotor : MonoBehaviour
     }
 
     /// <summary>
-    /// The velocity in degrees per second that this motor will try to run with
-    /// when its mode is RunWithVelocity. Only available if this motor has an
-    /// encoder.
-    /// </summary>
-    public float TargetVelocity
-    {
-        get
-        {
-            EnsureEncoder();
-            return _targetVelocity;
-        }
-        set
-        {
-            EnsureEncoder();
-            _targetVelocity = value;
-        }
-    }
-
-    /// <summary>
     /// Current velocity of this motor in degrees per second. Only available if
     /// this motor has an encoder.
     /// </summary>
@@ -198,7 +174,6 @@ public abstract class RoverMotor : MonoBehaviour
         {
             TargetPosition = 0;
             CurrentPosition = 0;
-            TargetVelocity = 0;
             CurrentVelocity = 0;
         }
     }

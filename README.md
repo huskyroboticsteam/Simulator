@@ -2,7 +2,7 @@
 The 3D Unity-based Husky Robotics simulator.
 
 ## Overview
-This simulator creates a WebSocket client to connect directly to the rover WebSocket server at the URL `ws://localhost:3001/simulator`. The simulator will automatically connect to the rover server and reconnect as needed, providing a visual indication of the connection status. The simulator and rover server communicate with each other by sending JSON objects termed *messages* over the WebSocket connection. Through these messages, the rover server can request that the simulator perform certain actions, such as set a a motor's power. Additionally, the simulator provides the rover server with data such as camera streams and lidar data through these messages.
+This simulator creates a WebSocket client to connect directly to the rover WebSocket server at the URL `ws://localhost:3001/simulator`. The simulator will automatically connect to the rover server and reconnect as needed, providing a visual indication of the connection status. The simulator and the rover server communicate with each other by sending JSON objects termed *messages* over the WebSocket connection. Through these messages, the rover server can request that the simulator perform certain actions, such as set a a motor's power. Additionally, the simulator provides the rover server with data such as camera streams and lidar data through these messages.
 
 ## Using the Simulator
 1. Download the latest release for your operating system.
@@ -30,7 +30,7 @@ The JSON objects sent between the simulator and the rover server are termed *mes
 
 ## Motor Power Request
 ### Description
-Sent from the rover server to instruct the simulator to make a motor run to a position.
+Sent from the rover server to instruct the simulator to make a motor run with a specified power.
 
 ### Syntax
 ```
@@ -47,7 +47,7 @@ Sent from the rover server to instruct the simulator to make a motor run to a po
 
 ## Motor Position Request
 ### Description
-Sent from the rover server to instruct the simulator to make a motor run to a position.
+Sent from the rover server to instruct the simulator to make a motor run to a specified position.
 
 ### Syntax
 ```
@@ -62,22 +62,26 @@ Sent from the rover server to instruct the simulator to make a motor run to a po
 - `motor` - the name of the motor
 - `position` - the requested position in degrees
 
-## Motor Velocity Request
+## Motor Status Report
 ### Description
-Sent from the rover server to instruct the simulator to make a motor run with a velocity.
+Sent from the simulator to inform the rover server of a motor's status.
 
 ### Syntax
 ```
 {
-  type: "simMotorVelocityRequest",
+  type: "simMotorStatusReport",
   motor: string,
-  velocity: number
+  power: number | null,
+  position: number | null,
+  velocity: number | null
 }
 ```
 
 ### Parameters
 - `motor` - the name of the motor
-- `velocity` - the requested velocity in degrees per second
+- `power` - the current power of the motor, or null if unavailable
+- `position` - the current position of the motor in degrees, or null if unavailable
+- `velocity` - the current velocity of the motor in degrees per second, or null if unavailable
 
 ## Camera Stream Open Request
 ### Description
@@ -114,27 +118,6 @@ Sent from the rover server to instruct the simulator to stop providing a camera 
 
 ### Parameters
 - `camera` - the name of the camera
-
-## Motor Status Report
-### Description
-Sent from the simulator to inform the rover server of a motor's status.
-
-### Syntax
-```
-{
-  type: "simMotorStatusReport",
-  motor: string,
-  power: number | null,
-  position: number | null,
-  velocity: number | null
-}
-```
-
-### Parameters
-- `motor` - the name of the motor
-- `power` - the current power of the motor, or null if unavailable
-- `position` - the current position of the motor in degrees, or null if unavailable
-- `velocity` - the current velocity of the motor in degrees per second, or null if unavailable
 
 ## Camera Stream Report
 ### Description

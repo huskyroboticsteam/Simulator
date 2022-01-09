@@ -42,9 +42,6 @@ public class WheelRoverMotor : RoverMotor
             case RunMode.RunToPosition:
                 CurrentPower = Mathf.Sign(TargetPosition - CurrentPosition);
                 break;
-            case RunMode.RunWithVelocity:
-                CurrentPower = Mathf.Sign(TargetVelocity - CurrentVelocity);
-                break;
             default:
                 break;
         }
