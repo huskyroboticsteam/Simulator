@@ -79,9 +79,9 @@ Sent from the simulator to inform the rover server of a motor's status.
 
 ### Parameters
 - `motor` - the name of the motor
-- `power` - the current power of the motor, or null if unavailable
-- `position` - the current position of the motor in degrees, or null if unavailable
-- `velocity` - the current velocity of the motor in degrees per second, or null if unavailable
+- `power` - the current power of the motor, or `null` if unavailable
+- `position` - the current position of the motor in degrees, or `null` if unavailable
+- `velocity` - the current velocity of the motor in degrees per second, or `null` if unavailable
 
 ## Camera Stream Open Request
 ### Description
