@@ -6,8 +6,9 @@ This simulator creates a WebSocket client to connect directly to the rover WebSo
 
 ## Using the Simulator
 1. Download the latest release for your operating system.
-2. Run the executable included with your downloaded release.
-3. Start the [rover server](https://github.com/huskyroboticsteam/Resurgence). Optionally start [Mission Control](https://github.com/huskyroboticsteam/new-mission-control) if you would like to teleoperate the rover yourself. The simulator will automatically connect to the rover server and begin sending and receiving messages.
+2. Give the executable included with your download permission to run as an executable.
+3. Run the executable.
+4. Start the [rover server](https://github.com/huskyroboticsteam/Resurgence). Optionally, start [Mission Control](https://github.com/huskyroboticsteam/new-mission-control) if you would like to teleoperate the rover yourself. The simulator will automatically connect to the rover server and begin sending and receiving messages.
 
 ## Motors
 The simulator is able to simulate the motors with the following names:
