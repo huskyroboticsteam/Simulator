@@ -36,7 +36,7 @@ public class RoverLidarSensor : MonoBehaviour
 
     private RoverSocket _socket;
 
-    public LidarPoint[] Points { get; private set; }
+    public List<LidarPoint> Points { get; private set; }
 
     private void Awake()
     {
@@ -45,6 +45,7 @@ public class RoverLidarSensor : MonoBehaviour
 
     private void OnEnable()
     {
+        Points = new List<LidarPoint>();
         StartCoroutine(BeginScanning());
     }
 
@@ -65,7 +66,7 @@ public class RoverLidarSensor : MonoBehaviour
 
     private void Scan()
     {
-        Points = new LidarPoint[_resolution];
+        Points.Clear();
         for (int i = 0; i < _resolution; i++)
         {
             float theta = i / (float)_resolution * 360;
@@ -73,19 +74,21 @@ public class RoverLidarSensor : MonoBehaviour
             if (Physics.Raycast(transform.position, direction, out RaycastHit hit, _range, ~_roverMask))
             {
                 Vector3 cartesian = hit.point - transform.position;
-                float r = cartesian.magnitude + Random.Range(-_noiseIntensity, _noiseIntensity);
+                float r = cartesian.magnitude;
+                // Apply noise.
+                r += Random.Range(-_noiseIntensity, _noiseIntensity);
                 // Convert from Unity coordinates to our coordinates.
                 theta = Mathf.Deg2Rad * ((360 - theta) % 360);
                 LidarPoint point = new LidarPoint(r, theta);
-                Points[i] = point;
+                Points.Add(point);
             }
         }
     }
 
     private void Report()
     {
-        JObject[] jPoints = new JObject[_resolution];
-        for (int i = 0; i < _resolution; i++)
+        JObject[] jPoints = new JObject[Points.Count];
+        for (int i = 0; i < Points.Count; i++)
         {
             LidarPoint point = Points[i];
             JObject jPoint = new JObject()
@@ -113,7 +116,7 @@ public class RoverLidarSensor : MonoBehaviour
                 float r = (float)point.R;
                 float theta = (float)point.Theta;
                 // Convert from our coordinates to Unity coordinates.
-                theta = 360 - Mathf.Rad2Deg * theta;
+                theta = Mathf.Rad2Deg * -theta;
                 Vector3 cartesianPoint = transform.position + Quaternion.AngleAxis(theta, transform.up) * transform.forward * r;
                 Gizmos.DrawSphere(cartesianPoint, 0.02f);
             }

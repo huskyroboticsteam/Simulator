@@ -9,6 +9,8 @@ public class WheelRoverMotor : RoverMotor
 {
     [SerializeField]
     private float _torqueMultiplier;
+    [SerializeField]
+    private GameObject _display;
 
     private WheelCollider _wheel;
 
@@ -25,6 +27,7 @@ public class WheelRoverMotor : RoverMotor
         {
             UpdateEncoder();
         }
+        UpdateModel();
     }
 
     private void FixedUpdate()
@@ -51,5 +54,12 @@ public class WheelRoverMotor : RoverMotor
     {
         CurrentVelocity = _wheel.rpm * 360 / 60;
         CurrentPosition += CurrentVelocity * Time.deltaTime;
+    }
+
+    private void UpdateModel()
+    {
+        _wheel.GetWorldPose(out Vector3 pos, out Quaternion rot);
+        _display.transform.position = pos;
+        _display.transform.rotation = rot;
     }
 }
