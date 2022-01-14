@@ -2,8 +2,8 @@ name: Build project
 
 on:
   push:
-    branches:
-      - main
+    tags:
+      - 'v*'
 
 jobs:
   buildForAllSupportedPlatforms:
@@ -52,8 +52,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: v${{ github.run_number }}
-          release_name: Simulator v${{ github.run_number }}
+          tag_name: ${{ github.ref }}
+          release_name: Husky Robotics Simulator ${{ github.ref }}
       - name: Download build artifacts
         uses: actions/download-artifact@v2
       - name: Zip build files
