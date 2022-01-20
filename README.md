@@ -19,12 +19,21 @@ The simulator is able to simulate the motors with the following names:
 - armBase
 - shoulder
 - elbow
+- forearm
+- differentialLeft
+- differentialRight
+- hand
 
 ## Cameras
 The simulator is able to simulate the cameras with the following names:
 - front
 - rear
 - upperArm
+
+## Additional Hardware devices
+The simulator is also able to simulate the following hardware devices.
+- Lidar sensor
+- IMU
 
 ## Messages
 The JSON objects sent between the simulator and the rover server are termed *messages*. Each message has a type property and a number of additional parameters depending on the type. Each type is prefaced with "sim" to avoid confusion with messages pertaining to Mission Control. The usage of each type of message is detailed below.
@@ -136,6 +145,27 @@ Sent from the simulator to inform the rover server of a single frame of a camera
 ### Parameters
 - `camera` - the name of the camera
 - `data` - the frame in JPG format encoded as a base-64 string
+
+## IMU Orientation Report
+### Description
+Sent from the simulator to inform the rover server of the orientation provided by a simulated IMU. The orientation will be a quaternion in the standard Husky Robotics software coordinate system.
+
+### Syntax
+```
+{
+  type: "simImuOrientationReport",
+  x: number,
+  y: number,
+  z: number,
+  w: number
+}
+```
+
+### Parameters
+- `x` - The x-component of the orientation
+- `y` - The y-component of the orientation
+- `z` - The z-component of the orientation
+- `w` - The w-component of the orientation
 
 ## Lidar Data Report
 ### Description

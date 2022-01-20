@@ -24,9 +24,7 @@ public class WheelRoverMotor : RoverMotor
     {
         UpdatePower();
         if (HasEncoder)
-        {
             UpdateEncoder();
-        }
         UpdateModel();
     }
 
