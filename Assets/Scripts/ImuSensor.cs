@@ -4,7 +4,8 @@ using Newtonsoft.Json.Linq;
 
 /// <summary>
 /// A simulated IMU sensor on the rover which sends the orientation of the
-/// simulated rover to the rover server as a quaternion in the standard Husky Robotics software coordinates.
+/// simulated rover to the rover server as a quaternion in the standard Husky
+/// Robotics software coordinates.
 /// </summary>
 public class ImuSensor : MonoBehaviour
 {
@@ -20,26 +21,32 @@ public class ImuSensor : MonoBehaviour
 
     private void OnEnable()
     {
-        StartCoroutine(BeginReporting());
+        StartCoroutine(BeginReportingOrientation());
     }
 
-    private IEnumerator BeginReporting()
+    private void OnDisable()
+    {
+        StopAllCoroutines();
+    }
+
+    private IEnumerator BeginReportingOrientation()
     {
         while (true)
         {
-            Report();
+            ReportOrientation();
             yield return new WaitForSeconds(1 / _reportPeriod);
         }
     }
 
-    private void Report()
+    private void ReportOrientation()
     {
         // Note on quaternions in Unity:
         // Let A be the axis of rotation represented by a quaternion Q.
-        // Q_x = A_x * sin(theta / 2)
-        // Q_y = A_y * sin(theta / 2)
-        // Q_z = A_y * sin(theta / 2)
-        // Q_w = cos(theta / 2)
+        // Let theta be the angle of rotation about A represented by Q.
+        // Q.x = A.x * sin(theta / 2)
+        // Q.y = A.y * sin(theta / 2)
+        // Q.z = A.y * sin(theta / 2)
+        // Q.w = cos(theta / 2)
         Quaternion rot = transform.rotation;
 
         // Convert to our coordinate system.
