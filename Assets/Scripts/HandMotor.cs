@@ -13,20 +13,17 @@ public class HandMotor : RoverMotor
     [SerializeField]
     private GameObject _rightFinger;
 
-    private float _angle;
+    private float _currentAngle;
 
     private void Update()
     {
         UpdatePower();
-        if (HasEncoder)
-            UpdateEncoder();
     }
 
     private void FixedUpdate()
     {
         UpdateAngle();
     }
-
 
     private void UpdatePower()
     {
@@ -47,14 +44,15 @@ public class HandMotor : RoverMotor
 
     private void UpdateAngle()
     {
-        _angle += CurrentPower * _speed * Time.fixedDeltaTime;
-        _angle = Mathf.Clamp(_angle, _minAngle, _maxAngle);
-        _leftFinger.transform.localRotation = Quaternion.AngleAxis(_angle, Vector3.up);
-        _rightFinger.transform.localRotation = Quaternion.AngleAxis(-_angle, Vector3.up);
-    }
-
-    private void UpdateEncoder()
-    {
-
+        float newAngle = _currentAngle + CurrentPower * _speed * Time.fixedDeltaTime;
+        newAngle = Mathf.Clamp(newAngle, _minAngle, _maxAngle);
+        _leftFinger.transform.localRotation = Quaternion.AngleAxis(newAngle, Vector3.up);
+        _rightFinger.transform.localRotation = Quaternion.AngleAxis(-newAngle, Vector3.up);
+        if (HasEncoder)
+        {
+            CurrentPosition = _currentAngle;
+            CurrentVelocity = (newAngle - _currentAngle) / Time.fixedDeltaTime;
+        }
+        _currentAngle = newAngle;
     }
 }
