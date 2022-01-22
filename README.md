@@ -30,7 +30,7 @@ The simulator is able to simulate the cameras with the following names:
 - rear
 - upperArm
 
-## Additional Hardware devices
+## Additional Hardware Devices
 The simulator is also able to simulate the following hardware devices.
 - GPS sensor
 - IMU
