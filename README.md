@@ -32,8 +32,9 @@ The simulator is able to simulate the cameras with the following names:
 
 ## Additional Hardware devices
 The simulator is also able to simulate the following hardware devices.
-- Lidar sensor
+- GPS sensor
 - IMU
+- Lidar sensor
 
 ## Messages
 The JSON objects sent between the simulator and the rover server are termed *messages*. Each message has a type property and a number of additional parameters depending on the type. Each type is prefaced with "sim" to avoid confusion with messages pertaining to Mission Control. The usage of each type of message is detailed below.
@@ -145,6 +146,23 @@ Sent from the simulator to inform the rover server of a single frame of a camera
 ### Parameters
 - `camera` - the name of the camera
 - `data` - the frame in JPG format encoded as a base-64 string
+
+## GPS Position Report
+### Description
+Sent from the simulator to inform the rover server of the geographic position provided by a simulated GPS sensor. The position will be reported in standard geographic coordinates. The simulated GPS sensor will map Unity's cartesian origin to Null Island.
+
+### Syntax
+```
+{
+  type: "simGpsPositionReport",
+  latitude: number,
+  longitude: number
+}
+```
+
+### Parameters
+- `latitude` - the latitude in degrees
+- `longitude` - the longitude in degrees
 
 ## IMU Orientation Report
 ### Description

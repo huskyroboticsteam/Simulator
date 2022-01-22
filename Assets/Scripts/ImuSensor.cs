@@ -34,7 +34,7 @@ public class ImuSensor : MonoBehaviour
         while (true)
         {
             ReportOrientation();
-            yield return new WaitForSeconds(1 / _reportPeriod);
+            yield return new WaitForSeconds(_reportPeriod);
         }
     }
 
