@@ -7,12 +7,20 @@ public class RoverDifferentialMotor : RoverMotor
     private float _speed;
     [SerializeField]
     public RoverDifferential _differential;
+    [SerializeField]
+    private float _minAngle;
+    [SerializeField]
+    private float _maxAngle;
 
     private void Update()
     {
         if (!HasEncoder)
             throw new Exception("Differential motors need encoders");
         UpdatePower();
+    }
+
+    private void FixedUpdate()
+    {
         UpdatePosition();
     }
 
@@ -35,6 +43,13 @@ public class RoverDifferentialMotor : RoverMotor
 
     private void UpdatePosition()
     {
-        CurrentPosition += _speed * CurrentPower * Time.deltaTime;
+        float newPosition = CurrentPosition + _speed * CurrentPower * Time.fixedDeltaTime;
+        newPosition = Mathf.Clamp(newPosition, _minAngle, _maxAngle);
+        if (HasEncoder)
+        {
+            CurrentVelocity = (newPosition - CurrentPosition) / Time.fixedDeltaTime;
+            CurrentPosition = newPosition;
+        }
+        CurrentPosition = newPosition;
     }
 }

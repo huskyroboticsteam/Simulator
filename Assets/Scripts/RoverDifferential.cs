@@ -9,11 +9,10 @@ public class RoverDifferential : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // TODO: THIS DOES NOT WORK
         float leftPos = _leftMotor.CurrentPosition;
         float rightPos = _rightMotor.CurrentPosition;
-        float x = leftPos;
-        float z = rightPos;
-        transform.localRotation = Quaternion.Euler(x, 0, z);
+        float pitch = (rightPos + leftPos) / 2;
+        float roll = rightPos - leftPos;
+        transform.localRotation = Quaternion.Euler(pitch, 0, roll);
     }
 }

@@ -335,6 +335,8 @@ MonoBehaviour:
   _statusReportPeriod: 0.033333335
   _speed: 50
   _differential: {fileID: 5744071065781546054}
+  _minAngle: -45
+  _maxAngle: 135
 --- !u!1 &288530936
 GameObject:
   m_ObjectHideFlags: 0
@@ -383,6 +385,8 @@ MonoBehaviour:
   _statusReportPeriod: 0.033333335
   _speed: 50
   _differential: {fileID: 5744071065781546054}
+  _minAngle: -45
+  _maxAngle: 135
 --- !u!1 &513085395
 GameObject:
   m_ObjectHideFlags: 0
