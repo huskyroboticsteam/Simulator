@@ -31,7 +31,7 @@ The simulator is able to simulate the cameras with the following names:
 - upperArm
 
 ## Additional Hardware Devices
-The simulator is also able to simulate the following hardware devices.
+The simulator is also able to simulate the following hardware devices:
 - GPS sensor
 - IMU
 - Lidar sensor
@@ -149,7 +149,7 @@ Sent from the simulator to inform the rover server of a single frame of a camera
 
 ## GPS Position Report
 ### Description
-Sent from the simulator to inform the rover server of the geographic position provided by a simulated GPS sensor. The position will be reported in standard geographic coordinates. The simulated GPS sensor will map Unity's cartesian origin to Null Island.
+Sent from the simulator to inform the rover server of the geographic position provided by a simulated GPS sensor. The position will be reported in standard geographic coordinates. The simulated GPS sensor will map Unity's cartesian origin to Null Island. Gaussian noise is applied to the latitude and longitude.
 
 ### Syntax
 ```
