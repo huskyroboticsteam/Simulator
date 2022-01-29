@@ -5,7 +5,7 @@ using UnityEngine;
 /// physics engine.
 /// </summary>
 [RequireComponent(typeof(WheelCollider))]
-public class WheelRoverMotor : RoverMotor
+public class WheelMotor : Motor
 {
     [SerializeField]
     private float _torqueMultiplier;

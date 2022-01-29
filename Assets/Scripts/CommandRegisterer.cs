@@ -7,8 +7,6 @@ using UnityEngine.SceneManagement;
 /// </summary>
 public class CommandRegisterer : MonoBehaviour
 {
-    [SerializeField]
-    private ItemSpawn _spawnPoint;
     private SimulatorConsole _console;
     private IList<Command> _commands;
 
@@ -20,7 +18,6 @@ public class CommandRegisterer : MonoBehaviour
     private void OnEnable()
     {
         _commands = new List<Command>() {
-            new Command("spawnitem", SpawnItem),
             new Command("reset", Reset)
         };
 
@@ -36,11 +33,6 @@ public class CommandRegisterer : MonoBehaviour
         {
             _console.UnregisterCommand(command);
         }
-    }
-
-    private void SpawnItem(string[] args)
-    {
-        _spawnPoint.DropItem();
     }
 
     /// <summary>

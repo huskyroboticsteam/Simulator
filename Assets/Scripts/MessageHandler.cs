@@ -28,17 +28,17 @@ public static class MessageHandler
     private static void HandleMotorPowerRequest(Rover rover, JObject motorPowerRequest)
     {
         string motorName = (string)motorPowerRequest["motor"];
-        RoverMotor motor = rover.GetMotor(motorName);
+        Motor motor = rover.GetMotor(motorName);
         motor.TargetPower = (float)motorPowerRequest["power"];
-        motor.Mode = RoverMotor.RunMode.RunWithPower;
+        motor.Mode = Motor.RunMode.RunWithPower;
     }
 
     private static void HandleMotorPositionRequest(Rover rover, JObject motorPositionRequest)
     {
         string motorName = (string)motorPositionRequest["motor"];
-        RoverMotor motor = rover.GetMotor(motorName);
+        Motor motor = rover.GetMotor(motorName);
         motor.TargetPosition = (float)motorPositionRequest["position"];
-        motor.Mode = RoverMotor.RunMode.RunToPosition;
+        motor.Mode = Motor.RunMode.RunToPosition;
     }
 
     private static void HandleCameraStreamOpenRequest(Rover rover, JObject cameraStreamOpenRequest)

@@ -1,11 +1,11 @@
 using UnityEngine;
 
-public class RoverDifferential : MonoBehaviour
+public class Differential : MonoBehaviour
 {
     [SerializeField]
-    private RoverDifferentialMotor _leftMotor;
+    private DifferentialMotor _leftMotor;
     [SerializeField]
-    private RoverDifferentialMotor _rightMotor;
+    private DifferentialMotor _rightMotor;
 
     private void FixedUpdate()
     {

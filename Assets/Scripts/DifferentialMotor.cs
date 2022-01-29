@@ -1,12 +1,12 @@
 using System;
 using UnityEngine;
 
-public class RoverDifferentialMotor : RoverMotor
+public class DifferentialMotor : Motor
 {
     [SerializeField]
     private float _speed;
     [SerializeField]
-    public RoverDifferential _differential;
+    public Differential _differential;
     [SerializeField]
     private float _minAngle;
     [SerializeField]

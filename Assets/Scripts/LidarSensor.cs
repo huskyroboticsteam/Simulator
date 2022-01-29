@@ -6,7 +6,7 @@ using Newtonsoft.Json.Linq;
 /// <summary>
 /// A lidar sensor on the rover which sends lidar data to the rover server.
 /// </summary>
-public class RoverLidarSensor : MonoBehaviour
+public class LidarSensor : MonoBehaviour
 {
     public struct LidarPoint
     {

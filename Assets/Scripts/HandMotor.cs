@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HandMotor : RoverMotor
+public class HandMotor : Motor
 {
     [SerializeField]
     private float _speed;

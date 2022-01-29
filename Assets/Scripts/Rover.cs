@@ -8,12 +8,12 @@ using UnityEngine;
 /// </summary>
 public class Rover : MonoBehaviour
 {
-    private IDictionary<string, RoverMotor> _motors;
+    private IDictionary<string, Motor> _motors;
     private IDictionary<string, RoverCamera> _cameras;
 
     /// A collection containing all of the motors on this rover.
     /// </summary>
-    public ICollection<RoverMotor> Motors
+    public ICollection<Motor> Motors
     {
         get { return _motors.Values; }
     }
@@ -29,9 +29,9 @@ public class Rover : MonoBehaviour
     /// <summary>
     /// Returns the motor on this rover with the specified name.
     /// </summary>
-    public RoverMotor GetMotor(string motorName)
+    public Motor GetMotor(string motorName)
     {
-        if (_motors.TryGetValue(motorName, out RoverMotor motor))
+        if (_motors.TryGetValue(motorName, out Motor motor))
         {
             return motor;
         }
@@ -52,8 +52,8 @@ public class Rover : MonoBehaviour
 
     private void OnEnable()
     {
-        _motors = new Dictionary<string, RoverMotor>();
-        foreach (RoverMotor motor in transform.GetComponentsInChildren<RoverMotor>())
+        _motors = new Dictionary<string, Motor>();
+        foreach (Motor motor in transform.GetComponentsInChildren<Motor>())
         {
             _motors[motor.MotorName] = motor;
         }

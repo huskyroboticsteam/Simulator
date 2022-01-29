@@ -10,7 +10,7 @@ using Newtonsoft.Json.Linq;
 /// CurrentPosition, and CurrentVelocity. Positions and velocities can only be
 /// accessed on motors with encoders.
 /// </summary>
-public abstract class RoverMotor : MonoBehaviour
+public abstract class Motor : MonoBehaviour
 {
     /// <summary>
     /// Determines the behavior of a motor.
@@ -217,7 +217,6 @@ public abstract class RoverMotor : MonoBehaviour
         };
         if (HasEncoder)
         {
-
             statusReport["position"] = CurrentPosition;
             statusReport["velocity"] = CurrentVelocity;
         }

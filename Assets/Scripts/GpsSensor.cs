@@ -65,7 +65,8 @@ public class GpsSensor : MonoBehaviour
     }
 
     /// <summary>
-    /// Returns a pseudorandom, Gaussian distributed value with mean 0 and standard deviation 1.
+    /// Returns a pseudorandom, Gaussian distributed value with mean 0 and
+    /// standard deviation 1.
     /// </summary>
     private float GaussianRandom()
     {

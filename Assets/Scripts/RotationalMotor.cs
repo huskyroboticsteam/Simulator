@@ -3,7 +3,7 @@ using UnityEngine;
 /// <summary>
 /// A motor on the rover that modifies its transform's rotation to turn.
 /// </summary>
-public class RotationalRoverMotor : RoverMotor
+public class RotationalMotor : Motor
 {
     /// <summary>
     /// Used to smooth motor movement when approaching a target position.

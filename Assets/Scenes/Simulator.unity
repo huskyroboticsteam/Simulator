@@ -17,7 +17,7 @@ RenderSettings:
   m_Fog: 1
   m_FogColor: {r: 0.8396226, g: 0.5968911, b: 0.3120861, a: 1}
   m_FogMode: 3
-  m_FogDensity: 0.01
+  m_FogDensity: 0.0025
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
   m_AmbientSkyColor: {r: 1, g: 1, b: 1, a: 1}
@@ -1785,7 +1785,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b71203aa62edc584dbc3a52ba21e4324, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spawnPoint: {fileID: 0}
 --- !u!4 &1792607559
 Transform:
   m_ObjectHideFlags: 0
