@@ -333,11 +333,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _motorName: differentialLeft
   _hasEncoder: 1
+  _hasLimitSwitch: 1
   _statusReportPeriod: 0.033333335
   _speed: 50
   _differential: {fileID: 5744071065781546054}
-  _minAngle: -45
-  _maxAngle: 135
+  _minPosition: -45
+  _maxPosition: 135
 --- !u!1 &288530936
 GameObject:
   m_ObjectHideFlags: 0
@@ -383,11 +384,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _motorName: differentialRight
   _hasEncoder: 1
+  _hasLimitSwitch: 1
   _statusReportPeriod: 0.033333335
   _speed: 50
   _differential: {fileID: 5744071065781546054}
-  _minAngle: -45
-  _maxAngle: 135
+  _minPosition: -45
+  _maxPosition: 135
 --- !u!1 &513085395
 GameObject:
   m_ObjectHideFlags: 0
@@ -895,6 +897,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _motorName: rearLeftWheel
   _hasEncoder: 1
+  _hasLimitSwitch: 0
   _statusReportPeriod: 0.033333335
   _torqueMultiplier: 4
   _display: {fileID: 513085395}
@@ -1160,10 +1163,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _motorName: hand
   _hasEncoder: 1
+  _hasLimitSwitch: 1
   _statusReportPeriod: 0.033333335
   _speed: 50
-  _minAngle: -30
-  _maxAngle: 15
+  _minPosition: -30
+  _maxPosition: 15
   _leftFinger: {fileID: 5192463422970891476}
   _rightFinger: {fileID: 4511818124128450315}
 --- !u!1 &1141722566
@@ -1419,6 +1423,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _motorName: frontRightWheel
   _hasEncoder: 1
+  _hasLimitSwitch: 0
   _statusReportPeriod: 0.033333335
   _torqueMultiplier: 4
   _display: {fileID: 726416728}
@@ -1499,6 +1504,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _motorName: rearRightWheel
   _hasEncoder: 1
+  _hasLimitSwitch: 0
   _statusReportPeriod: 0.033333335
   _torqueMultiplier: 4
   _display: {fileID: 2126870834}
@@ -2166,6 +2172,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _motorName: forearm
   _hasEncoder: 1
+  _hasLimitSwitch: 1
   _statusReportPeriod: 0.033333335
   _speed: 50
   _axis: {x: 0, y: 0, z: 1}
@@ -2219,11 +2226,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _motorName: shoulder
   _hasEncoder: 1
+  _hasLimitSwitch: 1
   _statusReportPeriod: 0.033333335
   _speed: 50
   _axis: {x: 1, y: 0, z: 0}
   _minAngle: -40
-  _maxAngle: 110
+  _maxAngle: 125
 --- !u!1 &919132148619690579
 GameObject:
   m_ObjectHideFlags: 0
@@ -2286,6 +2294,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _motorName: frontLeftWheel
   _hasEncoder: 1
+  _hasLimitSwitch: 0
   _statusReportPeriod: 0.033333335
   _torqueMultiplier: 4
   _display: {fileID: 5025346310533158112}
@@ -2323,6 +2332,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _motorName: armBase
   _hasEncoder: 1
+  _hasLimitSwitch: 1
   _statusReportPeriod: 0.033333335
   _speed: 50
   _axis: {x: 0, y: 1, z: 0}
@@ -2390,6 +2400,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _motorName: elbow
   _hasEncoder: 1
+  _hasLimitSwitch: 1
   _statusReportPeriod: 0.033333335
   _speed: 50
   _axis: {x: 1, y: 0, z: 0}

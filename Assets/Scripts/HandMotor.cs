@@ -5,15 +5,15 @@ public class HandMotor : Motor
     [SerializeField]
     private float _speed;
     [SerializeField]
-    private float _minAngle;
+    private float _minPosition;
     [SerializeField]
-    private float _maxAngle;
+    private float _maxPosition;
     [SerializeField]
     private GameObject _leftFinger;
     [SerializeField]
     private GameObject _rightFinger;
 
-    private float _currentAngle;
+    private float _currentPositionInternal;
 
     private void Update()
     {
@@ -22,7 +22,7 @@ public class HandMotor : Motor
 
     private void FixedUpdate()
     {
-        UpdateAngle();
+        UpdatePosition();
     }
 
     private void UpdatePower()
@@ -42,17 +42,15 @@ public class HandMotor : Motor
         }
     }
 
-    private void UpdateAngle()
+    private void UpdatePosition()
     {
-        float newAngle = _currentAngle + CurrentPower * _speed * Time.fixedDeltaTime;
-        newAngle = Mathf.Clamp(newAngle, _minAngle, _maxAngle);
-        _leftFinger.transform.localRotation = Quaternion.AngleAxis(newAngle, Vector3.up);
-        _rightFinger.transform.localRotation = Quaternion.AngleAxis(-newAngle, Vector3.up);
+        _currentPositionInternal += CurrentPower * _speed * Time.fixedDeltaTime;
+        _currentPositionInternal = Mathf.Clamp(_currentPositionInternal, _minPosition, _maxPosition);
+        _leftFinger.transform.localRotation = Quaternion.AngleAxis(_currentPositionInternal, Vector3.up);
+        _rightFinger.transform.localRotation = Quaternion.AngleAxis(-_currentPositionInternal, Vector3.up);
         if (HasEncoder)
-        {
-            CurrentPosition = _currentAngle;
-            CurrentVelocity = (newAngle - _currentAngle) / Time.fixedDeltaTime;
-        }
-        _currentAngle = newAngle;
+            CurrentPosition = _currentPositionInternal;
+        if (HasLimitSwitch)
+            AtLimit = _currentPositionInternal == _minPosition || _currentPositionInternal == _maxPosition;
     }
 }

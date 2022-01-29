@@ -50,8 +50,7 @@ public class WheelMotor : Motor
 
     private void UpdateEncoder()
     {
-        CurrentVelocity = _wheel.rpm * 360 / 60;
-        CurrentPosition += CurrentVelocity * Time.deltaTime;
+        CurrentPosition += _wheel.rpm * 360f / 60f * Time.deltaTime;
     }
 
     private void UpdateModel()

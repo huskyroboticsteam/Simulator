@@ -83,8 +83,7 @@ Sent from the simulator to inform the rover server of a motor's status.
   type: "simMotorStatusReport",
   motor: string,
   power: number | null,
-  position: number | null,
-  velocity: number | null
+  position: number | null
 }
 ```
 
@@ -92,7 +91,21 @@ Sent from the simulator to inform the rover server of a motor's status.
 - `motor` - the name of the motor
 - `power` - the current power of the motor, or `null` if unavailable
 - `position` - the current position of the motor in degrees, or `null` if unavailable
-- `velocity` - the current velocity of the motor in degrees per second, or `null` if unavailable
+
+## Motor Limit Switch Report
+### Description
+Sent from the simulator to inform the rover server that a motor has triggered its limit switch.
+
+### Syntax
+```
+{
+  type: "simMotorLimitSwitchReport",
+  motor: string
+}
+```
+
+### Parameters
+- `motor` - the name of the motor
 
 ## Camera Stream Open Request
 ### Description

@@ -8,14 +8,20 @@ public class DifferentialMotor : Motor
     [SerializeField]
     public Differential _differential;
     [SerializeField]
-    private float _minAngle;
+    private float _minPosition;
     [SerializeField]
-    private float _maxAngle;
+    private float _maxPosition;
+
+    private float _currentPositionInternal;
+
+    protected override void Start()
+    {
+        base.Start();
+        _currentPositionInternal = 0;
+    }
 
     private void Update()
     {
-        if (!HasEncoder)
-            throw new Exception("Differential motors need encoders");
         UpdatePower();
     }
 
@@ -43,13 +49,11 @@ public class DifferentialMotor : Motor
 
     private void UpdatePosition()
     {
-        float newPosition = CurrentPosition + _speed * CurrentPower * Time.fixedDeltaTime;
-        newPosition = Mathf.Clamp(newPosition, _minAngle, _maxAngle);
+        _currentPositionInternal += _speed * CurrentPower * Time.fixedDeltaTime;
+        _currentPositionInternal = Mathf.Clamp(_currentPositionInternal, _minPosition, _maxPosition);
         if (HasEncoder)
-        {
-            CurrentVelocity = (newPosition - CurrentPosition) / Time.fixedDeltaTime;
-            CurrentPosition = newPosition;
-        }
-        CurrentPosition = newPosition;
+            CurrentPosition = _currentPositionInternal;
+        if (HasLimitSwitch)
+            AtLimit = _currentPositionInternal == _minPosition || CurrentPosition == _maxPosition;
     }
 }

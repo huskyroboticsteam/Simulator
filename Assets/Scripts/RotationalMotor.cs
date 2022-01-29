@@ -56,11 +56,10 @@ public class RotationalMotor : Motor
         float newAngle = _currentAngle + _speed * CurrentPower * Time.fixedDeltaTime;
         newAngle = Mathf.Clamp(newAngle, _minAngle, _maxAngle);
         transform.localRotation = Quaternion.AngleAxis(newAngle, _axis);
-        if (HasEncoder)
-        {
-            CurrentPosition = _currentAngle;
-            CurrentVelocity = (newAngle - _currentAngle) / Time.fixedDeltaTime;
-        }
         _currentAngle = newAngle;
+        if (HasEncoder)
+            CurrentPosition = _currentAngle;
+        if (HasLimitSwitch)
+            AtLimit = _currentAngle == _minAngle || _currentAngle == _maxAngle;
     }
 }

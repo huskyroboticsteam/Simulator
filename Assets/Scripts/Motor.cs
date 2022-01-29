@@ -32,6 +32,8 @@ public abstract class Motor : MonoBehaviour
     [SerializeField]
     private bool _hasEncoder;
     [SerializeField]
+    private bool _hasLimitSwitch;
+    [SerializeField]
     private float _statusReportPeriod;
 
     private RunMode _mode;
@@ -39,7 +41,7 @@ public abstract class Motor : MonoBehaviour
     private float _currentPower;
     private float _targetPosition;
     private float _currentPosition;
-    private float _currentVelocity;
+    private bool _atLimit;
     private RoverSocket _socket;
 
     /// <summary>
@@ -56,6 +58,14 @@ public abstract class Motor : MonoBehaviour
     public bool HasEncoder
     {
         get { return _hasEncoder; }
+    }
+
+    /// <summary>
+    /// Whether this motor has a limit switch.
+    /// </summary>
+    public bool HasLimitSwitch
+    {
+        get { return _hasLimitSwitch; }
     }
 
     /// <summary>
@@ -138,20 +148,34 @@ public abstract class Motor : MonoBehaviour
     }
 
     /// <summary>
-    /// Current velocity of this motor in degrees per second. Only available if
-    /// this motor has an encoder.
+    /// Whether this motor is triggering its limit switch. Only available if
+    /// this motor has a limit switch.
     /// </summary>
-    public float CurrentVelocity
+    public bool AtLimit
     {
         get
         {
-            EnsureEncoder();
-            return _currentVelocity;
+            EnsureLimitSwitch();
+            return _atLimit;
         }
         protected set
         {
-            EnsureEncoder();
-            _currentVelocity = value;
+            EnsureLimitSwitch();
+            if (_atLimit == value)
+                return;
+            _atLimit = value;
+            if (_atLimit)
+            {
+                JObject limitSwitchReport = new JObject()
+                {
+                    ["type"] = "simMotorLimitSwitchReport",
+                    ["motor"] = MotorName
+                };
+                _socket.Send(limitSwitchReport);
+            }
+            // In the future, we may also want to send a message when the motor
+            // leaves its limit position. Hardware currently does not support
+            // this, however.
         }
     }
 
@@ -162,7 +186,7 @@ public abstract class Motor : MonoBehaviour
 
     protected virtual void OnEnable()
     {
-        StartCoroutine(SendStatusReports());
+        StartCoroutine(StreamStatus());
     }
 
     protected virtual void Start()
@@ -174,7 +198,6 @@ public abstract class Motor : MonoBehaviour
         {
             TargetPosition = 0;
             CurrentPosition = 0;
-            CurrentVelocity = 0;
         }
     }
 
@@ -193,13 +216,22 @@ public abstract class Motor : MonoBehaviour
     }
 
     /// <summary>
+    /// Throws an exception if this motor does not have a limit switch.
+    /// </summary>
+    private void EnsureLimitSwitch()
+    {
+        if (!_hasLimitSwitch)
+            throw new InvalidOperationException(MotorName + " has no limit switch");
+    }
+
+    /// <summary>
     /// Periodically sends status reports to the rover.
     /// </summary>
-    private IEnumerator SendStatusReports()
+    private IEnumerator StreamStatus()
     {
         while (true)
         {
-            SendStatusReport();
+            ReportStatus();
             yield return new WaitForSeconds(_statusReportPeriod);
         }
     }
@@ -207,7 +239,7 @@ public abstract class Motor : MonoBehaviour
     /// <summary>
     /// Sends a status report to the rover.
     /// </summary>
-    private void SendStatusReport()
+    private void ReportStatus()
     {
         JObject statusReport = new JObject()
         {
@@ -216,15 +248,9 @@ public abstract class Motor : MonoBehaviour
             ["power"] = CurrentPower
         };
         if (HasEncoder)
-        {
             statusReport["position"] = CurrentPosition;
-            statusReport["velocity"] = CurrentVelocity;
-        }
         else
-        {
             statusReport["position"] = null;
-            statusReport["velocity"] = null;
-        }
         _socket.Send(statusReport);
     }
 }
