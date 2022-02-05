@@ -32,7 +32,7 @@ public class GpsSensor : MonoBehaviour
 
     private void OnEnable()
     {
-        StartCoroutine(BeginReportingPosition());
+        StartCoroutine(StreamPosition());
     }
 
     private void OnDisable()
@@ -40,7 +40,7 @@ public class GpsSensor : MonoBehaviour
         StopAllCoroutines();
     }
 
-    private IEnumerator BeginReportingPosition()
+    private IEnumerator StreamPosition()
     {
         while (true)
         {

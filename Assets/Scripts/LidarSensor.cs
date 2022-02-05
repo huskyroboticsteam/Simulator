@@ -59,7 +59,7 @@ public class LidarSensor : MonoBehaviour
         while (true)
         {
             Scan();
-            Report();
+            ReportScan();
             yield return new WaitForSeconds(_scanPeriod);
         }
     }
@@ -85,7 +85,7 @@ public class LidarSensor : MonoBehaviour
         }
     }
 
-    private void Report()
+    private void ReportScan()
     {
         JObject[] jPoints = new JObject[Points.Count];
         for (int i = 0; i < Points.Count; i++)

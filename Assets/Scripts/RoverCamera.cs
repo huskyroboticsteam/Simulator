@@ -53,7 +53,7 @@ public class RoverCamera : MonoBehaviour
             _isStreaming = value;
             if (_isStreaming)
             {
-                StartCoroutine(Stream());
+                StartCoroutine(StreamFrames());
             }
             else
             {
@@ -72,7 +72,7 @@ public class RoverCamera : MonoBehaviour
     {
         if (IsStreaming)
         {
-            StartCoroutine(Stream());
+            StartCoroutine(StreamFrames());
         }
     }
 
@@ -84,37 +84,41 @@ public class RoverCamera : MonoBehaviour
         }
     }
 
-    private IEnumerator Stream()
+    private IEnumerator StreamFrames()
     {
         while (true)
         {
-            RenderTexture renderTexture = new RenderTexture(StreamWidth, StreamHeight, 24);
-            RenderTexture.active = renderTexture;
-
-            _camera.targetTexture = renderTexture;
-            _camera.Render();
-
-            Texture2D frame = new Texture2D(StreamWidth, StreamHeight, TextureFormat.RGB24, false);
-            frame.ReadPixels(new Rect(0, 0, StreamWidth, StreamHeight), 0, 0);
-
-            byte[] bytes = frame.EncodeToJPG();
-            string streamData = Convert.ToBase64String(bytes);
-
-            // Clean up to prevent memory leaks.
-            _camera.targetTexture = null;
-            RenderTexture.active = null;
-            Destroy(renderTexture);
-            Destroy(frame);
-
-            JObject cameraStreamReport = new JObject()
-            {
-                ["type"] = "simCameraStreamReport",
-                ["camera"] = CameraName,
-                ["data"] = streamData
-            };
-            _socket.Send(cameraStreamReport);
-
+            ReportFrame();
             yield return new WaitForSeconds(1 / StreamFps);
         }
+    }
+
+    private void ReportFrame()
+    {
+        RenderTexture renderTexture = new RenderTexture(StreamWidth, StreamHeight, 24);
+        RenderTexture.active = renderTexture;
+
+        _camera.targetTexture = renderTexture;
+        _camera.Render();
+
+        Texture2D frame = new Texture2D(StreamWidth, StreamHeight, TextureFormat.RGB24, false);
+        frame.ReadPixels(new Rect(0, 0, StreamWidth, StreamHeight), 0, 0);
+
+        byte[] bytes = frame.EncodeToJPG();
+        string streamData = Convert.ToBase64String(bytes);
+
+        // Clean up to prevent memory leaks.
+        _camera.targetTexture = null;
+        RenderTexture.active = null;
+        Destroy(renderTexture);
+        Destroy(frame);
+
+        JObject cameraStreamReport = new JObject()
+        {
+            ["type"] = "simCameraStreamReport",
+            ["camera"] = CameraName,
+            ["data"] = streamData
+        };
+        _socket.Send(cameraStreamReport);
     }
 }

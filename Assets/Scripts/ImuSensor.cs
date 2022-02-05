@@ -21,7 +21,7 @@ public class ImuSensor : MonoBehaviour
 
     private void OnEnable()
     {
-        StartCoroutine(BeginReportingOrientation());
+        StartCoroutine(StreamOrientation());
     }
 
     private void OnDisable()
@@ -29,7 +29,7 @@ public class ImuSensor : MonoBehaviour
         StopAllCoroutines();
     }
 
-    private IEnumerator BeginReportingOrientation()
+    private IEnumerator StreamOrientation()
     {
         while (true)
         {
