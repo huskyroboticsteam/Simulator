@@ -50,15 +50,15 @@ public class ImuSensor : MonoBehaviour
         Quaternion rot = transform.rotation;
 
         // Convert to our coordinate system.
-        // Unity Y -> Rover Z
-        // Unity -X -> Rover Y
-        // Unity Z -> Rover X
+        // Unity -Y -> Rover Z
+        // Unity X -> Rover Y
+        // Unity -Z -> Rover X
         JObject orientationReport = new JObject()
         {
             ["type"] = "simImuOrientationReport",
-            ["x"] = rot.z,
-            ["y"] = -rot.x,
-            ["z"] = rot.y,
+            ["x"] = -rot.z,
+            ["y"] = rot.x,
+            ["z"] = -rot.y,
             ["w"] = rot.w
         };
         _socket.Send(orientationReport);
