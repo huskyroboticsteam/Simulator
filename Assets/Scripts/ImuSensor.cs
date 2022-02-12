@@ -61,9 +61,9 @@ public class ImuSensor : MonoBehaviour
         JObject orientationReport = new JObject()
         {
             ["type"] = "simImuOrientationReport",
-            ["x"] = rotation.z,
-            ["y"] = rotation.x,
-            ["z"] = rotation.y,
+            ["x"] = rotation.x,
+            ["y"] = rotation.y,
+            ["z"] = rotation.z,
             ["w"] = rotation.w
         };
         _socket.Send(orientationReport);
