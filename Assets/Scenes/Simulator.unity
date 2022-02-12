@@ -1849,6 +1849,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _reportPeriod: 0.05
+  _noise: 3
 --- !u!1 &2126870834
 GameObject:
   m_ObjectHideFlags: 0
@@ -2592,6 +2593,7 @@ GameObject:
   - component: {fileID: 2516181680764149516}
   - component: {fileID: 2166036607842748948}
   - component: {fileID: 4173633544304033502}
+  - component: {fileID: 2516181680764149519}
   m_Layer: 6
   m_Name: Rover
   m_TagString: Untagged
@@ -2641,6 +2643,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8d0d374843382444984ee02b96ffd54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2516181680764149519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2516181680764149515}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38d1fcd4845761344978389a2972593d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _reportPeriod: 0.033333335
 --- !u!23 &2710550002911401694
 MeshRenderer:
   m_ObjectHideFlags: 0

@@ -11,6 +11,12 @@ public class ImuSensor : MonoBehaviour
 {
     [SerializeField]
     private float _reportPeriod;
+    /// <summary>
+    /// Standard deviation of Gaussian noise applied to each measured euler
+    /// angle in degrees.
+    /// </summary>
+    [SerializeField]
+    private float _noise;
 
     private RoverSocket _socket;
 
@@ -40,26 +46,25 @@ public class ImuSensor : MonoBehaviour
 
     private void ReportOrientation()
     {
-        // Note on quaternions in Unity:
-        // Let A be the axis of rotation represented by a quaternion Q.
-        // Let theta be the angle of rotation about A represented by Q.
-        // Q.x = A.x * sin(theta / 2)
-        // Q.y = A.y * sin(theta / 2)
-        // Q.z = A.y * sin(theta / 2)
-        // Q.w = cos(theta / 2)
-        Quaternion rot = transform.rotation;
+        Quaternion rotation = transform.rotation;
 
-        // Convert to our coordinate system.
-        // Unity -Y -> Rover Z
-        // Unity X -> Rover Y
-        // Unity -Z -> Rover X
+        // Apply noise to each euler angle.
+        Vector3 eulers = rotation.eulerAngles;
+        eulers.x += _noise * Utilities.GaussianRandom();
+        eulers.y += _noise * Utilities.GaussianRandom();
+        eulers.z += _noise * Utilities.GaussianRandom();
+        rotation = Quaternion.Euler(eulers);
+
+        // Convert to rover coordinate system.
+        rotation = Utilities.ConvertUnityToRover(rotation);
+
         JObject orientationReport = new JObject()
         {
             ["type"] = "simImuOrientationReport",
-            ["x"] = -rot.z,
-            ["y"] = rot.x,
-            ["z"] = -rot.y,
-            ["w"] = rot.w
+            ["x"] = rotation.z,
+            ["y"] = rotation.x,
+            ["z"] = rotation.y,
+            ["w"] = rotation.w
         };
         _socket.Send(orientationReport);
     }

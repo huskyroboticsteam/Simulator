@@ -160,6 +160,32 @@ Sent from the simulator to inform the rover server of a single frame of a camera
 - `camera` - the name of the camera
 - `data` - the frame in JPG format encoded as a base-64 string
 
+## Rover True Pose Report
+### Description
+Sent from the simulator to inform the rover server of the rover's exact pose.
+
+### Syntax
+```
+{
+  type: "simRoverTruePoseReport",
+  position: {
+    x: number,
+    y: number,
+    z: number
+  },
+  rotation: {
+    x: number,
+    y: number,
+    z: number,
+    w: number
+  }
+}
+```
+
+### Parameters
+- `position` - the position of the rover in standard Husky Robotics coordinates
+- `rotation` - the rotation of the rover in standard Husky Robotics coordinates
+
 ## GPS Position Report
 ### Description
 Sent from the simulator to inform the rover server of the geographic position provided by a simulated GPS sensor. The position will be reported in standard geographic coordinates. The simulated GPS sensor will map Unity's cartesian origin to Null Island. Gaussian noise is applied to the latitude and longitude.

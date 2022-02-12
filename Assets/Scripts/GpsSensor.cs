@@ -52,8 +52,8 @@ public class GpsSensor : MonoBehaviour
     private void ReportPosition()
     {
         // Use double precision since geographic degrees are very large.
-        double latitude = CartesianToGeographic(transform.position.z + _noise * GaussianRandom());
-        double longitude = CartesianToGeographic(transform.position.x + _noise * GaussianRandom());
+        double latitude = CartesianToGeographic(transform.position.z + _noise * Utilities.GaussianRandom());
+        double longitude = CartesianToGeographic(transform.position.x + _noise * Utilities.GaussianRandom());
 
         JObject positionReport = new JObject()
         {
@@ -62,15 +62,6 @@ public class GpsSensor : MonoBehaviour
             ["longitude"] = longitude
         };
         _socket.Send(positionReport);
-    }
-
-    /// <summary>
-    /// Returns a pseudorandom, Gaussian distributed value with mean 0 and
-    /// standard deviation 1.
-    /// </summary>
-    private float GaussianRandom()
-    {
-        return Mathf.Sqrt(-2f * Mathf.Log(Random.value)) * Mathf.Sin(2f * Mathf.PI * Random.value);
     }
 
     private double CartesianToGeographic(float meters)
