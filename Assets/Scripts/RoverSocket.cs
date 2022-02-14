@@ -2,6 +2,7 @@
 using System.Threading;
 using UnityEngine;
 using WebSocketSharp;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 /// <summary>
@@ -75,9 +76,9 @@ public class RoverSocket : MonoBehaviour
         {
             while (_socket.IsAlive)
             {
-                while (_outgoingMessages.TryDequeue(out JObject message))
+                if (_outgoingMessages.TryDequeue(out JObject message))
                 {
-                    _socket.Send(message.ToString(Newtonsoft.Json.Formatting.None));
+                    _socket.Send(message.ToString(Formatting.None));
                 }
             }
         }).Start();
