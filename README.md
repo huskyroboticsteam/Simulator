@@ -71,7 +71,7 @@ Sent from the rover server to instruct the simulator to make a motor run to a sp
 
 ### Parameters
 - `motor` - the name of the motor
-- `position` - the requested position in degrees
+- `position` - the requested position in millidegrees
 
 ## Motor Status Report
 ### Description
@@ -90,17 +90,18 @@ Sent from the simulator to inform the rover server of a motor's status.
 ### Parameters
 - `motor` - the name of the motor
 - `power` - the current power of the motor, or `null` if unavailable
-- `position` - the current position of the motor in degrees, or `null` if unavailable
+- `position` - the current position of the motor in millidegrees, or `null` if unavailable
 
-## Motor Limit Switch Report
+## Motor Limit Switch Alert
 ### Description
 Sent from the simulator to inform the rover server that a motor has triggered its limit switch.
 
 ### Syntax
 ```
 {
-  type: "simMotorLimitSwitchReport",
-  motor: string
+  type: "simLimitSwitchAlert",
+  motor: string,
+  limit: "minimum" | "maximum"
 }
 ```
 
