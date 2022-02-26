@@ -20,16 +20,11 @@ public class WheelMotor : Motor
         _wheel = GetComponent<WheelCollider>();
     }
 
-    private void Update()
-    {
-        UpdatePower();
-        if (HasEncoder)
-            UpdateEncoder();
-        UpdateModel();
-    }
-
     private void FixedUpdate()
     {
+        UpdatePower();
+        UpdatePosition();
+        Render();
         _wheel.motorTorque = CurrentPower * _torqueMultiplier;
     }
 
@@ -48,12 +43,12 @@ public class WheelMotor : Motor
         }
     }
 
-    private void UpdateEncoder()
+    private void UpdatePosition()
     {
         CurrentPosition += _wheel.rpm * 360f / 60f * Time.deltaTime;
     }
 
-    private void UpdateModel()
+    private void Render()
     {
         _wheel.GetWorldPose(out Vector3 pos, out Quaternion rot);
         _display.transform.position = pos;

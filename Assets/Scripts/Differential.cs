@@ -3,16 +3,22 @@ using UnityEngine;
 public class Differential : MonoBehaviour
 {
     [SerializeField]
-    private DifferentialMotor _leftMotor;
+    private PowerDrivenMotor _leftMotor;
     [SerializeField]
-    private DifferentialMotor _rightMotor;
+    private PowerDrivenMotor _rightMotor;
 
     private void FixedUpdate()
     {
-        float leftPos = _leftMotor.CurrentPosition;
-        float rightPos = _rightMotor.CurrentPosition;
+        float leftPos = _leftMotor.CurrentPosition / _leftMotor.GearRatio;
+        if (_leftMotor.Reverse)
+            leftPos = -leftPos;
+
+        float rightPos = _rightMotor.CurrentPosition / _rightMotor.GearRatio;
+        if (_rightMotor.Reverse)
+            rightPos = -rightPos;
+
         float pitch = (rightPos + leftPos) / 2;
-        float roll = rightPos - leftPos;
+        float roll = leftPos - rightPos;
         transform.localRotation = Quaternion.Euler(pitch, 0, roll);
     }
 }

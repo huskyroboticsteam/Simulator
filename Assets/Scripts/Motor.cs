@@ -13,6 +13,58 @@ using Newtonsoft.Json.Linq;
 public abstract class Motor : MonoBehaviour
 {
     /// <summary>
+    /// Determines how a motor will be able to read and report its position.
+    /// </summary>
+    public enum PositionSensorType
+    {
+        /// <summary>
+        /// A motor cannot read its position.
+        /// </summary>
+        None,
+        /// <summary>
+        /// A motor can read its position relative to its start position.
+        /// </summary>
+        Encoder,
+        /// <summary>
+        /// A motor can read its position absolutely.
+        /// </summary>
+        Potentiometer
+    }
+
+    /// <summary>
+    /// Determines the behavior of a motor's limit switch.
+    /// </summary>
+    public enum LimitSwitch
+    {
+        /// <summary>
+        /// The motor has no limit switch.
+        /// </summary>
+        None,
+        /// <summary>
+        /// The motor should report when it has triggered its limit switch, but
+        /// continue moving.
+        /// </summary>
+        Report,
+        /// <summary>
+        /// The motor should stop and report when it has triggered its limit
+        /// switch.
+        /// </summary>
+        KillAndReport
+    }
+
+    public enum Limit
+    {
+        /// <summary>
+        /// Corresponds to a limit switch at the minimum motor position.
+        /// </summary>
+        Minimum,
+        /// <summary>
+        /// Corresponds to a limit switch at the maximum motor position.
+        /// </summary>
+        Maximum
+    }
+
+    /// <summary>
     /// Determines the behavior of a motor.
     /// </summary>
     public enum RunMode
@@ -30,9 +82,19 @@ public abstract class Motor : MonoBehaviour
     [SerializeField]
     private string _motorName;
     [SerializeField]
-    private bool _hasEncoder;
+    private bool _reverse;
     [SerializeField]
-    private bool _hasLimitSwitch;
+    private PositionSensorType _positionSensor;
+    [SerializeField]
+    private LimitSwitch _minLimitSwitch;
+    [SerializeField]
+    private float _minLimitPosition;
+    [SerializeField]
+    private LimitSwitch _maxLimitSwitch;
+    [SerializeField]
+    private float _maxLimitPosition;
+    [SerializeField]
+    private float _potentiometerOffset;
     [SerializeField]
     private float _statusReportPeriod;
 
@@ -41,7 +103,6 @@ public abstract class Motor : MonoBehaviour
     private float _currentPower;
     private float _targetPosition;
     private float _currentPosition;
-    private bool _atLimit;
     private RoverSocket _socket;
 
     /// <summary>
@@ -53,19 +114,50 @@ public abstract class Motor : MonoBehaviour
     }
 
     /// <summary>
-    /// Whether this motor can read its position.
+    /// Whether this motor's direction is reversed.
     /// </summary>
-    public bool HasEncoder
+    public bool Reverse
     {
-        get { return _hasEncoder; }
+        get { return _reverse; }
+    }
+
+    public PositionSensorType PositionSensor
+    {
+        get { return _positionSensor; }
     }
 
     /// <summary>
-    /// Whether this motor has a limit switch.
+    /// The lower limit switch on this motor.
     /// </summary>
-    public bool HasLimitSwitch
+    public LimitSwitch MinLimitSwitch
     {
-        get { return _hasLimitSwitch; }
+        get { return _minLimitSwitch; }
+    }
+
+    /// <summary>
+    /// The position in degrees at which the lower limit switch on this motor
+    /// is triggered.
+    /// </summary>
+    public float MinLimitPosition
+    {
+        get { return _minLimitPosition; }
+    }
+
+    /// <summary>
+    /// The upper limit switch on this motor.
+    /// </summary>
+    public LimitSwitch MaxLimitSwitch
+    {
+        get { return _maxLimitSwitch; }
+    }
+
+    /// <summary>
+    /// The position in degrees at which the upper limit switch on this motor
+    /// is triggered.
+    /// </summary>
+    public float MaxLimitPosition
+    {
+        get { return _maxLimitPosition; }
     }
 
     /// <summary>
@@ -77,7 +169,7 @@ public abstract class Motor : MonoBehaviour
         set
         {
             if (value == RunMode.RunToPosition)
-                EnsureEncoder();
+                EnsurePositionSensor();
             _mode = value;
         }
     }
@@ -119,64 +211,43 @@ public abstract class Motor : MonoBehaviour
     {
         get
         {
-            EnsureEncoder();
+            EnsurePositionSensor();
             return _targetPosition;
         }
         set
         {
-            EnsureEncoder();
+            EnsurePositionSensor();
             _targetPosition = value;
         }
     }
 
     /// <summary>
-    /// Current position in degrees of this motor. Only available if this motor
-    /// has an encoder.
+    /// Current position in degrees of this motor.
     /// </summary>
     public float CurrentPosition
     {
         get
         {
-            EnsureEncoder();
             return _currentPosition;
         }
         protected set
         {
-            EnsureEncoder();
             _currentPosition = value;
         }
     }
 
     /// <summary>
-    /// Whether this motor is triggering its limit switch. Only available if
-    /// this motor has a limit switch.
+    /// Sends a limit switch report for this motor to the rover server.
     /// </summary>
-    public bool AtLimit
+    protected void ReportLimitSwitchTriggered(Limit limit)
     {
-        get
+        JObject limitSwitchReport = new JObject()
         {
-            EnsureLimitSwitch();
-            return _atLimit;
-        }
-        protected set
-        {
-            EnsureLimitSwitch();
-            if (_atLimit == value)
-                return;
-            _atLimit = value;
-            if (_atLimit)
-            {
-                JObject limitSwitchReport = new JObject()
-                {
-                    ["type"] = "simMotorLimitSwitchReport",
-                    ["motor"] = MotorName
-                };
-                _socket.Send(limitSwitchReport);
-            }
-            // In the future, we may also want to send a message when the motor
-            // leaves its limit position. Hardware currently does not support
-            // this, however.
-        }
+            ["type"] = "simLimitSwitchReport",
+            ["motor"] = MotorName,
+            ["limit"] = limit.ToString().ToLower()
+        };
+        _socket.Send(limitSwitchReport);
     }
 
     protected virtual void Awake()
@@ -194,11 +265,9 @@ public abstract class Motor : MonoBehaviour
         Mode = RunMode.RunWithPower;
         TargetPower = 0;
         CurrentPower = 0;
-        if (HasEncoder)
-        {
+        CurrentPosition = 0;
+        if (PositionSensor != PositionSensorType.None)
             TargetPosition = 0;
-            CurrentPosition = 0;
-        }
     }
 
     protected virtual void OnDisable()
@@ -207,21 +276,12 @@ public abstract class Motor : MonoBehaviour
     }
 
     /// <summary>
-    /// Throws an exception if this motor does not have an encoder.
+    /// Throws an exception if this motor does not have a position sensor.
     /// </summary>
-    private void EnsureEncoder()
+    private void EnsurePositionSensor()
     {
-        if (!_hasEncoder)
+        if (PositionSensor == PositionSensorType.None)
             throw new InvalidOperationException(MotorName + " has no encoder");
-    }
-
-    /// <summary>
-    /// Throws an exception if this motor does not have a limit switch.
-    /// </summary>
-    private void EnsureLimitSwitch()
-    {
-        if (!_hasLimitSwitch)
-            throw new InvalidOperationException(MotorName + " has no limit switch");
     }
 
     /// <summary>
@@ -247,8 +307,9 @@ public abstract class Motor : MonoBehaviour
             ["motor"] = MotorName,
             ["power"] = CurrentPower
         };
-        if (HasEncoder)
-            statusReport["position"] = CurrentPosition;
+        if (PositionSensor != PositionSensorType.None)
+            // Convert from degrees to millidegrees.
+            statusReport["position"] = (int)(CurrentPosition * 1000f);
         else
             statusReport["position"] = null;
         _socket.Send(statusReport);
