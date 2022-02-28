@@ -51,6 +51,9 @@ public abstract class Motor : MonoBehaviour
         KillAndReport
     }
 
+    /// <summary>
+    /// Describes the position of a limit switch.
+    /// </summary>
     public enum Limit
     {
         /// <summary>
@@ -120,6 +123,9 @@ public abstract class Motor : MonoBehaviour
         get { return _reverse; }
     }
 
+    /// <summary>
+    /// This motor's position sensor type.
+    /// </summary>
     public PositionSensorType PositionSensor
     {
         get { return _positionSensor; }
@@ -204,7 +210,8 @@ public abstract class Motor : MonoBehaviour
 
     /// <summary>
     /// The position in degrees that this motor will try to run to when its
-    /// mode is RunToPosition. Only available if this motor has an encoder.
+    /// mode is RunToPosition. Only available if this motor has a position
+    /// sensor.
     /// </summary>
     public float TargetPosition
     {
@@ -280,7 +287,7 @@ public abstract class Motor : MonoBehaviour
     private void EnsurePositionSensor()
     {
         if (PositionSensor == PositionSensorType.None)
-            throw new InvalidOperationException(MotorName + " has no encoder");
+            throw new InvalidOperationException(MotorName + " has no position sensor");
     }
 
     /// <summary>
