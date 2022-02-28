@@ -6,9 +6,8 @@ using Newtonsoft.Json.Linq;
 /// <summary>
 /// A motor on the rover. The manner in which this motor interacts with Unity's
 /// physics must be implemented in subclasses by reading Mode, TargetPower,
-/// and TargetPosition. Subclasses are responsible setting CurrentPower,
-/// CurrentPosition, and CurrentVelocity. Positions and velocities can only be
-/// accessed on motors with encoders.
+/// and TargetPosition. Subclasses are responsible setting CurrentPower and
+/// CurrentPosition.
 /// </summary>
 public abstract class Motor : MonoBehaviour
 {
