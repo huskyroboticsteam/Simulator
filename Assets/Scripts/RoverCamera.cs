@@ -48,8 +48,6 @@ public class RoverCamera : MonoBehaviour
         {
             float f = 1.0f;  // focal length can be arbitrary.
 
-            float sensorSizeX = f * StreamWidth / value[0];
-
             float ax = value[0];
             float ay = value[4];
             float px = value[2];
