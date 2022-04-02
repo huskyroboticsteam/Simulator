@@ -27,27 +27,23 @@ public class Rover : MonoBehaviour
     }
 
     /// <summary>
-    /// Returns the motor on this rover with the specified name.
+    /// Returns the motor on this rover with the specified name, or null if
+    /// none exists.
     /// </summary>
     public Motor GetMotor(string motorName)
     {
-        if (_motors.TryGetValue(motorName, out Motor motor))
-        {
-            return motor;
-        }
-        throw new ArgumentException("No such motor " + motorName);
+        _motors.TryGetValue(motorName, out Motor motor);
+        return motor;
     }
 
     /// <summary>
-    /// Returns the camera on this rover with the specified name.
+    /// Returns the camera on this rover with the specified name, nor null if
+    /// none exists.
     /// </summary>
     public RoverCamera GetCamera(string cameraName)
     {
-        if (_cameras.TryGetValue(cameraName, out RoverCamera camera))
-        {
-            return camera;
-        }
-        throw new ArgumentException("No such camera " + cameraName + ".");
+        _cameras.TryGetValue(cameraName, out RoverCamera camera);
+        return camera;
     }
 
     private void OnEnable()

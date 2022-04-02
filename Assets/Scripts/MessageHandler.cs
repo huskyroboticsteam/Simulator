@@ -22,6 +22,9 @@ public static class MessageHandler
             case "simCameraStreamCloseRequest":
                 HandleCameraStreamCloseRequest(rover, message);
                 break;
+            default:
+                SimulatorConsole.WriteLine("Unknown message type: " + type);
+                break;
         }
     }
 
@@ -29,6 +32,11 @@ public static class MessageHandler
     {
         string motorName = (string)motorPowerRequest["motor"];
         Motor motor = rover.GetMotor(motorName);
+        if (motor == null)
+        {
+            SimulatorConsole.WriteLine("Unknown motor: " + motorName);
+            return;
+        }
         motor.TargetPower = (float)motorPowerRequest["power"];
         motor.Mode = Motor.RunMode.RunWithPower;
     }
@@ -37,6 +45,11 @@ public static class MessageHandler
     {
         string motorName = (string)motorPositionRequest["motor"];
         Motor motor = rover.GetMotor(motorName);
+        if (motor == null)
+        {
+            SimulatorConsole.WriteLine("Unknown motor: " + motorName);
+            return;
+        }
         // Convert from millidegrees to degrees.
         motor.TargetPosition = (float)motorPositionRequest["position"] * 0.001f;
         motor.Mode = Motor.RunMode.RunToPosition;
@@ -46,6 +59,17 @@ public static class MessageHandler
     {
         string cameraName = (string)cameraStreamOpenRequest["camera"];
         RoverCamera camera = rover.GetCamera(cameraName);
+        if (camera == null)
+        {
+            SimulatorConsole.WriteLine("Unknown camera: " + cameraName);
+            return;
+        }
+        if (camera.IsStreaming)
+        {
+            SimulatorConsole.WriteLine(
+                "Attempted to stream camera that is already streaming: " + cameraName);
+            return;
+        }
         camera.StreamFps = (float)cameraStreamOpenRequest["fps"];
         camera.StreamWidth = (int)cameraStreamOpenRequest["width"];
         camera.StreamHeight = (int)cameraStreamOpenRequest["height"];
@@ -56,6 +80,17 @@ public static class MessageHandler
     {
         string cameraName = (string)cameraStreamCloseRequest["camera"];
         RoverCamera camera = rover.GetCamera(cameraName);
+        if (camera == null)
+        {
+            SimulatorConsole.WriteLine("Unknown camera: " + cameraName);
+            return;
+        }
+        if (!camera.IsStreaming)
+        {
+            SimulatorConsole.WriteLine(
+                "Attempted to close camera that is already closed: " + cameraName);
+            return;
+        }
         camera.IsStreaming = false;
     }
 }

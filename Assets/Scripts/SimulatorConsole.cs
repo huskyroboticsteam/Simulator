@@ -10,11 +10,12 @@ public class SimulatorConsole : MonoBehaviour
 {
     private const int MaxDisplayedMessages = 8;
 
+    private static IDictionary<string, Command> s_commands = new Dictionary<string, Command>();
+    private static IList<ConsoleMessage> s_output = new List<ConsoleMessage>();
+
     [SerializeField]
     private Font _font;
 
-    private IDictionary<string, Command> _commands = new Dictionary<string, Command>();
-    private IList<ConsoleMessage> _output;
     private bool _focused;
     private string _userInput;
 
@@ -23,32 +24,32 @@ public class SimulatorConsole : MonoBehaviour
     /// invoked by typing the command's name into the simulator console's input
     /// field.
     /// </summary>
-    public void RegisterCommand(Command command)
+    public static void RegisterCommand(Command command)
     {
-        _commands[command.Name] = command;
+        s_commands[command.Name] = command;
     }
 
     /// <summary>
     /// Unregisters the given command with this console.
     /// </summary>
-    public void UnregisterCommand(Command command)
+    public static void UnregisterCommand(Command command)
     {
-        _commands.Remove(command.Name);
+        s_commands.Remove(command.Name);
     }
 
     /// <summary>
     /// Prints the given string to this console.
     /// </summary>
-    public void WriteLine(string value)
+    public static void WriteLine(string value)
     {
         // Append the message to the output text.
         ConsoleMessage message = new ConsoleMessage(value, Time.time + 5f);
-        _output.Add(message);
+        s_output.Add(message);
 
         // Prevent overflow.
-        if (_output.Count > 8)
+        if (s_output.Count > MaxDisplayedMessages)
         {
-            _output.RemoveAt(0);
+            s_output.RemoveAt(0);
         }
     }
 
@@ -56,7 +57,6 @@ public class SimulatorConsole : MonoBehaviour
     {
         _focused = false;
         _userInput = "";
-        _output = new List<ConsoleMessage>();
     }
 
     private void Update()
@@ -104,12 +104,12 @@ public class SimulatorConsole : MonoBehaviour
             string outputText = "";
 
             // Add padding.
-            for (int i = 0; i < MaxDisplayedMessages - _output.Count; i++)
+            for (int i = 0; i < MaxDisplayedMessages - s_output.Count; i++)
             {
                 outputText += '\n';
             }
 
-            foreach (ConsoleMessage message in _output)
+            foreach (ConsoleMessage message in s_output)
             {
                 outputText += message.text + '\n';
             }
@@ -125,7 +125,7 @@ public class SimulatorConsole : MonoBehaviour
 
             // Only draw unfaded messages.
             List<ConsoleMessage> unfadedMessages = new List<ConsoleMessage>();
-            foreach (ConsoleMessage message in _output)
+            foreach (ConsoleMessage message in s_output)
             {
                 if (!message.HasFaded())
                 {
@@ -178,7 +178,7 @@ public class SimulatorConsole : MonoBehaviour
 
         // Ensure command exists.
         string commandName = tokens[0];
-        if (!_commands.ContainsKey(commandName))
+        if (!s_commands.ContainsKey(commandName))
         {
             WriteLine("No such command: " + commandName);
             return;
@@ -189,7 +189,7 @@ public class SimulatorConsole : MonoBehaviour
         Array.Copy(tokens, 1, args, 0, tokens.Length - 1);
 
         // Execute command.
-        Command command = _commands[commandName];
+        Command command = s_commands[commandName];
         command.Execute(args);
     }
 

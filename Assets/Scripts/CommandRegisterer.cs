@@ -7,13 +7,7 @@ using UnityEngine.SceneManagement;
 /// </summary>
 public class CommandRegisterer : MonoBehaviour
 {
-    private SimulatorConsole _console;
     private IList<Command> _commands;
-
-    private void Awake()
-    {
-        _console = FindObjectOfType<SimulatorConsole>();
-    }
 
     private void OnEnable()
     {
@@ -23,7 +17,7 @@ public class CommandRegisterer : MonoBehaviour
 
         foreach (Command command in _commands)
         {
-            _console.RegisterCommand(command);
+            SimulatorConsole.RegisterCommand(command);
         }
     }
 
@@ -31,7 +25,7 @@ public class CommandRegisterer : MonoBehaviour
     {
         foreach (Command command in _commands)
         {
-            _console.UnregisterCommand(command);
+            SimulatorConsole.UnregisterCommand(command);
         }
     }
 
@@ -42,7 +36,7 @@ public class CommandRegisterer : MonoBehaviour
     {
         if (args.Length != 0)
         {
-            _console.WriteLine("reset takes no arguments");
+            SimulatorConsole.WriteLine("reset takes no arguments");
             return;
         }
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
