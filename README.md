@@ -89,8 +89,8 @@ Sent from the simulator to inform the rover server of a motor's status.
 
 ### Parameters
 - `motor` - the name of the motor
-- `power` - the current power of the motor, or `null` if unavailable
-- `position` - the current position of the motor in millidegrees, or `null` if unavailable
+- `power` - the current power of the motor in [-1, 1], or `null` if unavailable
+- `position` - the current integer position of the motor in millidegrees, or `null` if unavailable
 
 ## Motor Limit Switch Alert
 ### Description
