@@ -119,7 +119,8 @@ Sent from the rover server to instruct the simulator to begin providing a camera
   camera: string,
   fps: number,
   width: number,
-  height: number
+  height: number,
+  intrinsicParameters: number[9] | null
 }
 ```
 
@@ -128,6 +129,7 @@ Sent from the rover server to instruct the simulator to begin providing a camera
 - `fps` - the frames per second of the stream
 - `width` - the width of the stream in pixels
 - `height` - the height of the stream in pixels
+- `intrinsicParameters` - the intrinsic parameters to be used by the camera, or `null` if none should be specified
 
 ## Camera Stream Close Request
 ### Description
