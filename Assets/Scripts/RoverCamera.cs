@@ -42,7 +42,7 @@ public class RoverCamera : MonoBehaviour
     /// A flattened 3x3 matrix representing the intrinsic parameters of this
     /// camera.
     /// </summary>
-    public float[] IntrinsicParams
+    public float[] IntrinsicParameters
     {
         set
         {
