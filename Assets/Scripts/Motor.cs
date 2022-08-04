@@ -12,6 +12,12 @@ using Newtonsoft.Json.Linq;
 public abstract class Motor : MonoBehaviour
 {
     /// <summary>
+    /// How many seconds a motor should be powered when it receives a power
+    /// request before its power is zeroed to simulate watchdog timers.
+    /// </summary>
+    private const float PowerDuration = 1f;
+
+    /// <summary>
     /// Determines how a motor will be able to read and report its position.
     /// </summary>
     public enum PositionSensorType
@@ -105,6 +111,7 @@ public abstract class Motor : MonoBehaviour
     private float _currentPower;
     private float _targetPosition;
     private float _currentPosition;
+    private float _killPowerTime;
     private RoverSocket _socket;
 
     /// <summary>
@@ -191,6 +198,7 @@ public abstract class Motor : MonoBehaviour
             if (Math.Abs(value) > 1)
                 throw new ArgumentOutOfRangeException(nameof(value), "|value| > 1");
             _targetPower = value;
+            _killPowerTime = Time.time + PowerDuration;
         }
     }
 
@@ -269,16 +277,22 @@ public abstract class Motor : MonoBehaviour
     protected virtual void Start()
     {
         Mode = RunMode.RunWithPower;
-        TargetPower = 0;
-        CurrentPower = 0;
-        CurrentPosition = 0;
+        TargetPower = 0f;
+        CurrentPower = 0f;
+        CurrentPosition = 0f;
         if (PositionSensor != PositionSensorType.None)
-            TargetPosition = 0;
+            TargetPosition = 0f;
     }
 
     protected virtual void OnDisable()
     {
         StopAllCoroutines();
+    }
+
+    protected virtual void Update()
+    {
+        if (Time.time > _killPowerTime && Mode == RunMode.RunWithPower)
+            TargetPower = 0f;
     }
 
     /// <summary>

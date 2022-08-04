@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 
 /// <summary>
-/// A motor whose change in position depeneds primarily on its current power.
+/// A motor whose change in position depeneds primarily on its current power,
+/// as opposed to its interaction with the physics engine.
 /// </summary>
 public class PowerDrivenMotor : Motor
 {

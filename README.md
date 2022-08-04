@@ -41,7 +41,7 @@ The JSON objects sent between the simulator and the rover server are termed *mes
 
 ## Motor Power Request
 ### Description
-Sent from the rover server to instruct the simulator to make a motor run with a specified power.
+Sent from the rover server to instruct the simulator to make a motor run with a specified power. The motor will only be powered for one second upon receiving the request. After one second, the power will be zeroed to simulate watchdog timers. Thus, to keep a motor powered continuously, the message will need to be resent periodically.
 
 ### Syntax
 ```
