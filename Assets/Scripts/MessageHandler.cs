@@ -50,10 +50,10 @@ public static class MessageHandler
         camera.StreamWidth = (int)cameraStreamOpenRequest["width"];
         camera.StreamHeight = (int)cameraStreamOpenRequest["height"];
         camera.IsStreaming = true;
-        if (cameraStreamOpenRequest.ContainsKey("intrinsicParameters"))
+        JArray intrinsicParameters = (JArray)cameraStreamOpenRequest["intrinsicParameters"];
+        if (intrinsicParameters != null)
         {
-            camera.IntrinsicParameters = ((JArray)cameraStreamOpenRequest["intrinsicParameters"])
-                .ToObject<float[]>();
+            camera.IntrinsicParameters = intrinsicParameters.ToObject<float[]>();
         }
     }
 

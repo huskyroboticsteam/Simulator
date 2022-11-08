@@ -46,7 +46,7 @@ public class RoverCamera : MonoBehaviour
     {
         set
         {
-            float f = 1.0f;  // focal length can be arbitrary.
+            float f = 1.0f;  // focal length can be anything but 0.
 
             float ax = value[0];
             float ay = value[4];
