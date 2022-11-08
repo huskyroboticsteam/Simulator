@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 /// <summary>
-/// Component applied to the main camera to make it follow a target.
+/// Component applied to the main camera pivot to make it follow a target.
 /// </summary>
 public class MainCameraController : MonoBehaviour
 {
