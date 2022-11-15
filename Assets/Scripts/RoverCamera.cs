@@ -39,6 +39,34 @@ public class RoverCamera : MonoBehaviour
     public int StreamHeight { get; set; }
 
     /// <summary>
+    /// A flattened 3x3 matrix representing the intrinsic parameters of this
+    /// camera.
+    /// </summary>
+    public float[] IntrinsicParameters
+    {
+        set
+        {
+            float f = 1.0f;  // focal length can be anything but 0.
+
+            float ax = value[0];
+            float ay = value[4];
+            float px = value[2];
+            float py = value[5];
+
+            float sizeX = f * StreamWidth / ax;
+            float sizeY = f * StreamHeight / ay;
+
+            float shiftX = -(px - StreamWidth / 2.0f) / StreamWidth;
+            float shiftY = (py - StreamHeight / 2.0f) / StreamHeight;
+
+            _camera.usePhysicalProperties = true;
+            _camera.sensorSize = new Vector2(sizeX, sizeY);
+            _camera.focalLength = f;
+            _camera.lensShift = new Vector2(shiftX, shiftY);
+        }
+    }
+
+    /// <summary>
     /// Whether this camera is streaming to the rover server.
     /// </summary>
     public bool IsStreaming

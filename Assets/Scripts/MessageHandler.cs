@@ -74,6 +74,11 @@ public static class MessageHandler
         camera.StreamWidth = (int)cameraStreamOpenRequest["width"];
         camera.StreamHeight = (int)cameraStreamOpenRequest["height"];
         camera.IsStreaming = true;
+        JArray intrinsicParameters = (JArray)cameraStreamOpenRequest["intrinsicParameters"];
+        if (intrinsicParameters != null)
+        {
+            camera.IntrinsicParameters = intrinsicParameters.ToObject<float[]>();
+        }
     }
 
     private static void HandleCameraStreamCloseRequest(Rover rover, JObject cameraStreamCloseRequest)
