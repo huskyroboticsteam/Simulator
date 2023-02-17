@@ -3001,7 +3001,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _motorName: wrist
-  _reverse: 0
+  _reverse: 1
   _positionSensor: 1
   _minLimitSwitch: 2
   _minLimitPosition: -5000
