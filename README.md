@@ -20,8 +20,7 @@ The simulator is able to simulate the motors with the following names:
 - shoulder
 - elbow
 - forearm
-- differentialLeft
-- differentialRight
+- wrist
 - hand
 
 ## Cameras
