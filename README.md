@@ -1,6 +1,13 @@
 # Husky Robotics Simulator
 The 3D Unity-based Husky Robotics simulator.
 
+## Creating Releases
+To create a new release from `main`, push create and push a new tag, replacing `<major>`, `<minor>`, and `<patch>` with the appropriate values, as per [semantic versioning](https://semver.org/).
+```bash
+git tag v<major>.<minor>.<patch>
+git push origin --tags
+```
+
 ## Overview
 This simulator creates a WebSocket client to connect directly to the rover WebSocket server at the URL `ws://localhost:3001/simulator`. The simulator will automatically connect to the rover server and reconnect as needed, providing a visual indication of the connection status. The simulator and the rover server communicate with each other by sending JSON objects termed *messages* over the WebSocket connection. Through these messages, the rover server can request that the simulator perform certain actions, such as set a a motor's power. Additionally, the simulator provides the rover server with data such as camera streams and lidar data through these messages.
 
