@@ -74,7 +74,7 @@ public class RoverSocket : MonoBehaviour
     {
         new Thread(() =>
         {
-            while (_socket.IsAlive)
+            while (IsConnected)
             {
                 if (_outgoingMessages.TryDequeue(out JObject message))
                 {
