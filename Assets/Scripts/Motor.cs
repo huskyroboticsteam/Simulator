@@ -328,8 +328,8 @@ public abstract class Motor : MonoBehaviour
             ["power"] = CurrentPower
         };
         if (PositionSensor != PositionSensorType.None)
-            // Convert from degrees to millidegrees.
-            statusReport["position"] = (int)(CurrentPosition * 1000f);
+            // Convert from degrees to millidegrees (remember to invert)
+            statusReport["position"] = (int)(-CurrentPosition * 1000f);
         else
             statusReport["position"] = null;
         _socket.Send(statusReport);
