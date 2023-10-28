@@ -60,4 +60,13 @@ public class Rover : MonoBehaviour
             _cameras[camera.CameraName] = camera;
         }
     }
+
+    public void ResetPos()
+    {
+        transform.position = new Vector3(0, 19.4f, 0);
+        transform.rotation = Quaternion.identity;
+        Rigidbody rb = GetComponent<Rigidbody>();
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+    }
 }
