@@ -63,11 +63,11 @@ public abstract class Motor : MonoBehaviour
     public enum Limit
     {
         /// <summary>
-        /// Corresponds to a limit switch at the minimum motor position.
+        /// Corresponds to a limit switch at the minimum motor position in degrees.
         /// </summary>
         Minimum,
         /// <summary>
-        /// Corresponds to a limit switch at the maximum motor position.
+        /// Corresponds to a limit switch at the maximum motor position in degrees.
         /// </summary>
         Maximum
     }
