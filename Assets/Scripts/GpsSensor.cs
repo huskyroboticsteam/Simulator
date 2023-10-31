@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using Newtonsoft.Json.Linq;
@@ -55,21 +56,35 @@ public class GpsSensor : MonoBehaviour
 
     private void ReportPosition()
     {
-        // Use double precision since geographic degrees are very large.
-        double latitude = initLat + CartesianToGeographic(transform.position.z + _noise * Utilities.GaussianRandom());
-        double longitude = initLong + CartesianToGeographic(transform.position.x + _noise * Utilities.GaussianRandom());
+        // Assuming rover initializes facing north, i.e. z+ (forward) is north & x+ (right) is east
+        double[] GPS = metersToGPS(new double[] {
+            transform.position.z + _noise * Utilities.GaussianRandom(),
+            transform.position.x + _noise * Utilities.GaussianRandom()});
 
         JObject positionReport = new JObject()
         {
             ["type"] = "simGpsPositionReport",
-            ["latitude"] = latitude,
-            ["longitude"] = longitude
+            ["latitude"] = GPS[0],
+            ["longitude"] = GPS[1]
         };
         _socket.Send(positionReport);
     }
 
-    private double CartesianToGeographic(float meters)
+    // Taken from Resurgence/src/gps/gps_util.cpp
+    private double[] metersToGPS(double[] offset)
     {
-        return Mathf.Rad2Deg * meters / EarthRadius;
+        // +x is +lat, +y is -lon
+        double semiMajorAxis = 6378137.0;
+        double semiMinorAxis = 6356752.314245;
+        double phi = Math.PI * initLat / 180.0;
+        // Square Eccentricity
+        double eSq = 1 - (Math.Pow(semiMinorAxis, 2)) / (Math.Pow(semiMajorAxis, 2));
+        double var = 1 - eSq * Math.Pow(Math.Sin(phi), 2);
+        double metersPerDegLon = (Math.PI * semiMajorAxis * phi) / (180.0 * Math.Sqrt(var));
+        double metersPerDegLat = (Math.PI * semiMajorAxis * (1 - eSq)) / (180.0 * Math.Pow(var, 1.5));
+        double[] gps = new double[2];
+        double degDiffLat = offset[0] / metersPerDegLat;
+        double degDiffLon = -offset[1] / metersPerDegLon;
+        return new double[] {initLat + degDiffLat, initLong + degDiffLon};
     }
 }
