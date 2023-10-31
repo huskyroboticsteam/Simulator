@@ -22,6 +22,10 @@ public class GpsSensor : MonoBehaviour
     private float _noise;
     [SerializeField]
     private float _reportPeriod;
+    [SerializeField]
+    private double initLat = 47.653749871465955;
+    [SerializeField]
+    private double initLong = -122.30429294489063;
 
     private RoverSocket _socket;
 
@@ -52,8 +56,8 @@ public class GpsSensor : MonoBehaviour
     private void ReportPosition()
     {
         // Use double precision since geographic degrees are very large.
-        double latitude = CartesianToGeographic(transform.position.z + _noise * Utilities.GaussianRandom());
-        double longitude = CartesianToGeographic(transform.position.x + _noise * Utilities.GaussianRandom());
+        double latitude = initLat + CartesianToGeographic(transform.position.z + _noise * Utilities.GaussianRandom());
+        double longitude = initLong + CartesianToGeographic(transform.position.x + _noise * Utilities.GaussianRandom());
 
         JObject positionReport = new JObject()
         {
