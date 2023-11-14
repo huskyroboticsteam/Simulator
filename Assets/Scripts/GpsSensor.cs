@@ -93,7 +93,7 @@ public class GpsSensor : MonoBehaviour
         double metersPerDegLon = (Math.PI * semiMajorAxis * phi) / (180.0 * Math.Sqrt(var));
         double metersPerDegLat = (Math.PI * semiMajorAxis * (1 - eSq)) / (180.0 * Math.Pow(var, 1.5));
         double degDiffLat = offset[0] / metersPerDegLat;
-        double degDiffLon = -offset[1] / metersPerDegLon;
+        double degDiffLon = offset[1] / metersPerDegLon;
         return new double[] {initGPS[0] + degDiffLat, initGPS[1] + degDiffLon};
     }
 }
