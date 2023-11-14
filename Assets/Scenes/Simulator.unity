@@ -2119,7 +2119,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _reportPeriod: 0.05
-  _noise: 3
+  _noise: 0
 --- !u!1 &2126870834
 GameObject:
   m_ObjectHideFlags: 0
