@@ -210,7 +210,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b3c9195b8fd60843ab3b7bc113683ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _noise: 0.15
+  _noise: 0
   _reportPeriod: 0.05
 --- !u!1 &144878289
 GameObject:
@@ -2119,7 +2119,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _reportPeriod: 0.05
-  _noise: 3
+  _noise: 0
 --- !u!1 &2126870834
 GameObject:
   m_ObjectHideFlags: 0
