@@ -2486,12 +2486,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _motorName: shoulder
-  _reverse: 1
+  _reverse: 0
   _positionSensor: 1
   _minLimitSwitch: 2
-  _minLimitPosition: 18.2
+  _minLimitPosition: -152.5
   _maxLimitSwitch: 2
-  _maxLimitPosition: 152.5
+  _maxLimitPosition: -18.2
   _potentiometerOffset: 0
   _statusReportPeriod: 0.033333335
   _speed: 40
@@ -2656,12 +2656,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _motorName: elbow
-  _reverse: 1
+  _reverse: 0
   _positionSensor: 1
   _minLimitSwitch: 2
-  _minLimitPosition: -169.1
+  _minLimitPosition: 0
   _maxLimitSwitch: 2
-  _maxLimitPosition: 0
+  _maxLimitPosition: 169.1
   _potentiometerOffset: 0
   _statusReportPeriod: 0.033333335
   _speed: 40
