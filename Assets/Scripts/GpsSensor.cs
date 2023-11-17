@@ -23,11 +23,10 @@ public class GpsSensor : MonoBehaviour
     private float _noise;
     [SerializeField]
     private float _reportPeriod;
-    /// <summary>
-    /// Points to UW's Engineering Annex (EGA)
-    /// </summary>
     [SerializeField]
-    private double[] initGPS = {47.653749871465955, -122.30429294489063};
+    private double initLat = 0.0;
+    [SerializeField]
+    private double initLon = 0.0;
 
     private RoverSocket _socket;
 
@@ -86,14 +85,14 @@ public class GpsSensor : MonoBehaviour
         // Math from
         // https://en.wikipedia.org/wiki/Longitude#Length_of_a_degree_of_longitude
         // https://en.wikipedia.org/wiki/Latitude#Meridian_distance_on_the_ellipsoid
-        double phi = Math.PI * initGPS[0] / 180.0;
+        double phi = Math.PI * initLat / 180.0;
         // Square Eccentricity
         double eSq = 1 - (Math.Pow(semiMinorAxis, 2)) / (Math.Pow(semiMajorAxis, 2));
         double var = 1 - eSq * Math.Pow(Math.Sin(phi), 2);
-        double metersPerDegLon = (Math.PI * semiMajorAxis * phi) / (180.0 * Math.Sqrt(var));
+        double metersPerDegLon = (Math.PI * semiMajorAxis * Math.Cos(phi)) / (180.0 * Math.Sqrt(var));
         double metersPerDegLat = (Math.PI * semiMajorAxis * (1 - eSq)) / (180.0 * Math.Pow(var, 1.5));
         double degDiffLat = offset[0] / metersPerDegLat;
         double degDiffLon = offset[1] / metersPerDegLon;
-        return new double[] {initGPS[0] + degDiffLat, initGPS[1] + degDiffLon};
+        return new double[] {initLat + degDiffLat, initLon + degDiffLon};
     }
 }
