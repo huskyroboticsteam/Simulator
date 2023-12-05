@@ -1155,7 +1155,8 @@ MonoBehaviour:
   _maxLimitPosition: 15
   _potentiometerOffset: 0
   _statusReportPeriod: 0.033333335
-  _speed: 40
+  _openLoopSpeed: 40
+  _closedLoopSpeed: 40
   _gearRatio: 1
   _leftFinger: {fileID: 5192463422970891476}
   _rightFinger: {fileID: 4511818124128450315}
@@ -2453,7 +2454,8 @@ MonoBehaviour:
   _maxLimitPosition: 9720
   _potentiometerOffset: 0
   _statusReportPeriod: 0.033333335
-  _speed: 40
+  _openLoopSpeed: 40
+  _closedLoopSpeed: 180
   _gearRatio: 1
   _axis: {x: 0, y: 0, z: 1}
 --- !u!1 &919132147660652431
@@ -2494,7 +2496,8 @@ MonoBehaviour:
   _maxLimitPosition: -18.2
   _potentiometerOffset: 0
   _statusReportPeriod: 0.033333335
-  _speed: 40
+  _openLoopSpeed: 40
+  _closedLoopSpeed: 180
   _gearRatio: 1
   _axis: {x: 1, y: 0, z: 0}
 --- !u!1 &919132148619690579
@@ -2609,7 +2612,8 @@ MonoBehaviour:
   _maxLimitPosition: 9000
   _potentiometerOffset: 0
   _statusReportPeriod: 0.033333335
-  _speed: 40
+  _openLoopSpeed: 40
+  _closedLoopSpeed: 40
   _gearRatio: 1
   _axis: {x: 0, y: 1, z: 0}
 --- !u!64 &919132148984513420
@@ -2664,7 +2668,8 @@ MonoBehaviour:
   _maxLimitPosition: 169.1
   _potentiometerOffset: 0
   _statusReportPeriod: 0.033333335
-  _speed: 40
+  _openLoopSpeed: 40
+  _closedLoopSpeed: 180
   _gearRatio: 1
   _axis: {x: 1, y: 0, z: 0}
 --- !u!23 &1220948287513773467
@@ -3151,7 +3156,8 @@ MonoBehaviour:
   _maxLimitPosition: 90
   _potentiometerOffset: 0
   _statusReportPeriod: 0.03333334
-  _speed: 40
+  _openLoopSpeed: 40
+  _closedLoopSpeed: 180
   _gearRatio: 1
   _axis: {x: 1, y: 0, z: 0}
 --- !u!23 &5985188835100470529

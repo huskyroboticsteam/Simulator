@@ -6,13 +6,10 @@
 /// </summary>
 public class PowerDrivenMotor : Motor
 {
-    /// <summary>
-    /// Used to smooth motor movement when approaching a target position.
-    /// </summary>
-    private const float Smoothing = 750;
-
     [SerializeField]
-    private float _speed;
+    private float _openLoopSpeed;
+    [SerializeField]
+    private float _closedLoopSpeed;
     [SerializeField]
     private float _gearRatio;
 
@@ -21,7 +18,7 @@ public class PowerDrivenMotor : Motor
     /// </summary>
     public float Speed
     {
-        get { return _speed; }
+        get { return _openLoopSpeed; }
     }
 
     /// <summary>
@@ -50,8 +47,9 @@ public class PowerDrivenMotor : Motor
                 float remainingDistance = TargetPosition - CurrentPosition;
                 float newPower = Mathf.Sign(remainingDistance);
                 // Slow down when near target.
-                if (Mathf.Abs(remainingDistance) < Smoothing)
-                    newPower *= Mathf.Abs(remainingDistance) / Smoothing;
+                if (Mathf.Abs(remainingDistance) < _closedLoopSpeed * Time.fixedDeltaTime) {
+                    newPower = remainingDistance / (_closedLoopSpeed * Time.fixedDeltaTime);
+                }
                 CurrentPower = newPower;
                 break;
             default:
@@ -61,7 +59,12 @@ public class PowerDrivenMotor : Motor
 
     private void UpdatePosition()
     {
-        float newPosition = CurrentPosition + _speed * CurrentPower * Time.fixedDeltaTime;
+        float speed = Mode switch
+        {
+            RunMode.RunToPosition => _closedLoopSpeed,
+            _ => _openLoopSpeed,
+        };
+        float newPosition = CurrentPosition + speed * CurrentPower * Time.fixedDeltaTime;
         if (newPosition <= MinLimitPosition)
         {
             if (MinLimitSwitch == LimitSwitch.KillAndReport)
