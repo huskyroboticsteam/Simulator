@@ -9,7 +9,7 @@ git push origin --tags
 ```
 
 ## Overview
-This simulator creates a WebSocket client to connect directly to the rover WebSocket server at the URL `ws://localhost:3001/simulator`. The simulator will automatically connect to the rover server and reconnect as needed, providing a visual indication of the connection status. The simulator and the rover server communicate with each other by sending JSON objects termed *messages* over the WebSocket connection. Through these messages, the rover server can request that the simulator perform certain actions, such as set a a motor's power. Additionally, the simulator provides the rover server with data such as camera streams and lidar data through these messages.
+This simulator creates a WebSocket client to connect directly to the rover WebSocket server at the URL `ws://localhost:3001/simulator`. The simulator will automatically connect to the rover server and reconnect as needed, providing a visual indication of the connection status. The simulator and the rover server communicate with each other by sending JSON objects termed *messages* over the WebSocket connection. Through these messages, the rover server can request that the simulator perform certain actions, such as set a a motor's power. Additionally, the simulator provides the rover server with data such as camera streams through these messages.
 
 ## Using the Simulator
 1. Download the latest release for your operating system.
@@ -40,7 +40,6 @@ The simulator is able to simulate the cameras with the following names:
 The simulator is also able to simulate the following hardware devices:
 - GPS sensor
 - IMU
-- Lidar sensor
 
 ## Messages
 The JSON objects sent between the simulator and the rover server are termed *messages*. Each message has a type property and a number of additional parameters depending on the type. Each type is prefaced with "sim" to avoid confusion with messages pertaining to Mission Control. The usage of each type of message is detailed below.
@@ -232,20 +231,3 @@ Sent from the simulator to inform the rover server of the orientation provided b
 - `y` - The y-component of the orientation
 - `z` - The z-component of the orientation
 - `w` - The w-component of the orientation
-
-## Lidar Data Report
-### Description
-Sent from the simulator to inform the rover server of data provided by a simulated lidar sensor.
-
-### Syntax
-```
-{
-  type: "simLidarReport",
-  points: { r: number, theta: number }[]
-}
-```
-
-### Parameters
-- `points` - an array of points in polar coordinates read by the simulated lidar sensor
-- `r` - the distance between a point and the rover in meters
-- `theta` - the angle of a point in [0, 2π) measured from the rover's forward direction and increasing counterclockwise
