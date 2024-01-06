@@ -322,6 +322,61 @@ Transform:
   m_Father: {fileID: 2999561474658698673}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &349944514
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 349944515}
+  - component: {fileID: 349944516}
+  m_Layer: 0
+  m_Name: Right Motor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &349944515
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 349944514}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4971088469074015998}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &349944516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 349944514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e0a231d7d80d8944ae3499df98139bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _motorName: differentialRight
+  _reverse: 1
+  _positionSensor: 1
+  _minLimitSwitch: 2
+  _minLimitPosition: -6000
+  _maxLimitSwitch: 2
+  _maxLimitPosition: 3000
+  _potentiometerOffset: 0
+  _statusReportPeriod: 0.0333334
+  _openLoopSpeed: 2000
+  _closedLoopSpeed: 2000
+  _gearRatio: 54
 --- !u!1 &494477793
 GameObject:
   m_ObjectHideFlags: 0
@@ -984,6 +1039,61 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _frontWheel: {fileID: 1182672565}
   _rearWheel: {fileID: 1365518639}
+--- !u!1 &1112039666
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1112039667}
+  - component: {fileID: 1112039668}
+  m_Layer: 0
+  m_Name: Left Motor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1112039667
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1112039666}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4971088469074015998}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1112039668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1112039666}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e0a231d7d80d8944ae3499df98139bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _motorName: differentialLeft
+  _reverse: 1
+  _positionSensor: 1
+  _minLimitSwitch: 2
+  _minLimitPosition: -6000
+  _maxLimitSwitch: 2
+  _maxLimitPosition: 3000
+  _potentiometerOffset: 0
+  _statusReportPeriod: 0.0333334
+  _openLoopSpeed: 2000
+  _closedLoopSpeed: 2000
+  _gearRatio: 54
 --- !u!1 &1122966450
 GameObject:
   m_ObjectHideFlags: 0
@@ -1012,13 +1122,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1122966450}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.215}
+  m_LocalPosition: {x: 0, y: 0, z: 0.34000045}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4847145696690951790}
   - {fileID: 3879536624985976241}
-  m_Father: {fileID: 4971088469074015998}
-  m_RootOrder: 0
+  m_Father: {fileID: 52496333168099060}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!64 &1122966452
 MeshCollider:
@@ -2273,6 +2383,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4971088469074015998}
+  - {fileID: 1122966451}
   m_Father: {fileID: 543450652657813582}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2980,7 +3091,8 @@ Transform:
   m_LocalPosition: {x: -0, y: 0, z: 0.125}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1122966451}
+  - {fileID: 1112039667}
+  - {fileID: 349944515}
   m_Father: {fileID: 52496333168099060}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3058,7 +3170,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4971088469074015998}
-  - component: {fileID: 5744071065781546055}
+  - component: {fileID: 5744071065781546054}
   - component: {fileID: 5744071065781546053}
   - component: {fileID: 8309986882779707739}
   - component: {fileID: 6104618588724628881}
@@ -3083,7 +3195,7 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 2534964839176971238, guid: feb10968614d86f43b4d31cdf72b037f, type: 3}
---- !u!114 &5744071065781546055
+--- !u!114 &5744071065781546054
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3092,22 +3204,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 5744071065781546052}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d2bb6ea6075e384b803d5c623a61e68, type: 3}
+  m_Script: {fileID: 11500000, guid: 4d60707ae300160488de5eca4af3006d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _motorName: wrist
-  _reverse: 0
-  _positionSensor: 1
-  _minLimitSwitch: 2
-  _minLimitPosition: -90
-  _maxLimitSwitch: 2
-  _maxLimitPosition: 90
-  _potentiometerOffset: 0
-  _statusReportPeriod: 0.03333334
-  _openLoopSpeed: 40
-  _closedLoopSpeed: 180
-  _gearRatio: 1
-  _axis: {x: 1, y: 0, z: 0}
+  _leftMotor: {fileID: 1112039668}
+  _rightMotor: {fileID: 349944516}
 --- !u!23 &5985188835100470529
 MeshRenderer:
   m_ObjectHideFlags: 0
