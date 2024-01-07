@@ -212,6 +212,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _noise: 0
   _reportPeriod: 0.05
+  initGPS:
+  - 0
+  - 0
 --- !u!1 &144878289
 GameObject:
   m_ObjectHideFlags: 0

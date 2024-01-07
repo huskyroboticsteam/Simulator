@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using Newtonsoft.Json.Linq;
@@ -22,6 +23,10 @@ public class GpsSensor : MonoBehaviour
     private float _noise;
     [SerializeField]
     private float _reportPeriod;
+    [SerializeField]
+    private double initLat = 0.0;
+    [SerializeField]
+    private double initLon = 0.0;
 
     private RoverSocket _socket;
 
@@ -51,21 +56,43 @@ public class GpsSensor : MonoBehaviour
 
     private void ReportPosition()
     {
-        // Use double precision since geographic degrees are very large.
-        double latitude = CartesianToGeographic(transform.position.z + _noise * Utilities.GaussianRandom());
-        double longitude = CartesianToGeographic(transform.position.x + _noise * Utilities.GaussianRandom());
+        // z+ is north, x+ is east
+        double[] GPS = metersToGPS(new double[] {
+            transform.position.z + _noise * Utilities.GaussianRandom(),
+            transform.position.x + _noise * Utilities.GaussianRandom()});
 
         JObject positionReport = new JObject()
         {
             ["type"] = "simGpsPositionReport",
-            ["latitude"] = latitude,
-            ["longitude"] = longitude
+            ["latitude"] = GPS[0],
+            ["longitude"] = GPS[1]
         };
         _socket.Send(positionReport);
     }
 
-    private double CartesianToGeographic(float meters)
+    private double[] metersToGPS(double[] offset)
     {
-        return Mathf.Rad2Deg * meters / EarthRadius;
+        // Because of our starting position, North is +lat and East is +lon
+
+        // The Earth is not a perfect sphere, so we approximate the Earth's surface with an ellipsoid
+        // https://en.wikipedia.org/wiki/Geodetic_datum#Earth_reference_ellipsoid
+
+        // Data taken from WGS 84:
+        // https://en.wikipedia.org/wiki/World_Geodetic_System#WGS_84
+        double semiMajorAxis = 6378137.0;
+        double semiMinorAxis = 6356752.314245;
+
+        // Math from
+        // https://en.wikipedia.org/wiki/Longitude#Length_of_a_degree_of_longitude
+        // https://en.wikipedia.org/wiki/Latitude#Meridian_distance_on_the_ellipsoid
+        double phi = Math.PI * initLat / 180.0;
+        // Square Eccentricity
+        double eSq = 1 - (Math.Pow(semiMinorAxis, 2)) / (Math.Pow(semiMajorAxis, 2));
+        double var = 1 - eSq * Math.Pow(Math.Sin(phi), 2);
+        double metersPerDegLon = (Math.PI * semiMajorAxis * Math.Cos(phi)) / (180.0 * Math.Sqrt(var));
+        double metersPerDegLat = (Math.PI * semiMajorAxis * (1 - eSq)) / (180.0 * Math.Pow(var, 1.5));
+        double degDiffLat = offset[0] / metersPerDegLat;
+        double degDiffLon = offset[1] / metersPerDegLon;
+        return new double[] {initLat + degDiffLat, initLon + degDiffLon};
     }
 }
