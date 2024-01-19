@@ -77,8 +77,10 @@ public class CommandRegisterer : MonoBehaviour
             else
             {
                 double[] GPS = Utilities.metersToGPS(new double[] {waypoint.transform.position.z, waypoint.transform.position.x});
-                GUIUtility.systemCopyBuffer = GPS[0].ToString("0." + new string('#', 339)) + ", "
-                                            + GPS[1].ToString("0." + new string('#', 339));
+                string lat = GPS[0].ToString("0." + new string('#', 8));
+                string lon = GPS[1].ToString("0." + new string('#', 8));
+                GUIUtility.systemCopyBuffer = lat + ", " + lon;
+                SimulatorConsole.WriteLine(waypoint.name + "->(lat:" + lat + ", lon:" + lon + ")");
                 SimulatorConsole.WriteLine("Copied " + waypoint.name + " to clipboard");
             }
         }
@@ -99,9 +101,9 @@ public class CommandRegisterer : MonoBehaviour
             foreach (Transform child in GameObject.Find("Waypoints").transform)
             {
                 double[] GPS = Utilities.metersToGPS(new double[] {child.transform.position.z, child.transform.position.x});
-                SimulatorConsole.WriteLine(child.name + " (" +
-                    GPS[0].ToString("0." + new string('#', 339)) + ", " +
-                    GPS[1].ToString("0." + new string('#', 339)) + ")");
+                string lat = GPS[0].ToString("0." + new string('#', 8));
+                string lon = GPS[1].ToString("0." + new string('#', 8));
+                SimulatorConsole.WriteLine(child.name + "->(lat:" + lat + ", lon:" + lon + ")");
             }
         }
     }
