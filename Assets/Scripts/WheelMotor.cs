@@ -17,7 +17,6 @@ public class WheelMotor : Motor
 
     [SerializeField]
     private float brakeTorque;
-    //private float brakeTorque;
 
     protected override void Awake()
     {
@@ -31,8 +30,7 @@ public class WheelMotor : Motor
         UpdatePower();
         UpdatePosition();
         Render();
-        if (Math.Abs(CurrentPower) <= 0.05) { 
-            //_wheel.brakeTorque = CurrentPower * _torqueMultiplier;
+        if (Math.Abs(CurrentPower) <= 0.05) {
             _wheel.brakeTorque = brakeTorque;
         } else {
             _wheel.brakeTorque = 0f;
