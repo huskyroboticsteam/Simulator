@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
 /// <summary>
 /// A motor on the rover that uses a WheelCollider to interact with Unity's
@@ -14,10 +15,15 @@ public class WheelMotor : Motor
 
     private WheelCollider _wheel;
 
+    [SerializeField]
+    private float brakeTorque;
+    //private float brakeTorque;
+
     protected override void Awake()
     {
         base.Awake();
         _wheel = GetComponent<WheelCollider>();
+        brakeTorque = Mathf.Infinity;
     }
 
     private void FixedUpdate()
@@ -25,6 +31,12 @@ public class WheelMotor : Motor
         UpdatePower();
         UpdatePosition();
         Render();
+        if (Math.Abs(CurrentPower) <= 0.05) { 
+            //_wheel.brakeTorque = CurrentPower * _torqueMultiplier;
+            _wheel.brakeTorque = brakeTorque;
+        } else {
+            _wheel.brakeTorque = 0f;
+        }
         _wheel.motorTorque = CurrentPower * _torqueMultiplier;
     }
 
