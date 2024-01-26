@@ -22,7 +22,6 @@ public class WheelMotor : Motor
     {
         base.Awake();
         _wheel = GetComponent<WheelCollider>();
-        brakeTorque = Mathf.Infinity;
     }
 
     private void FixedUpdate()

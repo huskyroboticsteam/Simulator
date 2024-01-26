@@ -212,9 +212,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _noise: 0
   _reportPeriod: 0.05
-  initGPS:
-  - 0
-  - 0
+  initLat: 0
+  initLon: 0
 --- !u!1 &144878289
 GameObject:
   m_ObjectHideFlags: 0
@@ -876,6 +875,7 @@ MonoBehaviour:
   _statusReportPeriod: 0.033333335
   _torqueMultiplier: 4
   _display: {fileID: 513085395}
+  brakeTorque: 10000
 --- !u!1 &1069975640
 GameObject:
   m_ObjectHideFlags: 0
@@ -1374,6 +1374,7 @@ MonoBehaviour:
   _statusReportPeriod: 0.033333335
   _torqueMultiplier: 4
   _display: {fileID: 726416728}
+  brakeTorque: 10000
 --- !u!1 &1365518634
 GameObject:
   m_ObjectHideFlags: 0
@@ -1460,6 +1461,7 @@ MonoBehaviour:
   _statusReportPeriod: 0.033333335
   _torqueMultiplier: 4
   _display: {fileID: 2126870834}
+  brakeTorque: 10000
 --- !u!1 &1416975727
 GameObject:
   m_ObjectHideFlags: 0
@@ -2523,6 +2525,7 @@ MonoBehaviour:
   _statusReportPeriod: 0.033333335
   _torqueMultiplier: 4
   _display: {fileID: 5025346310533158112}
+  brakeTorque: 10000
 --- !u!1 &919132148984513418
 GameObject:
   m_ObjectHideFlags: 0
