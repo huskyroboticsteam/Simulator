@@ -1,5 +1,4 @@
 using UnityEngine;
-using System;
 
 /// <summary>
 /// A motor on the rover that uses a WheelCollider to interact with Unity's
@@ -29,7 +28,7 @@ public class WheelMotor : Motor
         UpdatePower();
         UpdatePosition();
         Render();
-        if (Math.Abs(CurrentPower) <= 0.05) {
+        if (Mathf.Abs(CurrentPower) <= 0.05) {
             _wheel.brakeTorque = brakeTorque;
         } else {
             _wheel.brakeTorque = 0f;
