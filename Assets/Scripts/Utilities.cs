@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public static class Utilities
 {
@@ -35,6 +36,44 @@ public static class Utilities
     }
 
     /// <summary>
+    /// Converts the given offset (in meters) to GPS coordinates,
+    /// with respect to the starting position (in GPS coordinates).
+    /// </summary>
+    /// <see cref="https://en.wikipedia.org/wiki/Geodetic_datum#Earth_reference_ellipsoid"/> 
+    /// <see cref="https://en.wikipedia.org/wiki/World_Geodetic_System#WGS_84"/> 
+    /// <see cref="https://en.wikipedia.org/wiki/Longitude#Length_of_a_degree_of_longitude"/> 
+    /// <see cref="https://en.wikipedia.org/wiki/Latitude#Meridian_distance_on_the_ellipsoid"/> 
+    /// <param name="offset">Offset from starting position (in meters), [North, East]</param>
+    /// <param name="start">Starting coordinates (in GPS coordinates), defaults to [0 lat, 0 lon]</param>
+    /// <returns></returns>
+    public static double[] metersToGPS(double[] offset, double[] init = null)
+    {
+        init = init is null ? new double[] {0.0, 0.0} : init;
+        // North is +lat and East is +lon
+
+        // The Earth is not a perfect sphere, so we approximate the Earth's surface with an ellipsoid
+        // https://en.wikipedia.org/wiki/Geodetic_datum#Earth_reference_ellipsoid
+
+        // Data taken from WGS 84:
+        // https://en.wikipedia.org/wiki/World_Geodetic_System#WGS_84
+        double semiMajorAxis = 6378137.0;
+        double semiMinorAxis = 6356752.314245;
+
+        // Math from
+        // https://en.wikipedia.org/wiki/Longitude#Length_of_a_degree_of_longitude
+        // https://en.wikipedia.org/wiki/Latitude#Meridian_distance_on_the_ellipsoid
+        double phi = Math.PI * init[0] / 180.0;
+        // Square Eccentricity
+        double eSq = 1 - (Math.Pow(semiMinorAxis, 2)) / (Math.Pow(semiMajorAxis, 2));
+        double var = 1 - eSq * Math.Pow(Math.Sin(phi), 2);
+        double metersPerDegLon = (Math.PI * semiMajorAxis * Math.Cos(phi)) / (180.0 * Math.Sqrt(var));
+        double metersPerDegLat = (Math.PI * semiMajorAxis * (1 - eSq)) / (180.0 * Math.Pow(var, 1.5));
+        double degDiffLat = offset[0] / metersPerDegLat;
+        double degDiffLon = offset[1] / metersPerDegLon;
+        return new double[] {init[0] + degDiffLat, init[1] + degDiffLon};
+    }
+
+    /// <summary>
     /// Perform the swing-twist decomposition of a quaternion around a given axis.
     /// This essentially decomposes a rotation into a rotation around the axis (the twist) and
     /// a rotation around a vector perpendicular to that axis (the swing).
@@ -59,6 +98,6 @@ public static class Utilities
     /// </summary>
     public static float GaussianRandom()
     {
-        return Mathf.Sqrt(-2f * Mathf.Log(Random.value)) * Mathf.Sin(2f * Mathf.PI * Random.value);
+        return Mathf.Sqrt(-2f * Mathf.Log(UnityEngine.Random.value)) * Mathf.Sin(2f * Mathf.PI * UnityEngine.Random.value);
     }
 }
