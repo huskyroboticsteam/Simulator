@@ -51,7 +51,7 @@ public static class MessageHandler
             return;
         }
         // Convert from millidegrees to degrees.
-        motor.TargetPosition = (float)motorPositionRequest["position"] * 0.001f;
+        motor.TargetPosition = -(float)motorPositionRequest["position"] * 0.001f;
         motor.Mode = Motor.RunMode.RunToPosition;
     }
 

@@ -1200,6 +1200,7 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1023510547}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+  brakeTorque: 10000
 --- !u!1 &1069975640
 GameObject:
   m_ObjectHideFlags: 0
@@ -1311,57 +1312,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _frontWheel: {fileID: 1182672565}
   _rearWheel: {fileID: 1365518639}
---- !u!1 &1119198587
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1119198588}
-  - component: {fileID: 1119198589}
-  m_Layer: 6
-  m_Name: Lidar Sensor
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1119198588
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1119198587}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.3, z: 0.3}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 2999561474658698673}
-  m_RootOrder: 8
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1119198589
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1119198587}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47334de10e0723b41b9fb478268edce9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _range: 12
-  _resolution: 100
-  _scanPeriod: 0.1
-  _noiseIntensity: 0.05
-  _roverMask:
-    serializedVersion: 2
-    m_Bits: 64
-  _showGizmos: 0
 --- !u!1 &1122966450
 GameObject:
   m_ObjectHideFlags: 0
@@ -1482,7 +1432,8 @@ MonoBehaviour:
   _maxLimitPosition: 15
   _potentiometerOffset: 0
   _statusReportPeriod: 0.033333335
-  _speed: 40
+  _openLoopSpeed: 40
+  _closedLoopSpeed: 40
   _gearRatio: 1
   _leftFinger: {fileID: 5192463422970891476}
   _rightFinger: {fileID: 4511818124128450315}
@@ -1829,6 +1780,7 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1237948087}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+  brakeTorque: 10000
 --- !u!1 &1365518634
 GameObject:
   m_ObjectHideFlags: 0
@@ -1915,6 +1867,7 @@ MonoBehaviour:
   _statusReportPeriod: 0.033333335
   _torqueMultiplier: 4
   _display: {fileID: 2126870834}
+  brakeTorque: 10000
 --- !u!1 &1416975727
 GameObject:
   m_ObjectHideFlags: 0
@@ -2978,7 +2931,8 @@ MonoBehaviour:
   _maxLimitPosition: 9720
   _potentiometerOffset: 0
   _statusReportPeriod: 0.033333335
-  _speed: 40
+  _openLoopSpeed: 40
+  _closedLoopSpeed: 180
   _gearRatio: 1
   _axis: {x: 0, y: 0, z: 1}
 --- !u!1 &919132147660652431
@@ -3019,7 +2973,8 @@ MonoBehaviour:
   _maxLimitPosition: -18.2
   _potentiometerOffset: 0
   _statusReportPeriod: 0.033333335
-  _speed: 40
+  _openLoopSpeed: 40
+  _closedLoopSpeed: 180
   _gearRatio: 1
   _axis: {x: 1, y: 0, z: 0}
 --- !u!1 &919132148619690579
@@ -3093,6 +3048,7 @@ MonoBehaviour:
   _statusReportPeriod: 0.033333335
   _torqueMultiplier: 4
   _display: {fileID: 5025346310533158112}
+  brakeTorque: 10000
 --- !u!1 &919132148984513418
 GameObject:
   m_ObjectHideFlags: 0
@@ -3134,7 +3090,8 @@ MonoBehaviour:
   _maxLimitPosition: 9000
   _potentiometerOffset: 0
   _statusReportPeriod: 0.033333335
-  _speed: 40
+  _openLoopSpeed: 40
+  _closedLoopSpeed: 40
   _gearRatio: 1
   _axis: {x: 0, y: 1, z: 0}
 --- !u!64 &919132148984513420
@@ -3189,7 +3146,8 @@ MonoBehaviour:
   _maxLimitPosition: 169.1
   _potentiometerOffset: 0
   _statusReportPeriod: 0.033333335
-  _speed: 40
+  _openLoopSpeed: 40
+  _closedLoopSpeed: 180
   _gearRatio: 1
   _axis: {x: 1, y: 0, z: 0}
 --- !u!23 &1220948287513773467
@@ -3419,7 +3377,6 @@ Transform:
   - {fileID: 1141722567}
   - {fileID: 97750368}
   - {fileID: 1935106304}
-  - {fileID: 1119198588}
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3676,7 +3633,8 @@ MonoBehaviour:
   _maxLimitPosition: 90
   _potentiometerOffset: 0
   _statusReportPeriod: 0.03333334
-  _speed: 40
+  _openLoopSpeed: 40
+  _closedLoopSpeed: 180
   _gearRatio: 1
   _axis: {x: 1, y: 0, z: 0}
 --- !u!23 &5985188835100470529

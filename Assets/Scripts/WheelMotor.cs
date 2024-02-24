@@ -14,6 +14,9 @@ public class WheelMotor : Motor
 
     private WheelCollider _wheel;
 
+    [SerializeField]
+    private float brakeTorque;
+
     protected override void Awake()
     {
         base.Awake();
@@ -25,6 +28,11 @@ public class WheelMotor : Motor
         UpdatePower();
         UpdatePosition();
         Render();
+        if (Mathf.Abs(CurrentPower) <= 0.05) {
+            _wheel.brakeTorque = brakeTorque;
+        } else {
+            _wheel.brakeTorque = 0f;
+        }
         _wheel.motorTorque = CurrentPower * _torqueMultiplier;
     }
 
