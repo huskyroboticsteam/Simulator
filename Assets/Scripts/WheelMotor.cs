@@ -59,7 +59,8 @@ public class WheelMotor : Motor
     private void Render()
     {
         _wheel.GetWorldPose(out Vector3 pos, out Quaternion rot);
+        Utilities.SwingTwistDecomposition(rot, Vector3.right, out _, out Quaternion twist);
         _display.transform.position = pos;
-        _display.transform.rotation = rot;
+        // _display.transform.rotation = twist;
     }
 }

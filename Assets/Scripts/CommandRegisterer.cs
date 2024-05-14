@@ -1,18 +1,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Newtonsoft.Json.Linq;
 
 /// <summary>
 /// Registers commands with the simulator console.
 /// </summary>
 public class CommandRegisterer : MonoBehaviour
 {
+    [SerializeField]
+    private Rover _rover;
     private IList<Command> _commands;
 
     private void OnEnable()
     {
         _commands = new List<Command>() {
             new Command("reset", Reset),
+            new Command("run", RunMotor),
             new Command("waypoint", GetWaypoint),
             new Command("waypoints", ListWaypoints),
             new Command("help", PrintInstructions)
@@ -55,6 +59,37 @@ public class CommandRegisterer : MonoBehaviour
             return;
         }
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    private void RunMotor(string[] args)
+    {
+        if(args.Length < 1 || args.Length > 3) {
+            SimulatorConsole.WriteLine("bad");
+            return;
+        }
+        if(args[1] == "to") {
+            if(args.Length != 3) {
+                SimulatorConsole.WriteLine("bad");
+                return;
+            }
+            MessageHandler.Handle(_rover, new JObject(){
+                ["type"] = "simMotorPositionRequest",
+                ["motor"] = args[0],
+                ["position"] = args[2]
+            });
+            SimulatorConsole.WriteLine("run "+args[0]+" "+args[1]+" "+args[2]);
+        } else {
+            if(args.Length != 2) {
+                SimulatorConsole.WriteLine("bad");
+                return;
+            }
+            MessageHandler.Handle(_rover, new JObject(){
+                ["type"] = "simMotorPowerRequest",
+                ["motor"] = args[0],    
+                ["power"] = args[1]
+            });
+            SimulatorConsole.WriteLine("run "+args[0]+" "+args[1]);
+        }
     }
 
     /// <summary>
