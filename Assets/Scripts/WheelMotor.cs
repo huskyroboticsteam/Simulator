@@ -58,9 +58,9 @@ public class WheelMotor : Motor
 
     private void Render()
     {
+        _wheel.steerAngle = 2 * Mathf.Acos(transform.parent.rotation.w) * Mathf.Rad2Deg;
         _wheel.GetWorldPose(out Vector3 pos, out Quaternion rot);
-        Utilities.SwingTwistDecomposition(rot, Vector3.right, out _, out Quaternion twist);
         _display.transform.position = pos;
-        // _display.transform.rotation = twist;
+        _display.transform.rotation = rot;
     }
 }

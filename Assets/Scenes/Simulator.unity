@@ -426,7 +426,7 @@ MonoBehaviour:
   _minLimitSwitch: 2
   _minLimitPosition: -90
   _maxLimitSwitch: 2
-  _maxLimitPosition: 0
+  _maxLimitPosition: 90
   _potentiometerOffset: 0
   _statusReportPeriod: 0.033333335
   _openLoopSpeed: 40
@@ -591,7 +591,7 @@ MonoBehaviour:
   _reverse: 0
   _positionSensor: 1
   _minLimitSwitch: 2
-  _minLimitPosition: 0
+  _minLimitPosition: -90
   _maxLimitSwitch: 2
   _maxLimitPosition: 90
   _potentiometerOffset: 0
@@ -1201,7 +1201,7 @@ MonoBehaviour:
   _reverse: 0
   _positionSensor: 1
   _minLimitSwitch: 2
-  _minLimitPosition: 0
+  _minLimitPosition: -90
   _maxLimitSwitch: 2
   _maxLimitPosition: 90
   _potentiometerOffset: 0
@@ -2469,7 +2469,7 @@ MonoBehaviour:
   _minLimitSwitch: 2
   _minLimitPosition: -90
   _maxLimitSwitch: 2
-  _maxLimitPosition: 0
+  _maxLimitPosition: 90
   _potentiometerOffset: 0
   _statusReportPeriod: 0.033333335
   _openLoopSpeed: 40

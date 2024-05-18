@@ -17,6 +17,7 @@ public class CommandRegisterer : MonoBehaviour
         _commands = new List<Command>() {
             new Command("reset", Reset),
             new Command("run", RunMotor),
+            new Command("swerve", Swerve),
             new Command("waypoint", GetWaypoint),
             new Command("waypoints", ListWaypoints),
             new Command("help", PrintInstructions)
@@ -90,6 +91,64 @@ public class CommandRegisterer : MonoBehaviour
             });
             SimulatorConsole.WriteLine("run "+args[0]+" "+args[1]);
         }
+    }
+
+    private void Swerve(string[] args)
+    {
+        if(args.Length != 1)
+        {
+            SimulatorConsole.WriteLine("bad arguments");
+            return;
+        }
+        else
+        {
+            switch(args[0]) {
+                case "normal":
+                    Swerve(0);
+                    break;
+                case "tip":
+                case "turn-in-place":
+                    Swerve(45);
+                    break;
+                case "crab":
+                    Swerve(90);
+                    break;
+                default:
+                    if(float.TryParse(args[0], out float angle) && 0 <= angle && angle <= 90) {
+                        Swerve(angle);
+                    } else {
+                        SimulatorConsole.WriteLine("not a valid angle");
+                    }
+                    return;
+            }
+        }
+    }
+
+    private void Swerve(float angle) {
+        MessageHandler.Handle(_rover, new JObject(){
+                ["type"] = "simMotorPositionRequest",
+                ["motor"] = "frontLeftSwerve",    
+                ["position"] = angle
+        });
+        MessageHandler.Handle(_rover, new JObject(){
+                ["type"] = "simMotorPositionRequest",
+                ["motor"] = "rearLeftSwerve",    
+                ["position"] = -angle
+        });
+        MessageHandler.Handle(_rover, new JObject(){
+                ["type"] = "simMotorPositionRequest",
+                ["motor"] = "frontRightSwerve",    
+                ["position"] = -angle
+        });
+        MessageHandler.Handle(_rover, new JObject(){
+                ["type"] = "simMotorPositionRequest",
+                ["motor"] = "rearRightSwerve",    
+                ["position"] = angle
+        });
+        // _rover.GetMotor("frontLeftWheel").GetComponent<WheelCollider>().steerAngle = angle;
+        // _rover.GetMotor("rearLeftWheel").GetComponent<WheelCollider>().steerAngle = -angle;
+        // _rover.GetMotor("frontRightWheel").GetComponent<WheelCollider>().steerAngle = -angle;
+        // _rover.GetMotor("rearRightWheel").GetComponent<WheelCollider>().steerAngle = angle;
     }
 
     /// <summary>
