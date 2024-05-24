@@ -64,26 +64,13 @@ public class CommandRegisterer : MonoBehaviour
 
     private void RunMotor(string[] args)
     {
-        if(args.Length < 1 || args.Length > 3) {
-            SimulatorConsole.WriteLine("bad");
+        if(!((args.Length == 3 && args[1] == "to") || args.Length == 2))
+        {
+            SimulatorConsole.WriteLine("bad arguments");
             return;
         }
-        if(args[1] == "to") {
-            if(args.Length != 3) {
-                SimulatorConsole.WriteLine("bad");
-                return;
-            }
-            MessageHandler.Handle(_rover, new JObject(){
-                ["type"] = "simMotorPositionRequest",
-                ["motor"] = args[0],
-                ["position"] = args[2]
-            });
-            SimulatorConsole.WriteLine("run "+args[0]+" "+args[1]+" "+args[2]);
-        } else {
-            if(args.Length != 2) {
-                SimulatorConsole.WriteLine("bad");
-                return;
-            }
+        if(args.Length == 2)
+        {
             MessageHandler.Handle(_rover, new JObject(){
                 ["type"] = "simMotorPowerRequest",
                 ["motor"] = args[0],    
@@ -91,64 +78,44 @@ public class CommandRegisterer : MonoBehaviour
             });
             SimulatorConsole.WriteLine("run "+args[0]+" "+args[1]);
         }
+        else
+        {
+            MessageHandler.Handle(_rover, new JObject(){
+                ["type"] = "simMotorPositionRequest",
+                ["motor"] = args[0],
+                ["position"] = (-float.Parse(args[2]) * 1000)
+            });
+            SimulatorConsole.WriteLine("run "+args[0]+" to "+args[2]);
+        }
     }
 
-    private void Swerve(string[] args)
-    {
+    private void Swerve(string[] args) {
         if(args.Length != 1)
         {
             SimulatorConsole.WriteLine("bad arguments");
             return;
         }
-        else
-        {
-            switch(args[0]) {
-                case "normal":
-                    Swerve(0);
-                    break;
-                case "tip":
-                case "turn-in-place":
-                    Swerve(45);
-                    break;
-                case "crab":
-                    Swerve(90);
-                    break;
-                default:
-                    if(float.TryParse(args[0], out float angle) && 0 <= angle && angle <= 90) {
-                        Swerve(angle);
-                    } else {
-                        SimulatorConsole.WriteLine("not a valid angle");
-                    }
-                    return;
-            }
-        }
-    }
-
-    private void Swerve(float angle) {
+        float angle = -float.Parse(args[0]) * 1000;
         MessageHandler.Handle(_rover, new JObject(){
                 ["type"] = "simMotorPositionRequest",
-                ["motor"] = "frontLeftSwerve",    
+                ["motor"] = "frontLeftSwerve",
                 ["position"] = angle
         });
         MessageHandler.Handle(_rover, new JObject(){
                 ["type"] = "simMotorPositionRequest",
-                ["motor"] = "rearLeftSwerve",    
+                ["motor"] = "rearLeftSwerve",
                 ["position"] = -angle
         });
         MessageHandler.Handle(_rover, new JObject(){
                 ["type"] = "simMotorPositionRequest",
-                ["motor"] = "frontRightSwerve",    
+                ["motor"] = "frontRightSwerve",
                 ["position"] = -angle
         });
         MessageHandler.Handle(_rover, new JObject(){
                 ["type"] = "simMotorPositionRequest",
-                ["motor"] = "rearRightSwerve",    
+                ["motor"] = "rearRightSwerve",
                 ["position"] = angle
         });
-        // _rover.GetMotor("frontLeftWheel").GetComponent<WheelCollider>().steerAngle = angle;
-        // _rover.GetMotor("rearLeftWheel").GetComponent<WheelCollider>().steerAngle = -angle;
-        // _rover.GetMotor("frontRightWheel").GetComponent<WheelCollider>().steerAngle = -angle;
-        // _rover.GetMotor("rearRightWheel").GetComponent<WheelCollider>().steerAngle = angle;
     }
 
     /// <summary>

@@ -58,9 +58,11 @@ public class WheelMotor : Motor
 
     private void Render()
     {
-        _wheel.steerAngle = 2 * Mathf.Acos(transform.parent.rotation.w) * Mathf.Rad2Deg;
+        Quaternion swerve = transform.parent.rotation;
+        // affected by rover rotation?
+        _wheel.steerAngle = 2 * (swerve.y < 0 ? -1 : 1) * Mathf.Acos(swerve.w) * Mathf.Rad2Deg;
         _wheel.GetWorldPose(out Vector3 pos, out Quaternion rot);
         _display.transform.position = pos;
-        _display.transform.rotation = rot;
+        // _display.transform.rotation = rot;
     }
 }
