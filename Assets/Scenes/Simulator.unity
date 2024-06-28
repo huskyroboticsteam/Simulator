@@ -365,7 +365,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e0a231d7d80d8944ae3499df98139bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _motorName: differentialRight
+  _motorName: wristDiffRight
   _reverse: 1
   _positionSensor: 1
   _minLimitSwitch: 2
@@ -374,9 +374,9 @@ MonoBehaviour:
   _maxLimitPosition: 3000
   _potentiometerOffset: 0
   _statusReportPeriod: 0.0333334
-  _openLoopSpeed: 2000
-  _closedLoopSpeed: 2000
-  _gearRatio: 54
+  _openLoopSpeed: 100
+  _closedLoopSpeed: 100
+  _gearRatio: 1
 --- !u!1 &494477793
 GameObject:
   m_ObjectHideFlags: 0
@@ -1082,7 +1082,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e0a231d7d80d8944ae3499df98139bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _motorName: differentialLeft
+  _motorName: wristDiffLeft
   _reverse: 1
   _positionSensor: 1
   _minLimitSwitch: 2
@@ -1091,9 +1091,9 @@ MonoBehaviour:
   _maxLimitPosition: 3000
   _potentiometerOffset: 0
   _statusReportPeriod: 0.0333334
-  _openLoopSpeed: 2000
-  _closedLoopSpeed: 2000
-  _gearRatio: 54
+  _openLoopSpeed: 100
+  _closedLoopSpeed: 100
+  _gearRatio: 1
 --- !u!1 &1122966450
 GameObject:
   m_ObjectHideFlags: 0
@@ -1122,13 +1122,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1122966450}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.34000045}
+  m_LocalPosition: {x: 0, y: 0, z: 0.21500075}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4847145696690951790}
   - {fileID: 3879536624985976241}
-  m_Father: {fileID: 52496333168099060}
-  m_RootOrder: 1
+  m_Father: {fileID: 4971088469074015998}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!64 &1122966452
 MeshCollider:
@@ -2383,7 +2383,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4971088469074015998}
-  - {fileID: 1122966451}
   m_Father: {fileID: 543450652657813582}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3093,6 +3092,7 @@ Transform:
   m_Children:
   - {fileID: 1112039667}
   - {fileID: 349944515}
+  - {fileID: 1122966451}
   m_Father: {fileID: 52496333168099060}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
