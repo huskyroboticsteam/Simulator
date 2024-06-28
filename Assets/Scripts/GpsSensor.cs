@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using Newtonsoft.Json.Linq;
@@ -22,6 +23,10 @@ public class GpsSensor : MonoBehaviour
     private float _noise;
     [SerializeField]
     private float _reportPeriod;
+    [SerializeField]
+    private double initLat = 0.0;
+    [SerializeField]
+    private double initLon = 0.0;
 
     private RoverSocket _socket;
 
@@ -51,21 +56,18 @@ public class GpsSensor : MonoBehaviour
 
     private void ReportPosition()
     {
-        // Use double precision since geographic degrees are very large.
-        double latitude = CartesianToGeographic(transform.position.z + _noise * Utilities.GaussianRandom());
-        double longitude = CartesianToGeographic(transform.position.x + _noise * Utilities.GaussianRandom());
+        // z+ is north, x+ is east
+        double[] GPS = Utilities.metersToGPS(new double[] {
+            transform.position.z + _noise * Utilities.GaussianRandom(),
+            transform.position.x + _noise * Utilities.GaussianRandom()},
+            new double[] {initLat, initLon});
 
         JObject positionReport = new JObject()
         {
             ["type"] = "simGpsPositionReport",
-            ["latitude"] = latitude,
-            ["longitude"] = longitude
+            ["latitude"] = GPS[0],
+            ["longitude"] = GPS[1]
         };
         _socket.Send(positionReport);
-    }
-
-    private double CartesianToGeographic(float meters)
-    {
-        return Mathf.Rad2Deg * meters / EarthRadius;
     }
 }
