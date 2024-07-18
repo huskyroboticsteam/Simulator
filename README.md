@@ -33,9 +33,9 @@ The simulator is able to simulate the motors with the following names:
 
 ## Cameras
 The simulator is able to simulate the cameras with the following names:
-- front
-- rear
-- upperArm
+- mast
+- hand
+- wrist
 
 ## Additional Hardware Devices
 The simulator is also able to simulate the following hardware devices:
@@ -131,7 +131,7 @@ Sent from the rover server to instruct the simulator to begin providing a camera
 ```
 
 ### Parameters
-- `camera` - the name of the camera
+- `camera` - the name of the camera: `mast|hand|wrist`
 - `fps` - the frames per second of the stream
 - `width` - the width of the stream in pixels
 - `height` - the height of the stream in pixels
@@ -150,7 +150,7 @@ Sent from the rover server to instruct the simulator to stop providing a camera 
 ```
 
 ### Parameters
-- `camera` - the name of the camera
+- `camera` - the name of the camera: `mast|hand|wrist`
 
 ## Camera Stream Report
 ### Description
@@ -166,7 +166,7 @@ Sent from the simulator to inform the rover server of a single frame of a camera
 ```
 
 ### Parameters
-- `camera` - the name of the camera
+- `camera` - the name of the camera: `mast|hand|wrist`
 - `data` - the frame in JPG format encoded as a base-64 string
 
 ## Rover True Pose Report
