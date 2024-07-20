@@ -376,6 +376,63 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 97833576}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &136345174
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 136345175}
+  - component: {fileID: 136345176}
+  m_Layer: 6
+  m_Name: Front Right Swerve
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &136345175
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 136345174}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.385, y: -0.05, z: 0.325}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1182672561}
+  m_Father: {fileID: 325670890}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &136345176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 136345174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d2bb6ea6075e384b803d5c623a61e68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _motorName: frontRightSwerve
+  _reverse: 0
+  _positionSensor: 1
+  _minLimitSwitch: 2
+  _minLimitPosition: -180
+  _maxLimitSwitch: 2
+  _maxLimitPosition: 180
+  _potentiometerOffset: 0
+  _statusReportPeriod: 0.033333335
+  _openLoopSpeed: 40
+  _closedLoopSpeed: 180
+  _gearRatio: 1
+  _axis: {x: 0, y: 1, z: 0}
 --- !u!1 &144878289
 GameObject:
   m_ObjectHideFlags: 0
@@ -479,10 +536,10 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 543450653162084585}
-  - {fileID: 988781766}
-  - {fileID: 1182672561}
-  - {fileID: 1365518635}
+  - {fileID: 1005979097}
+  - {fileID: 1659966475}
+  - {fileID: 136345175}
+  - {fileID: 469048857}
   m_Father: {fileID: 2999561474658698673}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -541,6 +598,63 @@ MonoBehaviour:
   _openLoopSpeed: 100
   _closedLoopSpeed: 100
   _gearRatio: 1
+--- !u!1 &469048856
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 469048857}
+  - component: {fileID: 469048858}
+  m_Layer: 6
+  m_Name: Rear Right Swerve
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &469048857
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 469048856}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.385, y: -0.05, z: -0.325}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1365518635}
+  m_Father: {fileID: 325670890}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &469048858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 469048856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d2bb6ea6075e384b803d5c623a61e68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _motorName: rearRightSwerve
+  _reverse: 0
+  _positionSensor: 1
+  _minLimitSwitch: 2
+  _minLimitPosition: -180
+  _maxLimitSwitch: 2
+  _maxLimitPosition: 180
+  _potentiometerOffset: 0
+  _statusReportPeriod: 0.033333335
+  _openLoopSpeed: 40
+  _closedLoopSpeed: 180
+  _gearRatio: 1
+  _axis: {x: 0, y: 1, z: 0}
 --- !u!1 &494477793
 GameObject:
   m_ObjectHideFlags: 0
@@ -1033,12 +1147,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 988781765}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.385, y: -0.05, z: -0.325}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 513085396}
-  m_Father: {fileID: 325670890}
-  m_RootOrder: 1
+  m_Father: {fileID: 1659966475}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!146 &988781770
 WheelCollider:
@@ -1093,6 +1207,64 @@ MonoBehaviour:
   _statusReportPeriod: 0.033333335
   _torqueMultiplier: 4
   _display: {fileID: 513085395}
+  brakeTorque: 0
+--- !u!1 &1005979096
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1005979097}
+  - component: {fileID: 1005979098}
+  m_Layer: 6
+  m_Name: Front Left Swerve
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1005979097
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1005979096}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.385, y: -0.05, z: 0.325}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 543450653162084585}
+  m_Father: {fileID: 325670890}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1005979098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1005979096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d2bb6ea6075e384b803d5c623a61e68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _motorName: frontLeftSwerve
+  _reverse: 0
+  _positionSensor: 1
+  _minLimitSwitch: 2
+  _minLimitPosition: -180
+  _maxLimitSwitch: 2
+  _maxLimitPosition: 180
+  _potentiometerOffset: 0
+  _statusReportPeriod: 0.033333335
+  _openLoopSpeed: 40
+  _closedLoopSpeed: 180
+  _gearRatio: 1
+  _axis: {x: 0, y: 1, z: 0}
 --- !u!1 &1017321302
 GameObject:
   m_ObjectHideFlags: 0
@@ -1255,7 +1427,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1023510547}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
-  brakeTorque: 10000
 --- !u!1 &1069975640
 GameObject:
   m_ObjectHideFlags: 0
@@ -1749,12 +1920,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1182672560}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.385, y: -0.05, z: 0.325}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 726416729}
-  m_Father: {fileID: 325670890}
-  m_RootOrder: 2
+  m_Father: {fileID: 136345175}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!146 &1182672565
 WheelCollider:
@@ -1809,6 +1980,7 @@ MonoBehaviour:
   _statusReportPeriod: 0.033333335
   _torqueMultiplier: 4
   _display: {fileID: 726416728}
+  brakeTorque: 0
 --- !u!1 &1237948087
 GameObject:
   m_ObjectHideFlags: 0
@@ -1890,7 +2062,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1237948087}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
-  brakeTorque: 10000
 --- !u!1 &1365518634
 GameObject:
   m_ObjectHideFlags: 0
@@ -1917,12 +2088,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1365518634}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.385, y: -0.05, z: -0.325}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2126870835}
-  m_Father: {fileID: 325670890}
-  m_RootOrder: 3
+  m_Father: {fileID: 469048857}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!146 &1365518639
 WheelCollider:
@@ -2088,7 +2259,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1471516607
 Transform:
   m_ObjectHideFlags: 0
@@ -2358,6 +2529,63 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!1 &1659966474
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1659966475}
+  - component: {fileID: 1659966476}
+  m_Layer: 6
+  m_Name: Rear Left Swerve
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1659966475
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1659966474}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.385, y: -0.05, z: -0.325}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 988781766}
+  m_Father: {fileID: 325670890}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1659966476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1659966474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d2bb6ea6075e384b803d5c623a61e68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _motorName: rearLeftSwerve
+  _reverse: 0
+  _positionSensor: 1
+  _minLimitSwitch: 2
+  _minLimitPosition: -180
+  _maxLimitSwitch: 2
+  _maxLimitPosition: 180
+  _potentiometerOffset: 0
+  _statusReportPeriod: 0.033333335
+  _openLoopSpeed: 40
+  _closedLoopSpeed: 180
+  _gearRatio: 1
+  _axis: {x: 0, y: 1, z: 0}
 --- !u!1 &1671027893
 GameObject:
   m_ObjectHideFlags: 0
@@ -2487,6 +2715,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b71203aa62edc584dbc3a52ba21e4324, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rover: {fileID: 2516181680764149518}
 --- !u!4 &1792607559
 Transform:
   m_ObjectHideFlags: 0
@@ -2979,11 +3208,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 919132148619690579}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.385, y: -0.05, z: 0.325}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5689820342157463130}
-  m_Father: {fileID: 325670890}
+  m_Father: {fileID: 1005979097}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &860558680856126542

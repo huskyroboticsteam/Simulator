@@ -58,6 +58,9 @@ public class WheelMotor : Motor
 
     private void Render()
     {
+        Quaternion swerve = transform.parent.localRotation;
+        swerve.ToAngleAxis(out float angle, out Vector3 ax);
+        _wheel.steerAngle = angle * Mathf.Sign(ax.y);
         _wheel.GetWorldPose(out Vector3 pos, out Quaternion rot);
         _display.transform.position = pos;
         _display.transform.rotation = rot;
