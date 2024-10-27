@@ -9,7 +9,7 @@ using UnityEngine;
 public class Rover : MonoBehaviour
 {
     private IDictionary<string, Motor> _motors;
-    private IDictionary<string, RoverCamera> _cameras;
+    private IDictionary<int, RoverCamera> _cameras;
 
     /// A collection containing all of the motors on this rover.
     /// </summary>
@@ -40,9 +40,9 @@ public class Rover : MonoBehaviour
     /// Returns the camera on this rover with the specified name, nor null if
     /// none exists.
     /// </summary>
-    public RoverCamera GetCamera(string cameraName)
+    public RoverCamera GetCamera(int cameraID)
     {
-        _cameras.TryGetValue(cameraName, out RoverCamera camera);
+        _cameras.TryGetValue(cameraID, out RoverCamera camera);
         return camera;
     }
 
@@ -54,10 +54,10 @@ public class Rover : MonoBehaviour
             _motors[motor.MotorName] = motor;
         }
 
-        _cameras = new Dictionary<string, RoverCamera>();
+        _cameras = new Dictionary<int, RoverCamera>();
         foreach (RoverCamera camera in transform.GetComponentsInChildren<RoverCamera>())
         {
-            _cameras[camera.CameraName] = camera;
+            _cameras[camera.CameraID] = camera;
         }
     }
 }

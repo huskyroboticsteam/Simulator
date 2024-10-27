@@ -122,16 +122,15 @@ Sent from the rover server to instruct the simulator to begin providing a camera
 ```
 {
   type: "simCameraStreamOpenRequest",
-  camera: string,
+  cameraID: number,
   fps: number,
   width: number,
   height: number,
-  intrinsicParameters: number[9] | null
 }
 ```
 
 ### Parameters
-- `camera` - the name of the camera: `mast|hand|wrist`
+- `cameraID` - the id of the camera
 - `fps` - the frames per second of the stream
 - `width` - the width of the stream in pixels
 - `height` - the height of the stream in pixels
