@@ -149,7 +149,7 @@ Sent from the rover server to instruct the simulator to stop providing a camera 
 ```
 
 ### Parameters
-- `camera` - the name of the camera: `mast|hand|wrist`
+- `cameraID` - the id of the camera
 
 ## Camera Stream Report
 ### Description
@@ -159,13 +159,13 @@ Sent from the simulator to inform the rover server of a single frame of a camera
 ```
 {
   type: "simCameraStreamReport",
-  camera: string,
+  camera: number,
   data: string
 }
 ```
 
 ### Parameters
-- `camera` - the name of the camera: `mast|hand|wrist`
+- `cameraID` - the id of the camera
 - `data` - the frame in JPG format encoded as a base-64 string
 
 ## Rover True Pose Report
