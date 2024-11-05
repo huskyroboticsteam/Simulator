@@ -32,10 +32,10 @@ The simulator is able to simulate the motors with the following names:
 - hand
 
 ## Cameras
-The simulator is able to simulate the cameras with the following names:
-- mast
-- hand
-- wrist
+The simulator is able to simulate the cameras with the following IDs:
+- 40 (mast)
+- 30 (wrist)
+- 20 (hand)
 
 ## Additional Hardware Devices
 The simulator is also able to simulate the following hardware devices:
@@ -144,7 +144,7 @@ Sent from the rover server to instruct the simulator to stop providing a camera 
 ```
 {
   type: "simCameraStreamCloseRequest",
-  camera: string
+  cameraID: number,
 }
 ```
 
@@ -159,7 +159,7 @@ Sent from the simulator to inform the rover server of a single frame of a camera
 ```
 {
   type: "simCameraStreamReport",
-  camera: number,
+  cameraID: number,
   data: string
 }
 ```
