@@ -48,7 +48,7 @@ public static class Utilities
     /// <returns></returns>
     public static double[] metersToGPS(double[] offset, double[] init = null)
     {
-        init = init is null ? new double[] {0.0, 0.0} : init;
+        init = init is null ? new double[] {0.0, 0.0, 0.0} : init;
         // North is +lat and East is +lon
 
         // The Earth is not a perfect sphere, so we approximate the Earth's surface with an ellipsoid
@@ -70,7 +70,7 @@ public static class Utilities
         double metersPerDegLat = (Math.PI * semiMajorAxis * (1 - eSq)) / (180.0 * Math.Pow(var, 1.5));
         double degDiffLat = offset[0] / metersPerDegLat;
         double degDiffLon = offset[1] / metersPerDegLon;
-        return new double[] {init[0] + degDiffLat, init[1] + degDiffLon};
+        return new double[] {init[0] + degDiffLat, init[1] + degDiffLon, init[2] + offset[2]};
     }
 
     /// <summary>

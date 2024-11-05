@@ -27,6 +27,8 @@ public class GpsSensor : MonoBehaviour
     private double initLat = 0.0;
     [SerializeField]
     private double initLon = 0.0;
+   [SerializeField]
+    private double initAlt= 0.0;
 
     private RoverSocket _socket;
 
@@ -59,14 +61,16 @@ public class GpsSensor : MonoBehaviour
         // z+ is north, x+ is east
         double[] GPS = Utilities.metersToGPS(new double[] {
             transform.position.z + _noise * Utilities.GaussianRandom(),
-            transform.position.x + _noise * Utilities.GaussianRandom()},
-            new double[] {initLat, initLon});
+            transform.position.x + _noise * Utilities.GaussianRandom(),
+            transform.position.y + _noise * Utilities.GaussianRandom()},
+            new double[] {initLat, initLon, initAlt});
 
         JObject positionReport = new JObject()
         {
             ["type"] = "simGpsPositionReport",
             ["latitude"] = GPS[0],
-            ["longitude"] = GPS[1]
+            ["longitude"] = GPS[1],
+            ["altitude"] = GPS[2]
         };
         _socket.Send(positionReport);
     }
