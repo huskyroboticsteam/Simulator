@@ -61,16 +61,17 @@ public class GpsSensor : MonoBehaviour
         // z+ is north, x+ is east
         double[] GPS = Utilities.metersToGPS(new double[] {
             transform.position.z + _noise * Utilities.GaussianRandom(),
-            transform.position.x + _noise * Utilities.GaussianRandom(),
-            transform.position.y + _noise * Utilities.GaussianRandom()},
-            new double[] {initLat, initLon, initAlt});
+            transform.position.x + _noise * Utilities.GaussianRandom()},
+            new double[] {initLat, initLon});
+
+        double altitude = transform.position.y + _noise * Utilities.GaussianRandom();
 
         JObject positionReport = new JObject()
         {
             ["type"] = "simGpsPositionReport",
             ["latitude"] = GPS[0],
             ["longitude"] = GPS[1],
-            ["altitude"] = GPS[2]
+            ["altitude"] = altitude
         };
         _socket.Send(positionReport);
     }
