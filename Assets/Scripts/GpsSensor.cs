@@ -27,7 +27,7 @@ public class GpsSensor : MonoBehaviour
     private double initLat = 0.0;
     [SerializeField]
     private double initLon = 0.0;
-   [SerializeField]
+    [SerializeField]
     private double initAlt = 0.0;
 
     private RoverSocket _socket;
