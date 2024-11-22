@@ -28,7 +28,7 @@ public class GpsSensor : MonoBehaviour
     [SerializeField]
     private double initLon = 0.0;
    [SerializeField]
-    private double initAlt= 0.0;
+    private double initAlt = 0.0;
 
     private RoverSocket _socket;
 
@@ -64,7 +64,7 @@ public class GpsSensor : MonoBehaviour
             transform.position.x + _noise * Utilities.GaussianRandom()},
             new double[] {initLat, initLon});
 
-        double altitude = transform.position.y + _noise * Utilities.GaussianRandom();
+        double altitude = initAlt + transform.position.y + _noise * Utilities.GaussianRandom();
 
         JObject positionReport = new JObject()
         {
