@@ -17,6 +17,9 @@ public class WheelMotor : Motor
     [SerializeField]
     private float brakeTorque;
 
+    public bool backTreadMotor; 
+    public WheelMotor wheelFollowing;
+
     protected override void Awake()
     {
         base.Awake();
@@ -32,6 +35,9 @@ public class WheelMotor : Motor
             _wheel.brakeTorque = brakeTorque;
         } else {
             _wheel.brakeTorque = 0f;
+        }
+        if(backTreadMotor) {
+            _wheel.motorTorque = wheelFollowing.CurrentPower;
         }
         _wheel.motorTorque = CurrentPower * _torqueMultiplier;
     }

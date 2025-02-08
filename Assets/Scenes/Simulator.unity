@@ -1208,6 +1208,8 @@ MonoBehaviour:
   _torqueMultiplier: 4
   _display: {fileID: 513085395}
   brakeTorque: 0
+  backTreadMotor: 1
+  wheelFollowing: {fileID: 919132148619690582}
 --- !u!1 &1005979096
 GameObject:
   m_ObjectHideFlags: 0
@@ -1981,6 +1983,8 @@ MonoBehaviour:
   _torqueMultiplier: 4
   _display: {fileID: 726416728}
   brakeTorque: 0
+  backTreadMotor: 0
+  wheelFollowing: {fileID: 0}
 --- !u!1 &1237948087
 GameObject:
   m_ObjectHideFlags: 0
@@ -2149,6 +2153,8 @@ MonoBehaviour:
   _torqueMultiplier: 4
   _display: {fileID: 2126870834}
   brakeTorque: 10000
+  backTreadMotor: 1
+  wheelFollowing: {fileID: 1182672566}
 --- !u!1 &1416975727
 GameObject:
   m_ObjectHideFlags: 0
@@ -3388,6 +3394,8 @@ MonoBehaviour:
   _torqueMultiplier: 4
   _display: {fileID: 5025346310533158112}
   brakeTorque: 10000
+  backTreadMotor: 0
+  wheelFollowing: {fileID: 0}
 --- !u!1 &919132148984513418
 GameObject:
   m_ObjectHideFlags: 0
