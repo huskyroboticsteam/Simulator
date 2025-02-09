@@ -39,7 +39,9 @@ public class WheelMotor : Motor
         if(backTreadMotor) {
             _wheel.motorTorque = wheelFollowing.CurrentPower;
         }
-        _wheel.motorTorque = CurrentPower * _torqueMultiplier;
+        else {
+            _wheel.motorTorque = CurrentPower * _torqueMultiplier;
+        }
     }
 
     private void UpdatePower()
