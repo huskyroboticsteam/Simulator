@@ -197,20 +197,22 @@ Sent from the simulator to inform the rover server of the rover's exact pose.
 
 ## GPS Position Report
 ### Description
-Sent from the simulator to inform the rover server of the geographic position provided by a simulated GPS sensor. The position will be reported in standard geographic coordinates. The simulated GPS sensor will map Unity's cartesian origin to Null Island. Gaussian noise is applied to the latitude and longitude.
+Sent from the simulator to inform the rover server of the geographic position provided by a simulated GPS sensor. The position will be reported in standard geographic coordinates. The simulated GPS sensor will map Unity's cartesian origin to Null Island. Gaussian noise is applied to the latitude, longitude and altitude.
 
 ### Syntax
 ```
 {
   type: "simGpsPositionReport",
   latitude: number,
-  longitude: number
+  longitude: number,
+  altitude: number,
 }
 ```
 
 ### Parameters
 - `latitude` - the latitude in degrees
 - `longitude` - the longitude in degrees
+- `altitude` - the altitude in meters
 
 ## IMU Orientation Report
 ### Description
