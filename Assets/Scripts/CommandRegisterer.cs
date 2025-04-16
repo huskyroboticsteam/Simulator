@@ -16,6 +16,7 @@ public class CommandRegisterer : MonoBehaviour
     {
         _commands = new List<Command>() {
             new Command("reset", Reset),
+            new Command("run", RunMotor),
             new Command("waypoint", GetWaypoint),
             new Command("waypoints", ListWaypoints),
             new Command("help", PrintInstructions)
@@ -60,33 +61,31 @@ public class CommandRegisterer : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    private void Swerve(string[] args) {
-        if(args.Length != 1)
+    private void RunMotor(string[] args)
+    {
+        if(!((args.Length == 3 && args[1] == "to") || args.Length == 2))
         {
             SimulatorConsole.WriteLine("bad arguments");
             return;
         }
-        float angle = -float.Parse(args[0]) * 1000;
-        MessageHandler.Handle(_rover, new JObject(){
+        if(args.Length == 2)
+        {
+            MessageHandler.Handle(_rover, new JObject(){
+                ["type"] = "simMotorPowerRequest",
+                ["motor"] = args[0],    
+                ["power"] = args[1]
+            });
+            SimulatorConsole.WriteLine("run "+args[0]+" "+args[1]);
+        }
+        else
+        {
+            MessageHandler.Handle(_rover, new JObject(){
                 ["type"] = "simMotorPositionRequest",
-                ["motor"] = "frontLeftSwerve",
-                ["position"] = angle
-        });
-        MessageHandler.Handle(_rover, new JObject(){
-                ["type"] = "simMotorPositionRequest",
-                ["motor"] = "rearLeftSwerve",
-                ["position"] = -angle
-        });
-        MessageHandler.Handle(_rover, new JObject(){
-                ["type"] = "simMotorPositionRequest",
-                ["motor"] = "frontRightSwerve",
-                ["position"] = -angle
-        });
-        MessageHandler.Handle(_rover, new JObject(){
-                ["type"] = "simMotorPositionRequest",
-                ["motor"] = "rearRightSwerve",
-                ["position"] = angle
-        });
+                ["motor"] = args[0],
+                ["position"] = (-float.Parse(args[2]) * 1000)
+            });
+            SimulatorConsole.WriteLine("run "+args[0]+" to "+args[2]);
+        }
     }
 
     /// <summary>

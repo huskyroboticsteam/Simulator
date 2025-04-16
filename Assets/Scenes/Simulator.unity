@@ -295,6 +295,7 @@ MonoBehaviour:
   _reportPeriod: 0.05
   initLat: 0
   initLon: 0
+  initAlt: 0
 --- !u!1 &97833576
 GameObject:
   m_ObjectHideFlags: 0
@@ -1971,7 +1972,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74fc13afe9c7ac046a291ce30cd68c3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _motorName: frontRightWheel
+  _motorName: rightTread
   _reverse: 0
   _positionSensor: 0
   _minLimitSwitch: 0
@@ -2152,7 +2153,7 @@ MonoBehaviour:
   _statusReportPeriod: 0.033333335
   _torqueMultiplier: 4
   _display: {fileID: 2126870834}
-  brakeTorque: 10000
+  brakeTorque: 0
   backTreadMotor: 1
   wheelFollowing: {fileID: 1182672566}
 --- !u!1 &1416975727
@@ -3382,7 +3383,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74fc13afe9c7ac046a291ce30cd68c3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _motorName: frontLeftWheel
+  _motorName: leftTread
   _reverse: 0
   _positionSensor: 0
   _minLimitSwitch: 0
