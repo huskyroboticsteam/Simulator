@@ -295,6 +295,7 @@ MonoBehaviour:
   _reportPeriod: 0.05
   initLat: 0
   initLon: 0
+  initAlt: 0
 --- !u!1 &97833576
 GameObject:
   m_ObjectHideFlags: 0
@@ -1208,6 +1209,8 @@ MonoBehaviour:
   _torqueMultiplier: 4
   _display: {fileID: 513085395}
   brakeTorque: 0
+  backTreadMotor: 1
+  wheelFollowing: {fileID: 919132148619690582}
 --- !u!1 &1005979096
 GameObject:
   m_ObjectHideFlags: 0
@@ -1969,7 +1972,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74fc13afe9c7ac046a291ce30cd68c3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _motorName: frontRightWheel
+  _motorName: rightTread
   _reverse: 0
   _positionSensor: 0
   _minLimitSwitch: 0
@@ -1981,6 +1984,8 @@ MonoBehaviour:
   _torqueMultiplier: 4
   _display: {fileID: 726416728}
   brakeTorque: 0
+  backTreadMotor: 0
+  wheelFollowing: {fileID: 0}
 --- !u!1 &1237948087
 GameObject:
   m_ObjectHideFlags: 0
@@ -2148,7 +2153,9 @@ MonoBehaviour:
   _statusReportPeriod: 0.033333335
   _torqueMultiplier: 4
   _display: {fileID: 2126870834}
-  brakeTorque: 10000
+  brakeTorque: 0
+  backTreadMotor: 1
+  wheelFollowing: {fileID: 1182672566}
 --- !u!1 &1416975727
 GameObject:
   m_ObjectHideFlags: 0
@@ -3376,7 +3383,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74fc13afe9c7ac046a291ce30cd68c3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _motorName: frontLeftWheel
+  _motorName: leftTread
   _reverse: 0
   _positionSensor: 0
   _minLimitSwitch: 0
@@ -3388,6 +3395,8 @@ MonoBehaviour:
   _torqueMultiplier: 4
   _display: {fileID: 5025346310533158112}
   brakeTorque: 10000
+  backTreadMotor: 0
+  wheelFollowing: {fileID: 0}
 --- !u!1 &919132148984513418
 GameObject:
   m_ObjectHideFlags: 0
