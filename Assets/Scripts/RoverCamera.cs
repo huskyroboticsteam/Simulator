@@ -11,6 +11,8 @@ public class RoverCamera : MonoBehaviour
 {
     [SerializeField]
     private string _cameraName;
+    [SerializeField]
+    private int _cameraID;
     private bool _isStreaming;
     private Camera _camera;
     private RoverSocket _socket;
@@ -21,6 +23,14 @@ public class RoverCamera : MonoBehaviour
     public string CameraName
     {
         get { return _cameraName; }
+    }
+
+    /// <summary>
+    /// The ID that identifies this camera.
+    /// </summary>
+    public int CameraID
+    {
+        get { return _cameraID; }
     }
 
     /// <summary>
@@ -144,7 +154,7 @@ public class RoverCamera : MonoBehaviour
         JObject cameraStreamReport = new JObject()
         {
             ["type"] = "simCameraStreamReport",
-            ["camera"] = CameraName,
+            ["cameraID"] = CameraID,
             ["data"] = streamData
         };
         _socket.Send(cameraStreamReport);

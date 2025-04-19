@@ -57,43 +57,38 @@ public static class MessageHandler
 
     private static void HandleCameraStreamOpenRequest(Rover rover, JObject cameraStreamOpenRequest)
     {
-        string cameraName = (string)cameraStreamOpenRequest["camera"];
-        RoverCamera camera = rover.GetCamera(cameraName);
+        int cameraID = (int)cameraStreamOpenRequest["cameraID"];
+        RoverCamera camera = rover.GetCamera(cameraID);
         if (camera == null)
         {
-            SimulatorConsole.WriteLine("Unknown camera: " + cameraName);
+            SimulatorConsole.WriteLine("Unknown camera ID: " + cameraID);
             return;
         }
         if (camera.IsStreaming)
         {
             SimulatorConsole.WriteLine(
-                "Attempted to stream camera that is already streaming: " + cameraName);
+                "Attempted to stream camera that is already streaming: " + camera.CameraName);
             return;
         }
         camera.StreamFps = (float)cameraStreamOpenRequest["fps"];
         camera.StreamWidth = (int)cameraStreamOpenRequest["width"];
         camera.StreamHeight = (int)cameraStreamOpenRequest["height"];
         camera.IsStreaming = true;
-        JArray intrinsicParameters = (JArray)cameraStreamOpenRequest["intrinsicParameters"];
-        if (intrinsicParameters != null)
-        {
-            camera.IntrinsicParameters = intrinsicParameters.ToObject<float[]>();
-        }
     }
 
     private static void HandleCameraStreamCloseRequest(Rover rover, JObject cameraStreamCloseRequest)
     {
-        string cameraName = (string)cameraStreamCloseRequest["camera"];
-        RoverCamera camera = rover.GetCamera(cameraName);
+        int cameraID = (int)cameraStreamCloseRequest["cameraID"];
+        RoverCamera camera = rover.GetCamera(cameraID);
         if (camera == null)
         {
-            SimulatorConsole.WriteLine("Unknown camera: " + cameraName);
+            SimulatorConsole.WriteLine("Unknown camera ID: " + cameraID);
             return;
         }
         if (!camera.IsStreaming)
         {
             SimulatorConsole.WriteLine(
-                "Attempted to close camera that is already closed: " + cameraName);
+                "Attempted to close camera that is already closed: " + camera.CameraName);
             return;
         }
         camera.IsStreaming = false;

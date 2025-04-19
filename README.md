@@ -32,10 +32,10 @@ The simulator is able to simulate the motors with the following names:
 - hand
 
 ## Cameras
-The simulator is able to simulate the cameras with the following names:
-- mast
-- hand
-- wrist
+The simulator is able to simulate the cameras with the following IDs:
+- 40 (mast)
+- 30 (wrist)
+- 20 (hand)
 
 ## Additional Hardware Devices
 The simulator is also able to simulate the following hardware devices:
@@ -122,16 +122,15 @@ Sent from the rover server to instruct the simulator to begin providing a camera
 ```
 {
   type: "simCameraStreamOpenRequest",
-  camera: string,
+  cameraID: number,
   fps: number,
   width: number,
   height: number,
-  intrinsicParameters: number[9] | null
 }
 ```
 
 ### Parameters
-- `camera` - the name of the camera: `mast|hand|wrist`
+- `cameraID` - the id of the camera
 - `fps` - the frames per second of the stream
 - `width` - the width of the stream in pixels
 - `height` - the height of the stream in pixels
@@ -145,12 +144,12 @@ Sent from the rover server to instruct the simulator to stop providing a camera 
 ```
 {
   type: "simCameraStreamCloseRequest",
-  camera: string
+  cameraID: number,
 }
 ```
 
 ### Parameters
-- `camera` - the name of the camera: `mast|hand|wrist`
+- `cameraID` - the id of the camera
 
 ## Camera Stream Report
 ### Description
@@ -160,13 +159,13 @@ Sent from the simulator to inform the rover server of a single frame of a camera
 ```
 {
   type: "simCameraStreamReport",
-  camera: string,
+  cameraID: number,
   data: string
 }
 ```
 
 ### Parameters
-- `camera` - the name of the camera: `mast|hand|wrist`
+- `cameraID` - the id of the camera
 - `data` - the frame in JPG format encoded as a base-64 string
 
 ## Rover True Pose Report
