@@ -93,7 +93,7 @@ public class RoverCamera : MonoBehaviour
     private void Awake()
     {
         _camera = GetComponent<Camera>();
-        _socket = FindObjectOfType<RoverSocket>();
+        _socket = FindAnyObjectByType<RoverSocket>();
     }
 
     private void OnEnable()

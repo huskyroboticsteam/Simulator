@@ -34,7 +34,7 @@ public class GpsSensor : MonoBehaviour
 
     private void Awake()
     {
-        _socket = FindObjectOfType<RoverSocket>();
+        _socket = FindAnyObjectByType<RoverSocket>();
     }
 
     private void OnEnable()
