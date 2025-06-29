@@ -10,7 +10,7 @@ using Newtonsoft.Json.Linq;
 public class RoverCamera : MonoBehaviour
 {
     [SerializeField]
-    private string _cameraName;
+    private int _cameraName;
     private bool _isStreaming;
     private Camera _camera;
     private RoverSocket _socket;
@@ -18,7 +18,7 @@ public class RoverCamera : MonoBehaviour
     /// <summary>
     /// The name that identifies this camera.
     /// </summary>
-    public string CameraName
+    public int CameraName
     {
         get { return _cameraName; }
     }
