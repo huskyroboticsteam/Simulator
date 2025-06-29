@@ -1765,7 +1765,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c82dca69731416449ee97f7492e49c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cameraName: wrist
+  _cameraName: 30
 --- !u!20 &1141722569
 Camera:
   m_ObjectHideFlags: 0
@@ -1853,7 +1853,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c82dca69731416449ee97f7492e49c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cameraName: hand
+  _cameraName: 20
 --- !u!20 &1161797000
 Camera:
   m_ObjectHideFlags: 0
@@ -2492,7 +2492,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c82dca69731416449ee97f7492e49c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cameraName: mast
+  _cameraName: 40
 --- !u!20 &1647191664
 Camera:
   m_ObjectHideFlags: 0
