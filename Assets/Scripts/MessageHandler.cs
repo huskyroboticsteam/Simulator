@@ -57,7 +57,7 @@ public static class MessageHandler
 
     private static void HandleCameraStreamOpenRequest(Rover rover, JObject cameraStreamOpenRequest)
     {
-        int cameraName = (int)cameraStreamOpenRequest["camera"];
+        string cameraName = (string)cameraStreamOpenRequest["camera"];
         RoverCamera camera = rover.GetCamera(cameraName);
         if (camera == null)
         {
@@ -83,7 +83,7 @@ public static class MessageHandler
 
     private static void HandleCameraStreamCloseRequest(Rover rover, JObject cameraStreamCloseRequest)
     {
-        int cameraName = (int)cameraStreamCloseRequest["camera"];
+        string cameraName = (string)cameraStreamCloseRequest["camera"];
         RoverCamera camera = rover.GetCamera(cameraName);
         if (camera == null)
         {
