@@ -800,7 +800,7 @@ GameObject:
   - component: {fileID: 563680318}
   - component: {fileID: 563680317}
   m_Layer: 6
-  m_Name: Segment (1)
+  m_Name: Bottom Linkage Segment
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -814,11 +814,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 563680315}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.35, z: -0.124}
-  m_LocalScale: {x: 0.07, y: 0.07, z: 0.24}
+  m_LocalPosition: {x: 0, y: 0.034494065, z: -0.10721257}
+  m_LocalScale: {x: 0.07, y: 0.06999998, z: 0.24}
   m_Children: []
-  m_Father: {fileID: 543450652657813582}
-  m_RootOrder: 3
+  m_Father: {fileID: 2061131505}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &563680317
 BoxCollider:
@@ -2461,7 +2461,7 @@ GameObject:
   - component: {fileID: 1506380405}
   - component: {fileID: 1506380404}
   m_Layer: 6
-  m_Name: Segment
+  m_Name: Front Linkage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2479,7 +2479,7 @@ Transform:
   m_LocalScale: {x: 0.07, y: 0.07, z: 0.3848608}
   m_Children: []
   m_Father: {fileID: 543450651846518069}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1506380404
 BoxCollider:
@@ -2556,7 +2556,7 @@ GameObject:
   - component: {fileID: 1585679979}
   - component: {fileID: 1585679978}
   m_Layer: 6
-  m_Name: Segment (1)
+  m_Name: Back Linakge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3014,7 +3014,7 @@ Transform:
   m_LocalScale: {x: 0.1, y: 0.07, z: 0.1}
   m_Children: []
   m_Father: {fileID: 543450651846518069}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!23 &1811806426
 MeshRenderer:
@@ -3110,6 +3110,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _reportPeriod: 0.05
   _noise: 0
+--- !u!1 &2061131504
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2061131505}
+  m_Layer: 6
+  m_Name: LowerLinkageArmBase
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2061131505
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2061131504}
+  m_LocalRotation: {x: 0.691513, y: 0, z: 0, w: 0.72236407}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 563680316}
+  m_Father: {fileID: 543450651846518069}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 87.5, y: 0, z: 0}
 --- !u!1 &2070603486
 GameObject:
   m_ObjectHideFlags: 0
@@ -3417,9 +3448,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 543450652657813582}
-  - {fileID: 1506380403}
   - {fileID: 1811806425}
+  - {fileID: 1506380403}
   - {fileID: 1585679977}
+  - {fileID: 2061131505}
   m_Father: {fileID: 543450652704856368}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -87.51, y: 0, z: 0}
@@ -3437,7 +3469,6 @@ Transform:
   - {fileID: 1647191662}
   - {fileID: 52496333168099060}
   - {fileID: 1416975728}
-  - {fileID: 563680316}
   m_Father: {fileID: 543450651846518069}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 87.5, y: 0, z: 0}
@@ -3714,7 +3745,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 543450652657813582}
-  - component: {fileID: 919132148989940470}
+  - component: {fileID: 919132148989940469}
   m_Layer: 6
   m_Name: Upper Arm
   m_TagString: Untagged
@@ -3722,7 +3753,7 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &919132148989940470
+--- !u!114 &919132148989940469
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3731,7 +3762,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 919132148989940468}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d2bb6ea6075e384b803d5c623a61e68, type: 3}
+  m_Script: {fileID: 11500000, guid: 6e9e34b61132d8b43b61d36e16f0704f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _motorName: elbow
@@ -3742,11 +3773,13 @@ MonoBehaviour:
   _maxLimitSwitch: 2
   _maxLimitPosition: 169.1
   _potentiometerOffset: 0
-  _statusReportPeriod: 0.033333335
+  _statusReportPeriod: 0.03333334
   _openLoopSpeed: 40
   _closedLoopSpeed: 180
   _gearRatio: 1
   _axis: {x: 1, y: 0, z: 0}
+  backLinkageBeam: {fileID: 1585679976}
+  frontLinkageMountJoint: {fileID: 2061131504}
 --- !u!23 &1220948287513773467
 MeshRenderer:
   m_ObjectHideFlags: 0
