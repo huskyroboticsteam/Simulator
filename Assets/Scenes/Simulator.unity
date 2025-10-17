@@ -1003,7 +1003,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 573246908}
-  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.384861, z: 0}
   m_LocalScale: {x: 0.1, y: 0.10000002, z: 0.10000002}
   m_Children: []
@@ -3717,7 +3717,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 919132148989940468}
-  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.484861, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -3848,9 +3848,9 @@ MonoBehaviour:
   _reverse: 0
   _positionSensor: 1
   _minLimitSwitch: 2
-  _minLimitPosition: -180
+  _minLimitPosition: 0
   _maxLimitSwitch: 2
-  _maxLimitPosition: 0
+  _maxLimitPosition: 80
   _potentiometerOffset: 0
   _statusReportPeriod: 0.03333334
   _openLoopSpeed: 40
@@ -4029,9 +4029,9 @@ MonoBehaviour:
   _reverse: 0
   _positionSensor: 1
   _minLimitSwitch: 2
-  _minLimitPosition: -50
+  _minLimitPosition: 0
   _maxLimitSwitch: 2
-  _maxLimitPosition: 70
+  _maxLimitPosition: 80
   _potentiometerOffset: 0
   _statusReportPeriod: 0.03333334
   _openLoopSpeed: 40

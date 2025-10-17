@@ -40,12 +40,12 @@ public class ShoulderMotor : HingeMotor
             height * Mathf.Sin(elbowMotor.transform.localEulerAngles.x * Mathf.Deg2Rad));
 
         bottomBackNode.transform.localPosition = new Vector3(bottomBackNode.transform.localPosition.x,
-            bottomFrontNode.transform.localPosition.y + (width * Mathf.Cos(transform.localEulerAngles.x * Mathf.Deg2Rad)),
-            bottomFrontNode.transform.localPosition.z + (width * Mathf.Sin(transform.localEulerAngles.x * Mathf.Deg2Rad)));
+            bottomFrontNode.transform.localPosition.y + (width * Mathf.Sin(transform.localEulerAngles.x * Mathf.Deg2Rad)),
+            bottomFrontNode.transform.localPosition.z - (width * Mathf.Cos(transform.localEulerAngles.x * Mathf.Deg2Rad)));
 
         topBackNode.transform.localPosition = new Vector3(topBackNode.transform.localPosition.x,
-            topFrontNode.transform.localPosition.y + Mathf.Abs(width * Mathf.Cos(transform.localEulerAngles.x * Mathf.Deg2Rad)),
-            topFrontNode.transform.localPosition.z + (width * Mathf.Sin(transform.localEulerAngles.x * Mathf.Deg2Rad)));
+            topFrontNode.transform.localPosition.y + Mathf.Abs(width * Mathf.Sin(transform.localEulerAngles.x * Mathf.Deg2Rad)),
+            topFrontNode.transform.localPosition.z - (width * Mathf.Cos(transform.localEulerAngles.x * Mathf.Deg2Rad)));
 
 
 
@@ -60,6 +60,6 @@ public class ShoulderMotor : HingeMotor
 
 
         // Update angle limit
-        
+
     }
 }   
