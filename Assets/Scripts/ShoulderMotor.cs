@@ -25,16 +25,18 @@ public class ShoulderMotor : HingeMotor
     private GameObject frontLinkage;
     [SerializeField]
     private GameObject backLinkage;
-    private float width;
-    private float height;
+    [SerializeField]
+    private GameObject bottomLinkage;
+    private float width = 0.205f;
+    private float height = 0.609f;
     protected override void Start()
     {
         base.Start();
-        width = Vector3.Distance(bottomFrontNode.transform.position,
-            bottomBackNode.transform.position);
+        // width = Vector3.Distance(bottomFrontNode.transform.position,
+        //     bottomBackNode.transform.position);
         Debug.Log(width);
-        height = Vector3.Distance(bottomFrontNode.transform.position,
-            topBackNode.transform.position);
+        // height = Vector3.Distance(bottomFrontNode.transform.position,
+        //     topBackNode.transform.position);
         Debug.Log(height);
     }
     protected override void Render()
@@ -79,5 +81,14 @@ public class ShoulderMotor : HingeMotor
             elbowMotor.transform.localEulerAngles.x + 90,
             frontLinkageBeam.transform.localEulerAngles.y,
             frontLinkageBeam.transform.localEulerAngles.z);
+
+        // Update bottom bracket
+        bottomLinkage.transform.localPosition = new Vector3(bottomBackNode.transform.localPosition.x,
+            bottomFrontNode.transform.localPosition.y + ((width / 2) * Mathf.Sin(transform.localEulerAngles.x * Mathf.Deg2Rad)),
+            bottomFrontNode.transform.localPosition.z - ((width / 2) * Mathf.Cos(transform.localEulerAngles.x * Mathf.Deg2Rad)));
+        bottomLinkage.transform.localEulerAngles = new Vector3(
+            transform.localEulerAngles.x,
+            bottomLinkage.transform.localEulerAngles.y,
+            bottomLinkage.transform.localEulerAngles.z);
     }
 }   
