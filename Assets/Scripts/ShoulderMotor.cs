@@ -19,6 +19,12 @@ public class ShoulderMotor : HingeMotor
     // Elbow motor script that we read angle off of and limit angle
     [SerializeField]
     private GameObject elbowMotor;
+
+    // Linkage Visual Objects
+    [SerializeField]
+    private GameObject frontLinkage;
+    [SerializeField]
+    private GameObject backLinkage;
     private float width;
     private float height;
     protected override void Start()
@@ -47,9 +53,7 @@ public class ShoulderMotor : HingeMotor
             topFrontNode.transform.localPosition.y + Mathf.Abs(width * Mathf.Sin(transform.localEulerAngles.x * Mathf.Deg2Rad)),
             topFrontNode.transform.localPosition.z - (width * Mathf.Cos(transform.localEulerAngles.x * Mathf.Deg2Rad)));
 
-
-
-        // Update the arm position
+        // Update the forearm position
         Vector3 topFrontToTopBack = topFrontNode.transform.localPosition - topBackNode.transform.localPosition;
         topFrontToTopBack = topFrontToTopBack / 2;
         frontLinkageBeam.transform.localPosition = topFrontNode.transform.localPosition - topFrontToTopBack;
@@ -59,7 +63,21 @@ public class ShoulderMotor : HingeMotor
             frontLinkageBeam.transform.localEulerAngles.z);
 
 
-        // Update angle limit
+        // Update the upper arm posiiton
+        Vector3 botFrontToTopFront = topFrontNode.transform.localPosition - bottomFrontNode.transform.localPosition;
+        botFrontToTopFront = botFrontToTopFront / 2;
+        frontLinkage.transform.localPosition = botFrontToTopFront + bottomFrontNode.transform.localPosition;
+        frontLinkage.transform.localEulerAngles = new Vector3(
+            elbowMotor.transform.localEulerAngles.x + 90,
+            frontLinkageBeam.transform.localEulerAngles.y,
+            frontLinkageBeam.transform.localEulerAngles.z);
 
+        Vector3 botBackToTopBack = topBackNode.transform.localPosition - bottomBackNode.transform.localPosition;
+        botBackToTopBack = botBackToTopBack / 2;
+        backLinkage.transform.localPosition = botBackToTopBack + bottomBackNode.transform.localPosition;
+        backLinkage.transform.localEulerAngles = new Vector3(
+            elbowMotor.transform.localEulerAngles.x + 90,
+            frontLinkageBeam.transform.localEulerAngles.y,
+            frontLinkageBeam.transform.localEulerAngles.z);
     }
 }   
