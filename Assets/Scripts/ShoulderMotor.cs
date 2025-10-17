@@ -6,8 +6,6 @@ using UnityEngine;
 public class ShoulderMotor : HingeMotor
 {
     [SerializeField]
-    private GameObject topArmBeam;
-    [SerializeField]
     private GameObject frontLinkageBeam;
     [SerializeField]
     private GameObject bottomFrontNode;
@@ -17,10 +15,10 @@ public class ShoulderMotor : HingeMotor
     private GameObject topBackNode;
     [SerializeField]
     private GameObject bottomBackNode;
+
+    // Elbow motor script that we read angle off of and limit angle
     [SerializeField]
     private GameObject elbowMotor;
-    [SerializeField]
-    private float shoulderAngle = 90f;
     private float width;
     private float height;
     protected override void Start()
@@ -36,19 +34,32 @@ public class ShoulderMotor : HingeMotor
     protected override void Render()
     {
         base.Render();
-        topArmBeam.transform.localPosition = new Vector3(topArmBeam.transform.localPosition.x + (frontLinkageBeam.transform.localScale.z * Mathf.Sin(0)),
-                                                    topArmBeam.transform.localPosition.y,
-                                                    topArmBeam.transform.localPosition.z);
+
+        topFrontNode.transform.localPosition = new Vector3(topFrontNode.transform.localPosition.x,
+            height * Mathf.Cos(elbowMotor.transform.localEulerAngles.x * Mathf.Deg2Rad),
+            height * Mathf.Sin(elbowMotor.transform.localEulerAngles.x * Mathf.Deg2Rad));
 
         bottomBackNode.transform.localPosition = new Vector3(bottomBackNode.transform.localPosition.x,
-            bottomFrontNode.transform.localPosition.y + (width * Mathf.Sin((transform.localRotation.x + 90) * Mathf.Deg2Rad)),
-            bottomFrontNode.transform.localPosition.z + (width * Mathf.Cos((transform.localRotation.x + 90) * Mathf.Deg2Rad)));
-        Debug.Log(elbowMotor.transform.localEulerAngles.x);
-        topFrontNode.transform.localPosition = new Vector3(topFrontNode.transform.localPosition.x,
-            height * Mathf.Cos((elbowMotor.transform.localEulerAngles.x + 90) * Mathf.Deg2Rad), height * Mathf.Sin((elbowMotor.transform.localEulerAngles.x + 90) * Mathf.Deg2Rad));
+            bottomFrontNode.transform.localPosition.y + (width * Mathf.Cos(transform.localEulerAngles.x * Mathf.Deg2Rad)),
+            bottomFrontNode.transform.localPosition.z + (width * Mathf.Sin(transform.localEulerAngles.x * Mathf.Deg2Rad)));
 
         topBackNode.transform.localPosition = new Vector3(topBackNode.transform.localPosition.x,
-            topFrontNode.transform.localPosition.y + (width * Mathf.Cos(transform.localRotation.x * Mathf.Deg2Rad)),
-            topFrontNode.transform.localPosition.z + (width * Mathf.Sin(transform.localRotation.x * Mathf.Deg2Rad)));
+            topFrontNode.transform.localPosition.y + Mathf.Abs(width * Mathf.Cos(transform.localEulerAngles.x * Mathf.Deg2Rad)),
+            topFrontNode.transform.localPosition.z + (width * Mathf.Sin(transform.localEulerAngles.x * Mathf.Deg2Rad)));
+
+
+
+        // Update the arm position
+        Vector3 topFrontToTopBack = topFrontNode.transform.localPosition - topBackNode.transform.localPosition;
+        topFrontToTopBack = topFrontToTopBack / 2;
+        frontLinkageBeam.transform.localPosition = topFrontNode.transform.localPosition - topFrontToTopBack;
+        frontLinkageBeam.transform.localEulerAngles = new Vector3(
+            -Mathf.Abs(Mathf.Atan(topFrontToTopBack.z / topFrontToTopBack.y) * Mathf.Rad2Deg) + 90,
+            frontLinkageBeam.transform.localEulerAngles.y,
+            frontLinkageBeam.transform.localEulerAngles.z);
+
+
+        // Update angle limit
+        
     }
 }   
