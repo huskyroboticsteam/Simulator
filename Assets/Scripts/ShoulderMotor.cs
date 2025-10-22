@@ -52,7 +52,7 @@ public class ShoulderMotor : HingeMotor
             bottomFrontNode.transform.localPosition.z - (width * Mathf.Cos(transform.localEulerAngles.x * Mathf.Deg2Rad)));
 
         topBackNode.transform.localPosition = new Vector3(topBackNode.transform.localPosition.x,
-            topFrontNode.transform.localPosition.y + Mathf.Abs(width * Mathf.Sin(transform.localEulerAngles.x * Mathf.Deg2Rad)),
+            topFrontNode.transform.localPosition.y + (width * Mathf.Sin(transform.localEulerAngles.x * Mathf.Deg2Rad)),
             topFrontNode.transform.localPosition.z - (width * Mathf.Cos(transform.localEulerAngles.x * Mathf.Deg2Rad)));
 
         // Update the forearm position
@@ -60,7 +60,7 @@ public class ShoulderMotor : HingeMotor
         topFrontToTopBack = topFrontToTopBack / 2;
         frontLinkageBeam.transform.localPosition = topFrontNode.transform.localPosition - topFrontToTopBack;
         frontLinkageBeam.transform.localEulerAngles = new Vector3(
-            -Mathf.Abs(Mathf.Atan(topFrontToTopBack.z / topFrontToTopBack.y) * Mathf.Rad2Deg) + 90,
+            transform.localEulerAngles.x,
             frontLinkageBeam.transform.localEulerAngles.y,
             frontLinkageBeam.transform.localEulerAngles.z);
 
@@ -90,5 +90,10 @@ public class ShoulderMotor : HingeMotor
             transform.localEulerAngles.x,
             bottomLinkage.transform.localEulerAngles.y,
             bottomLinkage.transform.localEulerAngles.z);
+
+        // MinLimitPosition = elbowMotor.transform.localEulerAngles.x + 60f;
+        float eulerAnglesRelative = 0;
+
+        MaxLimitPosition = (elbowMotor.transform.localEulerAngles.x) + 60;
     }
 }   

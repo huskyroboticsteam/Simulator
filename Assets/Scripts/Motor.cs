@@ -170,6 +170,7 @@ public abstract class Motor : MonoBehaviour
     public float MaxLimitPosition
     {
         get { return _maxLimitPosition; }
+        set { _maxLimitPosition = value;  }
     }
 
     /// <summary>
