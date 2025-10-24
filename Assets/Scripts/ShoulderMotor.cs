@@ -39,8 +39,8 @@ public class ShoulderMotor : HingeMotor
     {
         base.Start();
         // Update mesh scale with inputed values
-        frontLinkageBeam.transform.localScale = new Vector3(frontLinkageBeam.transform.localScale.x,
-                                                            frontLinkageBeam.transform.localScale.y,
+        frontLinkage.transform.localScale = new Vector3(frontLinkage.transform.localScale.x,
+                                                            frontLinkage.transform.localScale.y,
                                                             height);
         backLinkage.transform.localScale = new Vector3(backLinkage.transform.localScale.x,
                                                             backLinkage.transform.localScale.y,
