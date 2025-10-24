@@ -21,7 +21,7 @@ public class ShoulderMotor : HingeMotor
     [SerializeField]
     private GameObject elbowMotor;
 
-    // Linkage Visual Objects
+    // Linkage Objects that contain meshes
     [SerializeField]
     private GameObject frontLinkage;
     [SerializeField]
@@ -118,7 +118,7 @@ public class ShoulderMotor : HingeMotor
         prevShoulderAngle = transform.localEulerAngles.x;
     }
 
-    // Euler angles cannot be negative, this function takes a angle that is greater than 180
+    // Euler angles cannot be negative, this function takes an angle that is greater than 180
     // and converts it to it's negative counterpart.
     private float localEulerAngleToEditorAngle(float angle)
     {
