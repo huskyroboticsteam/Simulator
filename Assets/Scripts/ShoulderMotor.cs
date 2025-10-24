@@ -94,60 +94,9 @@ public class ShoulderMotor : HingeMotor
             transform.localEulerAngles.x,
             bottomLinkage.transform.localEulerAngles.y,
             bottomLinkage.transform.localEulerAngles.z);
-        float convertedAngle = elbowMotor.transform.localEulerAngles.x;
-        // editorAngleConversion
-        if (convertedAngle >= 180)
-        {
-            convertedAngle = convertedAngle - 360;
-        }
 
-
-        // Check whether a vertical linkage is approaching the other (front and back linkage)
-        // then update max and min limit switch position if one is encroaching the other
-        // otherwise set limit switch pos to default limit switch values
-        Vector3 frontBeamLocalSpace = frontLinkageBeam.transform.InverseTransformPoint(backLinkage.transform.position);
-        float elbowAngularVel = elbowMotor.transform.localEulerAngles.x - prevElbowAngle;
-        float shoulderAngularVel = this.transform.localEulerAngles.x - prevShoulderAngle;
-        if (Mathf.Abs(frontBeamLocalSpace.y) < 0.15f && elbowAngularVel < 0)
-        {
-            Debug.Log("go here" + elbowMotor.transform.localEulerAngles.x);
-            elbowMotor.GetComponent<Motor>().MinLimitPosition = localEulerAngleToEditorAngle(elbowMotor.transform.localEulerAngles.x);
-            this.MaxLimitPosition = localEulerAngleToEditorAngle(transform.localEulerAngles.x);
-        }
-        else if (elbowAngularVel > 0)
-        {
-            elbowMotor.GetComponent<Motor>().MinLimitPosition = -80;
-        }
-
-        if (Mathf.Abs(frontBeamLocalSpace.y) < 0.15f && elbowAngularVel > 0)
-        {
-            Debug.Log("go here" + elbowMotor.transform.localEulerAngles.x);
-            elbowMotor.GetComponent<Motor>().MaxLimitPosition = localEulerAngleToEditorAngle(elbowMotor.transform.localEulerAngles.x);
-        }
-        else if (elbowAngularVel > 0)
-        {
-            elbowMotor.GetComponent<Motor>().MaxLimitPosition = 80;
-        }
-
-        if (Mathf.Abs(frontBeamLocalSpace.y) < 0.15f && shoulderAngularVel > 0)
-        {
-            Debug.Log("go here" + localEulerAngleToEditorAngle(transform.localEulerAngles.x));
-            this.MaxLimitPosition = localEulerAngleToEditorAngle(transform.localEulerAngles.x);
-        }
-        else if (shoulderAngularVel < 0)
-        {
-            this.MaxLimitPosition = 80;
-        }
-
-       if (Mathf.Abs(frontBeamLocalSpace.y) < 0.15f && shoulderAngularVel < 0)
-        {
-            Debug.Log("go here" + localEulerAngleToEditorAngle(transform.localEulerAngles.x));
-            this.MinLimitPosition = localEulerAngleToEditorAngle(transform.localEulerAngles.x);
-        }
-        else if (shoulderAngularVel > 0)
-        {
-            this.MinLimitPosition = -30;
-        }
+        MaxLimitPosition = localEulerAngleToEditorAngle(elbowMotor.transform.localEulerAngles.x + 60);
+        MinLimitPosition = localEulerAngleToEditorAngle(elbowMotor.transform.localEulerAngles.x - 60);
 
         // Record the previous angle for checking whether state changed
         // Elbow and shoulder only rotate around x axis, no need to check any other angles
