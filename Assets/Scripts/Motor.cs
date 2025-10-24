@@ -153,6 +153,7 @@ public abstract class Motor : MonoBehaviour
     public float MinLimitPosition
     {
         get { return _minLimitPosition; }
+        set { _minLimitPosition = value; }
     }
 
     /// <summary>
@@ -161,6 +162,7 @@ public abstract class Motor : MonoBehaviour
     public LimitSwitch MaxLimitSwitch
     {
         get { return _maxLimitSwitch; }
+        set { _maxLimitSwitch = value; }
     }
 
     /// <summary>
