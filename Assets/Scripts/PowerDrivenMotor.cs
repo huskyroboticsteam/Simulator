@@ -59,6 +59,11 @@ public class PowerDrivenMotor : Motor
 
     private void UpdatePosition()
     {
+
+        if (gameObject.name.Equals("Shoulder Motor"))
+        {
+            Debug.Log(CurrentPower);
+        }
         float speed = Mode switch
         {
             RunMode.RunToPosition => _closedLoopSpeed,
