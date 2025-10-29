@@ -64,7 +64,7 @@ public class ShoulderMotor : HingeMotor
         topFrontNode.transform.localPosition = new Vector3(topFrontNode.transform.localPosition.x,
             height * Mathf.Cos(elbowMotor.transform.localEulerAngles.x * Mathf.Deg2Rad),
             height * Mathf.Sin(elbowMotor.transform.localEulerAngles.x * Mathf.Deg2Rad));
-
+        Debug.Log(transform.localEulerAngles.x);
         bottomBackNode.transform.localPosition = new Vector3(bottomBackNode.transform.localPosition.x,
             bottomFrontNode.transform.localPosition.y + (width * Mathf.Sin(transform.localEulerAngles.x * Mathf.Deg2Rad)),
             bottomFrontNode.transform.localPosition.z - (width * Mathf.Cos(transform.localEulerAngles.x * Mathf.Deg2Rad)));
