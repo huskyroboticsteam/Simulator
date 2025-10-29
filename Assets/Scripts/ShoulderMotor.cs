@@ -109,8 +109,10 @@ public class ShoulderMotor : HingeMotor
             bottomLinkage.transform.localEulerAngles.y,
             bottomLinkage.transform.localEulerAngles.z);
 
-        MaxLimitPosition = localEulerAngleToEditorAngle(elbowMotor.transform.localEulerAngles.x + 60);
-        MinLimitPosition = Mathf.Max(localEulerAngleToEditorAngle(elbowMotor.transform.localEulerAngles.x - 60), -30);
+        // TODO
+        // Implement max limit switch positions!
+        // MaxLimitPosition = localEulerAngleToEditorAngle(elbowMotor.transform.localEulerAngles.x + 60);
+        // MinLimitPosition = Mathf.Max(localEulerAngleToEditorAngle(elbowMotor.transform.localEulerAngles.x - 60), -30);
 
         // Record the previous angle for checking whether state changed
         // Elbow and shoulder only rotate around x axis, no need to check any other angles
