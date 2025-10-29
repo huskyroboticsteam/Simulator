@@ -10,6 +10,8 @@ public class CommandRegisterer : MonoBehaviour
 {
     [SerializeField]
     private Rover _rover;
+    [SerializeField]
+    private GameObject arucoMarker;
     private IList<Command> _commands;
 
     private void OnEnable()
@@ -19,7 +21,8 @@ public class CommandRegisterer : MonoBehaviour
             new Command("run", RunMotor),
             new Command("waypoint", GetWaypoint),
             new Command("waypoints", ListWaypoints),
-            new Command("help", PrintInstructions)
+            new Command("help", PrintInstructions),
+            new Command("toggleAruco", toggleAruco)
         };
 
         foreach (Command command in _commands)
@@ -46,6 +49,7 @@ public class CommandRegisterer : MonoBehaviour
         SimulatorConsole.WriteLine("reset: Reloads the scene");
         SimulatorConsole.WriteLine("waypoints: Lists all waypoints");
         SimulatorConsole.WriteLine("waypoint <name>: Copies GPS coordinates of waypoint");
+        SimulatorConsole.WriteLine("toggleAruco: Toggle Aruco marker visibility");
     }
 
     /// <summary>
@@ -131,11 +135,31 @@ public class CommandRegisterer : MonoBehaviour
         {
             foreach (Transform child in GameObject.Find("Waypoints").transform)
             {
-                double[] GPS = Utilities.metersToGPS(new double[] {child.transform.position.z, child.transform.position.x});
+                double[] GPS = Utilities.metersToGPS(new double[] { child.transform.position.z, child.transform.position.x });
                 string lat = GPS[0].ToString("0." + new string('#', 8));
                 string lon = GPS[1].ToString("0." + new string('#', 8));
                 SimulatorConsole.WriteLine(child.name + "->(lat:" + lat + ", lon:" + lon + ")");
             }
+        }
+    }
+
+    // Turns on the visibility for the ArUco Marker Gate 1 object
+    private void toggleAruco(string[] args)
+    {
+        if (arucoMarker != null)
+        {
+            if (arucoMarker.activeSelf)
+            {
+                arucoMarker.SetActive(false);
+            }
+            else
+            {
+                arucoMarker.SetActive(true);
+            }
+        }
+        else
+        {
+            SimulatorConsole.WriteLine("No ArUco Marker Gate 1 in world!");
         }
     }
 }
