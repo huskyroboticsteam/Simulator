@@ -166,7 +166,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
-  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &76217086
 GameObject:
@@ -1610,72 +1609,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 857999118}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1001 &912579782
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 509743861628865031, guid: ff3ba6d371804b648bdef0c771a15f6b, type: 3}
-      propertyPath: m_Name
-      value: ArUco Marker Gate 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 509743861628865031, guid: ff3ba6d371804b648bdef0c771a15f6b, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1073218108609730134, guid: ff3ba6d371804b648bdef0c771a15f6b, type: 3}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1073218108609730134, guid: ff3ba6d371804b648bdef0c771a15f6b, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.08686471
-      objectReference: {fileID: 0}
-    - target: {fileID: 1073218108609730134, guid: ff3ba6d371804b648bdef0c771a15f6b, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 18.740473
-      objectReference: {fileID: 0}
-    - target: {fileID: 1073218108609730134, guid: ff3ba6d371804b648bdef0c771a15f6b, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 4.6628428
-      objectReference: {fileID: 0}
-    - target: {fileID: 1073218108609730134, guid: ff3ba6d371804b648bdef0c771a15f6b, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1073218108609730134, guid: ff3ba6d371804b648bdef0c771a15f6b, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1073218108609730134, guid: ff3ba6d371804b648bdef0c771a15f6b, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1073218108609730134, guid: ff3ba6d371804b648bdef0c771a15f6b, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1073218108609730134, guid: ff3ba6d371804b648bdef0c771a15f6b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1073218108609730134, guid: ff3ba6d371804b648bdef0c771a15f6b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1073218108609730134, guid: ff3ba6d371804b648bdef0c771a15f6b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: ff3ba6d371804b648bdef0c771a15f6b, type: 3}
---- !u!1 &912579783 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 509743861628865031, guid: ff3ba6d371804b648bdef0c771a15f6b, type: 3}
-  m_PrefabInstance: {fileID: 912579782}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &961188769
 GameObject:
   m_ObjectHideFlags: 0
@@ -3675,7 +3608,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rover: {fileID: 2516181680764149518}
-  arucoMarker: {fileID: 912579783}
+  arucoMarker: {fileID: 2026221751}
 --- !u!4 &1792607559
 Transform:
   m_ObjectHideFlags: 0
