@@ -59,6 +59,7 @@ public class PowerDrivenMotor : Motor
 
     private void UpdatePosition()
     {
+
         float speed = Mode switch
         {
             RunMode.RunToPosition => _closedLoopSpeed,
