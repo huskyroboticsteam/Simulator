@@ -269,7 +269,7 @@ public abstract class Motor : MonoBehaviour
 
     protected virtual void Awake()
     {
-        _socket = FindObjectOfType<RoverSocket>();
+        _socket = FindAnyObjectByType<RoverSocket>();
     }
 
     protected virtual void OnEnable()
